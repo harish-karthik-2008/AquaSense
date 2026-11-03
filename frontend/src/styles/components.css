@@ -1,0 +1,515 @@
+/* ==========================================================================
+   AquaSense AI - Component Styles (Sensor Cards, pH Gauge, Alerts, Tables)
+   ========================================================================== */
+
+/* ------------------- CARD FOUNDATION ------------------- */
+.atom-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.atom-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: #d8dbe5;
+}
+
+.atom-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.card-icon-bubble {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--brand-purple-subtle);
+  color: var(--brand-primary);
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.card-subtitle {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* ------------------- SENSOR CARDS ------------------- */
+.sensor-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .sensor-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sensor-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sensor-card-body {
+  margin-bottom: 1.25rem;
+}
+
+.sensor-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.sensor-value {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--brand-primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+.sensor-unit {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.sensor-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.sensor-diff {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+.sensor-diff.up {
+  color: #d97706;
+}
+
+.sensor-diff.down {
+  color: #2563eb;
+}
+
+.sensor-diff.neutral {
+  color: var(--text-muted);
+}
+
+.sensor-threshold-tag {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ------------------- STATUS BADGES ------------------- */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.status-pill.normal {
+  background-color: var(--status-normal-bg);
+  color: #065f46;
+  border: 1px solid var(--status-normal-border);
+}
+
+.status-pill.warning {
+  background-color: var(--status-warning-bg);
+  color: #92400e;
+  border: 1px solid var(--status-warning-border);
+}
+
+.status-pill.critical {
+  background-color: var(--status-critical-bg);
+  color: #991b1b;
+  border: 1px solid var(--status-critical-border);
+}
+
+.status-pill.info {
+  background-color: var(--status-info-bg);
+  color: #1e40af;
+  border: 1px solid var(--status-info-border);
+}
+
+/* ------------------- VISUAL pH SCALE ------------------- */
+.ph-scale-wrapper {
+  margin: 1.25rem 0 0.5rem;
+  position: relative;
+}
+
+.ph-track {
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    to right,
+    #ef4444 0%,    /* Acidic Red (0) */
+    #f97316 20%,   /* Orange (3) */
+    #eab308 35%,   /* Yellow (5) */
+    #10b981 50%,   /* Pure Green Neutral (7-8) */
+    #06b6d4 65%,   /* Cyan (9) */
+    #3b82f6 80%,   /* Blue (11) */
+    #8b5cf6 100%   /* Purple Alkaline (14) */
+  );
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.ph-marker-pointer {
+  position: absolute;
+  top: -6px;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid var(--brand-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.ph-marker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+}
+
+.ph-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.ph-range-indicator {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* ------------------- CIRCULAR & BAR GAUGES ------------------- */
+.gauge-bar-wrapper {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.gauge-track {
+  height: 8px;
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.gauge-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gauge-fill.normal {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+}
+
+.gauge-fill.warning {
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+.gauge-fill.critical {
+  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+}
+
+.gauge-limits {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ------------------- BUTTONS ------------------- */
+.atom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.atom-btn-primary {
+  background: var(--brand-primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(46, 8, 84, 0.2);
+}
+
+.atom-btn-primary:hover {
+  background: var(--brand-primary-hover);
+  box-shadow: 0 4px 14px rgba(46, 8, 84, 0.3);
+  transform: translateY(-1px);
+}
+
+.atom-btn-secondary {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+
+.atom-btn-secondary:hover {
+  background-color: #e5e8f2;
+  border-color: #d1d6e5;
+}
+
+.atom-btn-outline {
+  border: 1px solid var(--brand-purple-border);
+  background-color: transparent;
+  color: var(--brand-primary);
+}
+
+.atom-btn-outline:hover {
+  background-color: var(--brand-purple-subtle);
+  border-color: var(--brand-accent);
+}
+
+.atom-btn-danger {
+  background-color: var(--status-critical-bg);
+  color: var(--status-critical);
+  border: 1px solid var(--status-critical-border);
+}
+
+.atom-btn-danger:hover {
+  background-color: #fee2e2;
+}
+
+.atom-btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.78rem;
+}
+
+/* ------------------- TABLES ------------------- */
+.atom-table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background: #fff;
+}
+
+.atom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  text-align: left;
+}
+
+.atom-table th {
+  background-color: #f9fafd;
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.atom-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.atom-table tbody tr:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.atom-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ------------------- ALERT CARDS ------------------- */
+.alert-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  background: #fff;
+  border: 1px solid var(--border-light);
+  margin-bottom: 1rem;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.alert-card.critical {
+  border-left: 4px solid var(--status-critical);
+}
+
+.alert-card.warning {
+  border-left: 4px solid var(--status-warning);
+}
+
+.alert-card.normal, .alert-card.info {
+  border-left: 4px solid var(--brand-accent);
+}
+
+.alert-card.acknowledged {
+  opacity: 0.65;
+  background-color: #fbfcff;
+}
+
+.alert-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.alert-card.critical .alert-icon-box {
+  background-color: var(--status-critical-bg);
+  color: var(--status-critical);
+}
+
+.alert-card.warning .alert-icon-box {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning);
+}
+
+.alert-card.normal .alert-icon-box, .alert-card.info .alert-icon-box {
+  background-color: var(--brand-purple-subtle);
+  color: var(--brand-accent);
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.alert-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.alert-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.alert-msg {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.65rem;
+}
+
+.alert-action-box {
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  color: var(--brand-primary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ------------------- EMPTY STATE ------------------- */
+.empty-state-box {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background-color: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border-light);
+}
+
+.empty-state-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--brand-purple-subtle);
+  color: var(--brand-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+
+.empty-state-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.empty-state-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  max-width: 440px;
+  margin: 0 auto 1.5rem;
+}
+

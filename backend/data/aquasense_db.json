@@ -1,0 +1,212 @@
+{
+  "settings": [
+    {
+      "tds_warning_threshold": 300.0,
+      "tds_critical_threshold": 500.0,
+      "ph_min_acceptable": 6.5,
+      "ph_max_acceptable": 8.5,
+      "turbidity_warning_threshold": 5.0,
+      "turbidity_critical_threshold": 10.0,
+      "anomaly_sensitivity": "medium",
+      "heartbeat_timeout_seconds": 25,
+      "_id": "threshold_settings"
+    }
+  ],
+  "filter_health": [
+    {
+      "operating_hours": 1420.6,
+      "processed_volume_liters": 4851.199999999999,
+      "last_serviced_date": "2026-08-15",
+      "next_scheduled_service": "2027-02-15",
+      "stages": [
+        {
+          "id": "stage-1-sediment",
+          "name": "Sediment Pre-Filter (PP Spun)",
+          "stage_number": 1,
+          "type": "Mechanical Filtration (5 Micron)",
+          "condition_pct": 74.0,
+          "status": "Good",
+          "lifespan_days": 180,
+          "days_remaining": 48,
+          "description": "Traps suspended silt, sand, rust, and turbidity particles before entering delicate RO membrane.",
+          "target_contaminants": "Coarse sediment, rust, visible turbidity",
+          "replacement_model": "Atomberg ProClean PP-5M"
+        },
+        {
+          "id": "stage-2-precarbon",
+          "name": "Pre-Carbon Block Filter",
+          "stage_number": 2,
+          "type": "Adsorption (Activated Coconut Shell)",
+          "condition_pct": 81.0,
+          "status": "Optimal",
+          "lifespan_days": 180,
+          "days_remaining": 62,
+          "description": "Adsorbs chlorine, organic volatile compounds, pesticides, foul odor and taste.",
+          "target_contaminants": "Chlorine, odor, pesticides, VOCs",
+          "replacement_model": "Atomberg PureCarb Block-10"
+        },
+        {
+          "id": "stage-3-ro",
+          "name": "RO Membrane (High Recovery)",
+          "stage_number": 3,
+          "type": "Reverse Osmosis (0.0001 Micron)",
+          "condition_pct": 89.0,
+          "status": "Optimal",
+          "lifespan_days": 365,
+          "days_remaining": 178,
+          "description": "Semi-permeable thin-film composite membrane rejecting dissolved salts (TDS) and heavy metals.",
+          "target_contaminants": "High TDS, salts, dissolved inorganics",
+          "replacement_model": "Atomberg DuraFlow RO-75GPD"
+        },
+        {
+          "id": "stage-4-postcarbon",
+          "name": "Post-Carbon & Alkaline Mineralizer",
+          "stage_number": 4,
+          "type": "Mineral Infusion & Polish",
+          "condition_pct": 68.0,
+          "status": "Good",
+          "lifespan_days": 180,
+          "days_remaining": 36,
+          "description": "Restores essential calcium/magnesium minerals, balances drinking pH (6.5-8.5), and enriches taste.",
+          "target_contaminants": "Taste polish, pH stabilization",
+          "replacement_model": "Atomberg AlkiPure Mineralizer"
+        }
+      ],
+      "_id": "filter_state_01"
+    }
+  ],
+  "sensor_readings": [
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T12:53:26.134247+00:00",
+      "tds": 175.0,
+      "ph": 7.4,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Normal",
+      "water_quality_score": 100.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "c19c6ff6-8cd3-4918-beb9-a46b7dae0e51"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T12:53:26.145467+00:00",
+      "tds": 540.0,
+      "ph": 7.4,
+      "turbidity": 1.2,
+      "tds_status": "Critical",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 71.2,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 2/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "bc98c921-1a7d-4aca-9c11-5441844505f6"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T12:53:26.158959+00:00",
+      "tds": 175.0,
+      "ph": 5.1,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 72.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "9bd8598e-0ebc-40b1-a5c9-7da495a8cb6b"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T13:03:32.765126+00:00",
+      "tds": 170.0,
+      "ph": 7.35,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Normal",
+      "water_quality_score": 100.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "a050b4f3-5f04-410a-bc67-7183895cace4"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T13:03:32.767179+00:00",
+      "tds": 590.0,
+      "ph": 7.4,
+      "turbidity": 1.5,
+      "tds_status": "Critical",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 65.2,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 2/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "0a2e3faf-0b3e-41ef-87d8-d2ba66a95526"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T13:03:32.769101+00:00",
+      "tds": 170.0,
+      "ph": 4.9,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 68.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "1be32647-6e2c-479a-b7bb-615819c29ef9"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "5729c135-2137-428b-aa64-2d749ed9e7f7",
+      "timestamp": "2026-11-03T13:03:32.767179+00:00",
+      "alert_type": "Threshold",
+      "parameter": "TDS",
+      "reading_value": 590.0,
+      "threshold_value": "> 500.0 ppm",
+      "severity": "Critical",
+      "title": "Critical TDS Level Exceeded",
+      "message": "TDS reading reached 540.0 ppm, exceeding the critical limit of 500.0 ppm. Purifier output water may contain excessive dissolved solids.",
+      "suggested_action": "Inspect RO membrane rejection rate and flush RO cartridge immediately.",
+      "acknowledged": false,
+      "_id": "5729c135-2137-428b-aa64-2d749ed9e7f7"
+    },
+    {
+      "id": "7dbd0def-2044-4fb6-99ae-043fdb39f43a",
+      "timestamp": "2026-11-03T13:03:32.769101+00:00",
+      "alert_type": "Range",
+      "parameter": "pH",
+      "reading_value": 4.9,
+      "threshold_value": "< 6.5",
+      "severity": "Critical",
+      "title": "Acidic Water Quality Alert",
+      "message": "pH level dropped to 5.10, below safe drinking minimum of 6.5. Water may be corrosive.",
+      "suggested_action": "Check alkaline remineralizer cartridge and calibrate pH sensor electrode.",
+      "acknowledged": true,
+      "_id": "7dbd0def-2044-4fb6-99ae-043fdb39f43a"
+    }
+  ]
+}

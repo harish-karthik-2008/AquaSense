@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "author": "AquaSense AI - Atomberg atomQUEST 2026",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_tds",
+      "top": -120,
+      "left": -180,
+      "attrs": { "label": "TDS (GPIO 34)", "value": "245" }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_ph",
+      "top": 20,
+      "left": -180,
+      "attrs": { "label": "pH (GPIO 35)", "value": "512" }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_turb",
+      "top": 160,
+      "left": -180,
+      "attrs": { "label": "Turbidity (GPIO 32)", "value": "100" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "pot_tds:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "pot_tds:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "pot_tds:SIG", "esp:34", "blue", [ "v0" ] ],
+    [ "pot_ph:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "pot_ph:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "pot_ph:SIG", "esp:35", "green", [ "v0" ] ],
+    [ "pot_turb:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "pot_turb:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "pot_turb:SIG", "esp:32", "orange", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
+

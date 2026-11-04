@@ -17,8 +17,8 @@
   ],
   "filter_health": [
     {
-      "operating_hours": 0.16,
-      "processed_volume_liters": 1.6,
+      "operating_hours": 0.22,
+      "processed_volume_liters": 2.2,
       "last_serviced_date": "2026-11-04",
       "next_scheduled_service": "2027-05-03",
       "stages": [
@@ -76,8 +76,8 @@
         }
       ],
       "_id": "filter_state_01",
-      "telemetry_reading_count": 8,
-      "last_telemetry_timestamp": "2026-11-04T06:25:25.876691+00:00",
+      "telemetry_reading_count": 11,
+      "last_telemetry_timestamp": "2026-11-04T06:46:51.053762+00:00",
       "last_evaluated_condition_pct": 100.0,
       "last_evaluated_status": "Optimal"
     }
@@ -1991,16 +1991,71 @@
       "anomaly_score": 50.5,
       "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
       "note": "Turbidity values are simulated based on potentiometer input.",
-      "_id": "a13213da-2a7b-4da9-9616-a7c301aac6bd"
+      "_id": "a13213da-2a7b-4da9-9616-a7c301aac6bd",
+      "id": "a13213da-2a7b-4da9-9616-a7c301aac6bd"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-04T06:46:50.924310+00:00",
+      "tds": 170.0,
+      "ph": 7.35,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Normal",
+      "water_quality_score": 100.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "10a4d3b0-f573-4735-a4a2-a2c9665d8523",
+      "id": "10a4d3b0-f573-4735-a4a2-a2c9665d8523"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-04T06:46:51.021163+00:00",
+      "tds": 590.0,
+      "ph": 7.4,
+      "turbidity": 1.5,
+      "tds_status": "Critical",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 65.2,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "e67e74cf-f044-468b-bd5e-5b66f3796535",
+      "id": "e67e74cf-f044-468b-bd5e-5b66f3796535"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-04T06:46:51.049725+00:00",
+      "tds": 170.0,
+      "ph": 4.9,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 68.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 5/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "5ff1357e-6b29-4903-817c-5adff95f9603",
+      "id": "5ff1357e-6b29-4903-817c-5adff95f9603"
     }
   ],
   "alerts": [
     {
       "id": "5729c135-2137-428b-aa64-2d749ed9e7f7",
-      "timestamp": "2026-11-04T06:25:25.781471+00:00",
+      "timestamp": "2026-11-04T06:46:51.021163+00:00",
       "alert_type": "Threshold",
       "parameter": "TDS",
-      "reading_value": 536.0,
+      "reading_value": 590.0,
       "threshold_value": "> 500.0 ppm",
       "severity": "Critical",
       "title": "Critical TDS Level Exceeded",
@@ -2123,10 +2178,10 @@
     },
     {
       "id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a",
-      "timestamp": "2026-11-04T06:25:25.781471+00:00",
+      "timestamp": "2026-11-04T06:46:51.049725+00:00",
       "alert_type": "Range",
       "parameter": "pH",
-      "reading_value": 10.92,
+      "reading_value": 4.9,
       "threshold_value": "> 8.5",
       "severity": "Critical",
       "title": "Alkaline Water Quality Alert",
@@ -2151,17 +2206,31 @@
     },
     {
       "id": "58a11b74-0155-4763-890e-38bc1bd313c2",
-      "timestamp": "2026-11-04T06:25:25.962349+00:00",
+      "timestamp": "2026-11-04T06:46:51.059713+00:00",
       "alert_type": "Maintenance",
       "parameter": "Filter Health",
       "reading_value": 100.0,
       "threshold_value": "Telemetry Trend Anomaly",
       "severity": "Warning",
       "title": "Filter Water Quality Stress Warning",
-      "message": "Turbidity Surge: Recent simulated turbidity (53.06) is +688.4% relative to baseline (6.7). Indicates sediment pre-filter particulate stress.",
+      "message": "Turbidity Surge: Recent simulated turbidity (49.99) is +604.1% relative to baseline (7.1). Indicates sediment pre-filter particulate stress.",
+      "suggested_action": "RECOMMENDED: Inspect pre-filter mesh and verify raw input water parameters.",
+      "acknowledged": true,
+      "_id": "58a11b74-0155-4763-890e-38bc1bd313c2"
+    },
+    {
+      "id": "6ce07bab-e2d3-48fb-8bb8-dabe162b8939",
+      "timestamp": "2026-11-04T07:47:22.249264+00:00",
+      "alert_type": "Maintenance",
+      "parameter": "Filter Health",
+      "reading_value": 100.0,
+      "threshold_value": "Telemetry Trend Anomaly",
+      "severity": "Warning",
+      "title": "Filter Water Quality Stress Warning",
+      "message": "Turbidity Surge: Recent simulated turbidity (47.51) is +554.4% relative to baseline (7.3). Indicates sediment pre-filter particulate stress.",
       "suggested_action": "RECOMMENDED: Inspect pre-filter mesh and verify raw input water parameters.",
       "acknowledged": false,
-      "_id": "58a11b74-0155-4763-890e-38bc1bd313c2"
+      "_id": "6ce07bab-e2d3-48fb-8bb8-dabe162b8939"
     }
   ],
   "filter_maintenance_log": [
@@ -2277,12 +2346,12 @@
       "_id": "baa08935-0215-4ec7-be74-8d8c02c1f584",
       "id": "baa08935-0215-4ec7-be74-8d8c02c1f584",
       "created_at": "2026-11-04T04:08:16.792840+00:00",
-      "last_updated_at": "2026-11-04T06:25:25.896269+00:00",
+      "last_updated_at": "2026-11-04T06:46:51.057818+00:00",
       "priority": "Warning",
       "category": "Water Quality",
       "title": "Persistent Degrading Water Quality Trend Identified",
       "message": "Historical analytics detected a continuous declining purity trend across the past 24 hours. Most frequent abnormal parameter: pH.",
-      "reason": "Overall purity score has trended downwards across historical readings. 0 warning and 49 critical records logged.",
+      "reason": "Overall purity score has trended downwards across historical readings. 0 warning and 51 critical records logged.",
       "source_factors": [
         "historical_analytics"
       ],
@@ -2297,7 +2366,7 @@
       "threshold_or_baseline": "Historical 24h Trend",
       "is_dismissed": false,
       "dismissed_at": null,
-      "occurrence_count": 15,
+      "occurrence_count": 18,
       "deduplication_key": "water_quality:system:warning:persistent_degrading_trend",
       "related_alert_id": null
     },
@@ -2394,7 +2463,7 @@
       "_id": "176d8ef7-5c39-4771-81aa-018d9eabb77b",
       "id": "176d8ef7-5c39-4771-81aa-018d9eabb77b",
       "created_at": "2026-11-04T04:08:16.984372+00:00",
-      "last_updated_at": "2026-11-04T04:08:16.984372+00:00",
+      "last_updated_at": "2026-11-04T06:46:50.986846+00:00",
       "priority": "Informational",
       "category": "System & Calibration",
       "title": "Periodic Sensor Probe Maintenance & Rinsing Guidance",
@@ -2415,7 +2484,7 @@
       "threshold_or_baseline": "Preventative Maintenance",
       "is_dismissed": false,
       "dismissed_at": null,
-      "occurrence_count": 1,
+      "occurrence_count": 2,
       "deduplication_key": "routine_advisory:system:informational:sensor_hygiene_guidance",
       "related_alert_id": null
     },
@@ -2423,12 +2492,12 @@
       "_id": "c33852d2-7d82-4aa8-9887-36f4b7719eea",
       "id": "c33852d2-7d82-4aa8-9887-36f4b7719eea",
       "created_at": "2026-11-04T04:08:17.301209+00:00",
-      "last_updated_at": "2026-11-04T04:49:06.633125+00:00",
+      "last_updated_at": "2026-11-04T06:46:51.057818+00:00",
       "priority": "Critical",
       "category": "Water Quality",
       "title": "Acidic Water Quality - Remineralizer Inspection Advised",
-      "message": "Drinking water pH has dropped to 5.12, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
-      "reason": "Measured pH is 5.12 (safe minimum: 6.5). Post-Carbon Alkaline cartridge condition is currently at 100.0%.",
+      "message": "Drinking water pH has dropped to 4.90, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
+      "reason": "Measured pH is 4.90 (safe minimum: 6.5). Post-Carbon Alkaline cartridge condition is currently at 100.0%.",
       "source_factors": [
         "current_reading",
         "filter_health",
@@ -2441,11 +2510,11 @@
         "Perform a fresh 60-second purge cycle to test if reservoir stagnation caused acidity accumulation."
       ],
       "parameter": "pH",
-      "current_value": 5.12,
+      "current_value": 4.9,
       "threshold_or_baseline": "< 6.5",
       "is_dismissed": false,
       "dismissed_at": null,
-      "occurrence_count": 4,
+      "occurrence_count": 5,
       "deduplication_key": "water_quality:ph:critical:acidic_balance",
       "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
     },
@@ -2512,12 +2581,12 @@
       "_id": "b1ccc822-03dd-40be-bee4-14f6808dff8b",
       "id": "b1ccc822-03dd-40be-bee4-14f6808dff8b",
       "created_at": "2026-11-04T04:48:36.756209+00:00",
-      "last_updated_at": "2026-11-04T06:25:25.896269+00:00",
+      "last_updated_at": "2026-11-04T06:46:51.028163+00:00",
       "priority": "Critical",
       "category": "Water Quality",
       "title": "Critical TDS Level - High Dissolved Mineral Ingress",
-      "message": "Purifier output TDS reached 536.0 ppm, crossing the critical limit (500.0 ppm). Water contains excessive dissolved mineral content. Immediate filtration check is advised.",
-      "reason": "Measured TDS (536.0 ppm) exceeded critical limit (500.0 ppm). 24h historical average is 274.9 ppm with a degrading trend.",
+      "message": "Purifier output TDS reached 590.0 ppm, crossing the critical limit (500.0 ppm). Water contains excessive dissolved mineral content. Immediate filtration check is advised.",
+      "reason": "Measured TDS (590.0 ppm) exceeded critical limit (500.0 ppm). 24h historical average is 277.9 ppm with a degrading trend.",
       "source_factors": [
         "current_reading",
         "historical_analytics",
@@ -2531,11 +2600,11 @@
         "If TDS remains elevated above 500 ppm after flush, service RO membrane cartridge."
       ],
       "parameter": "TDS",
-      "current_value": 536.0,
+      "current_value": 590.0,
       "threshold_or_baseline": "> 500.0 ppm",
       "is_dismissed": false,
       "dismissed_at": null,
-      "occurrence_count": 6,
+      "occurrence_count": 7,
       "deduplication_key": "water_quality:tds:critical:excessive_dissolved_solids",
       "related_alert_id": "5729c135-2137-428b-aa64-2d749ed9e7f7"
     },
@@ -2567,6 +2636,35 @@
       "occurrence_count": 3,
       "deduplication_key": "water_quality:ph:critical:alkaline_balance",
       "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
+    },
+    {
+      "_id": "445e89ec-75cf-401b-b336-887efeca999a",
+      "id": "445e89ec-75cf-401b-b336-887efeca999a",
+      "created_at": "2026-11-04T06:46:50.986846+00:00",
+      "last_updated_at": "2026-11-04T06:46:50.986846+00:00",
+      "priority": "Informational",
+      "category": "Routine Advisory",
+      "title": "Optimal Drinking Water Quality & Stable Operation",
+      "message": "All monitored parameters (TDS: 170.0 ppm, pH: 7.35, Turbidity: 1.2) and purifier filter stages (100.0% health) are operating within target drinking specifications.",
+      "reason": "Instantaneous telemetry is Normal. 24h trend direction is degrading. Filter health condition is Optimal. Next routine service projected for 2027-05-03.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics",
+        "filter_health"
+      ],
+      "action": "Continue standard purifier operation and regular hydration.",
+      "action_steps": [
+        "Maintain consistent domestic purifier operating flow.",
+        "Next routine preventative service projected for 2027-05-03."
+      ],
+      "parameter": "Composite Quality",
+      "current_value": 100.0,
+      "threshold_or_baseline": "Optimal Target Profile",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "routine_advisory:water_quality:informational:optimal_purity_assurance",
+      "related_alert_id": null
     }
   ],
   "recommendation_history_log": [
@@ -2895,6 +2993,35 @@
       "occurrence_count": 1,
       "deduplication_key": "water_quality:ph:critical:alkaline_balance",
       "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
+    },
+    {
+      "_id": "445e89ec-75cf-401b-b336-887efeca999a",
+      "id": "445e89ec-75cf-401b-b336-887efeca999a",
+      "created_at": "2026-11-04T06:46:50.986846+00:00",
+      "last_updated_at": "2026-11-04T06:46:50.986846+00:00",
+      "priority": "Informational",
+      "category": "Routine Advisory",
+      "title": "Optimal Drinking Water Quality & Stable Operation",
+      "message": "All monitored parameters (TDS: 170.0 ppm, pH: 7.35, Turbidity: 1.2) and purifier filter stages (100.0% health) are operating within target drinking specifications.",
+      "reason": "Instantaneous telemetry is Normal. 24h trend direction is degrading. Filter health condition is Optimal. Next routine service projected for 2027-05-03.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics",
+        "filter_health"
+      ],
+      "action": "Continue standard purifier operation and regular hydration.",
+      "action_steps": [
+        "Maintain consistent domestic purifier operating flow.",
+        "Next routine preventative service projected for 2027-05-03."
+      ],
+      "parameter": "Composite Quality",
+      "current_value": 100.0,
+      "threshold_or_baseline": "Optimal Target Profile",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "routine_advisory:water_quality:informational:optimal_purity_assurance",
+      "related_alert_id": null
     }
   ],
   "notifications": [
@@ -3103,11 +3230,11 @@
       "reading_value": 100.0,
       "threshold_value": "Telemetry Trend Anomaly",
       "suggested_action": "RECOMMENDED: Inspect pre-filter mesh and verify raw input water parameters.",
-      "is_read": false,
+      "is_read": true,
       "read_at": null,
-      "is_acknowledged": false,
-      "acknowledged_at": null,
-      "acknowledged_by": null,
+      "is_acknowledged": true,
+      "acknowledged_at": "2026-11-04T06:46:51.133713+00:00",
+      "acknowledged_by": "Alert Sync",
       "occurrence_count": 1,
       "deduplication_key": "filter maintenance:filter health:warning:filter water quality stress wa",
       "related_alert_id": "58a11b74-0155-4763-890e-38bc1bd313c2",
@@ -3161,6 +3288,30 @@
       "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a",
       "related_recommendation_id": "088b21d1-7aaa-456d-a9d5-0b7a6f62f72c",
       "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "7809b98c-bbe5-418a-b044-33591c1b302e",
+      "id": "7809b98c-bbe5-418a-b044-33591c1b302e",
+      "created_at": "2026-11-04T06:46:51.144718+00:00",
+      "updated_at": "2026-11-04T06:46:51.144718+00:00",
+      "title": "Filter Water Quality Stress Warning",
+      "message": "Turbidity Surge: Recent simulated turbidity (47.51) is +554.4% relative to baseline (7.3). Indicates sediment pre-filter particulate stress.",
+      "severity": "Warning",
+      "category": "Filter Maintenance",
+      "parameter": "Filter Health",
+      "reading_value": 100.0,
+      "threshold_value": "Telemetry Trend Anomaly",
+      "suggested_action": "RECOMMENDED: Inspect pre-filter mesh and verify raw input water parameters.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter maintenance:filter health:warning:filter water quality stress wa",
+      "related_alert_id": "6ce07bab-e2d3-48fb-8bb8-dabe162b8939",
+      "related_recommendation_id": null,
+      "source_event": "alert_service"
     }
   ]
 }

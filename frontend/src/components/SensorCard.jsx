@@ -36,12 +36,12 @@ export default function SensorCard({
       <div className="atom-card-header">
         <div className="card-title-group">
           <div className="card-icon-bubble">
-            <Icon size={20} />
+            <Icon size={18} />
           </div>
           <div>
             <h3 className="card-title">{title}</h3>
             <span className="card-subtitle">
-              {type === 'turbidity' ? 'Simulated Potentiometer Scale' : 'Continuous Stream'}
+              {type === 'turbidity' ? 'Simulated Scale' : 'Continuous Stream'}
             </span>
           </div>
         </div>
@@ -50,8 +50,8 @@ export default function SensorCard({
 
       <div className="sensor-card-body">
         {type === 'tds' && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-            <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <div style={{ minWidth: 0 }}>
               <div className="sensor-value-row">
                 <span className="sensor-value">{Number(value).toFixed(1)}</span>
                 <span className="sensor-unit">{unit}</span>
@@ -60,14 +60,16 @@ export default function SensorCard({
                 Target: &lt; 300 ppm (Drinking Standard)
               </p>
             </div>
-            <CircularGauge
-              value={Number(value)}
-              max={800}
-              unit={unit}
-              label="TDS"
-              status={status}
-              size={95}
-            />
+            <div style={{ flexShrink: 0 }}>
+              <CircularGauge
+                value={Number(value)}
+                max={800}
+                unit={unit}
+                label="TDS"
+                status={status}
+                size={84}
+              />
+            </div>
           </div>
         )}
 
@@ -114,11 +116,12 @@ export default function SensorCard({
               display: 'flex',
               alignItems: 'flex-start',
               gap: '0.35rem',
-              backgroundColor: 'var(--brand-purple-subtle)',
+              backgroundColor: 'var(--brand-yellow-light)',
+              border: '1px solid var(--brand-yellow-border)',
               padding: '0.45rem 0.65rem',
-              borderRadius: 'var(--radius-sm)',
+              borderRadius: 'var(--radius-xs)',
               fontSize: '0.72rem',
-              color: 'var(--brand-primary)',
+              color: '#855d00',
               marginTop: '0.5rem'
             }}>
               <Info size={14} style={{ flexShrink: 0, marginTop: '2px' }} />
@@ -150,4 +153,3 @@ export default function SensorCard({
     </div>
   );
 }
-

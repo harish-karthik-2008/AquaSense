@@ -4,12 +4,11 @@ import {
   Play,
   Pause,
   RotateCcw,
-  Sliders,
-  Radio,
   Clock,
   Layers,
-  ArrowUp,
-  ArrowDown
+  AlertTriangle,
+  CheckCircle2,
+  ShieldCheck
 } from 'lucide-react';
 import LiveLineChart from '../charts/LiveLineChart';
 import SensorCard from '../components/SensorCard';
@@ -19,92 +18,97 @@ export default function LiveMonitoring({
   latestReading = null,
   previousReading = null,
   recentReadings = [],
+  activeAlerts = [],
   deviceStatus = {},
   settings = {},
   isPaused = false,
   onTogglePause = () => {},
-  onClearBuffer = () => {}
+  onClearBuffer = () => {},
+  onAcknowledgeAlert = () => {}
 }) {
-  const [activeMetric, setActiveMetric] = useState('all'); // 'all' | 'tds' | 'ph' | 'turbidity'
-
   const currentTds = latestReading?.tds ?? 165.0;
   const currentPh = latestReading?.ph ?? 7.35;
   const currentTurbidity = latestReading?.turbidity ?? 1.4;
 
   const isOnline = deviceStatus?.is_online ?? false;
+  const lastSeen = latestReading?.timestamp || deviceStatus?.last_seen;
+
+  const formatTime = (ts) => {
+    if (!ts) return 'Awaiting data';
+    try {
+      const dt = new Date(ts);
+      return dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch {
+      return ts;
+    }
+  };
 
   return (
     <div>
-      {/* Page Header Bar */}
-      <div style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 'var(--radius-lg)',
-        padding: '1.25rem 1.75rem',
-        border: '1px solid var(--border-light)',
-        boxShadow: 'var(--shadow-card)',
-        marginBottom: '1.75rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '1rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{
-            width: 42,
-            height: 42,
-            borderRadius: 'var(--radius-md)',
-            background: 'var(--brand-gradient)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fff'
-          }}>
-            <Activity size={22} />
+      {/* 1. Header Bar */}
+      <div className="dashboard-header-card">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
+          <div className="brand-logo-icon" style={{ width: 36, height: 36, borderRadius: 'var(--radius-xs)' }}>
+            <Activity size={20} color="#000000" />
           </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--brand-primary)' }}>
-                Live Water Quality Cockpit
+          <div style={{ minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#000000' }}>
+                Live Sensor Telemetry
               </h2>
               <span className={`status-pill ${isOnline ? 'normal' : 'critical'}`}>
                 <span className={`status-dot ${isOnline ? 'online' : 'offline'}`} />
-                {isOnline ? 'Live Socket Stream' : 'Disconnected'}
+                {isOnline ? 'Live WebSocket' : 'Disconnected'}
               </span>
             </div>
             <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-              Direct WebSocket stream receiving simulated potentiometer inputs from ESP32.
+              Real-time data streaming directly from simulated Wokwi ESP32 potentiometers.
             </p>
           </div>
         </div>
 
-        {/* Streaming Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Timestamp & Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            fontSize: '0.76rem',
+            color: 'var(--text-secondary)',
+            padding: '0.35rem 0.65rem',
+            backgroundColor: '#FAFAFA',
+            border: '1px solid var(--border-light)',
+            borderRadius: 'var(--radius-xs)'
+          }}>
+            <Clock size={12} />
+            <span>Latest: {formatTime(lastSeen)}</span>
+          </div>
+
           <button
             className={`atom-btn ${isPaused ? 'atom-btn-primary' : 'atom-btn-secondary'} atom-btn-sm`}
             onClick={onTogglePause}
             title={isPaused ? "Resume real-time data plotting" : "Pause incoming plot updates"}
           >
-            {isPaused ? <Play size={14} /> : <Pause size={14} />}
-            <span>{isPaused ? 'Resume Stream' : 'Pause Stream'}</span>
+            {isPaused ? <Play size={13} /> : <Pause size={13} />}
+            <span>{isPaused ? 'Resume' : 'Pause'}</span>
           </button>
 
           <button
-            className="atom-btn atom-btn-outline atom-btn-sm"
+            className="atom-btn atom-btn-secondary atom-btn-sm"
             onClick={onClearBuffer}
             title="Clear live chart data points buffer"
           >
-            <RotateCcw size={14} />
-            <span>Reset Buffer</span>
+            <RotateCcw size={13} />
+            <span>Clear Buffer</span>
           </button>
         </div>
       </div>
 
-      {/* THREE LIVE SENSOR CARDS */}
+      {/* 2. Three Live Sensor Cards */}
       <div className="sensor-card-grid">
         <SensorCard
           type="tds"
-          title="TDS – Total Dissolved Solids"
+          title="Live TDS"
           value={currentTds}
           unit="ppm"
           status={latestReading?.tds_status || 'Normal'}
@@ -115,18 +119,18 @@ export default function LiveMonitoring({
 
         <SensorCard
           type="ph"
-          title="pH – Acidity & Alkalinity"
+          title="Live pH"
           value={currentPh}
           unit="pH"
           status={latestReading?.ph_status || 'Normal'}
           previousValue={previousReading?.ph}
-          thresholdText={`Safe: ${settings?.ph_min_acceptable || 6.5} - ${settings?.ph_max_acceptable || 8.5}`}
+          thresholdText={`Range: ${settings?.ph_min_acceptable || 6.5} - ${settings?.ph_max_acceptable || 8.5}`}
           settings={settings}
         />
 
         <SensorCard
           type="turbidity"
-          title="Turbidity (Simulated Scale)"
+          title="Live Turbidity (Simulated)"
           value={currentTurbidity}
           unit=""
           status={latestReading?.turbidity_status || 'Normal'}
@@ -137,139 +141,187 @@ export default function LiveMonitoring({
         />
       </div>
 
-      {/* LIVE INTERACTIVE CHART SECTION */}
-      <div className="atom-card" style={{ marginBottom: '2rem' }}>
-        <div className="atom-card-header" style={{ flexWrap: 'wrap', gap: '1rem' }}>
-          <div>
-            <h3 className="card-title">Real-Time Waveform Monitor</h3>
-            <p className="card-subtitle">
-              Displaying last {recentReadings.length} readings received over WebSocket
-            </p>
+      {/* 3. Three Dynamically Updating Charts */}
+      <div className="live-charts-grid">
+        {/* Chart 1: TDS Live */}
+        <div className="atom-card">
+          <div className="atom-card-header" style={{ marginBottom: '0.5rem' }}>
+            <div>
+              <h4 className="card-title" style={{ fontSize: '0.9rem' }}>TDS Waveform (ppm)</h4>
+              <span className="card-subtitle">Real-time salt & mineral rejection</span>
+            </div>
+            <span style={{ fontWeight: 800, color: '#000000', fontSize: '1rem' }}>
+              {Number(currentTds).toFixed(1)} <small style={{ fontSize: '0.7rem', color: '#666' }}>ppm</small>
+            </span>
           </div>
-
-          {/* Metric Selector Tabs */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            backgroundColor: 'var(--bg-subtle)',
-            padding: '0.25rem',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--border-light)'
-          }}>
-            {[
-              { id: 'all', label: 'All Parameters' },
-              { id: 'tds', label: 'TDS Only' },
-              { id: 'ph', label: 'pH Only' },
-              { id: 'turbidity', label: 'Turbidity Only' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveMetric(tab.id)}
-                style={{
-                  padding: '0.35rem 0.75rem',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  color: activeMetric === tab.id ? 'var(--brand-primary)' : 'var(--text-secondary)',
-                  backgroundColor: activeMetric === tab.id ? '#FFFFFF' : 'transparent',
-                  boxShadow: activeMetric === tab.id ? '0 1px 4px rgba(0,0,0,0.06)' : 'none',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <LiveLineChart data={recentReadings} activeMetric="tds" height={210} showLegend={false} />
         </div>
 
-        <LiveLineChart data={recentReadings} activeMetric={activeMetric} />
+        {/* Chart 2: pH Live */}
+        <div className="atom-card">
+          <div className="atom-card-header" style={{ marginBottom: '0.5rem' }}>
+            <div>
+              <h4 className="card-title" style={{ fontSize: '0.9rem' }}>pH Level Waveform</h4>
+              <span className="card-subtitle">Acidity & alkalinity monitoring</span>
+            </div>
+            <span style={{ fontWeight: 800, color: '#10B981', fontSize: '1rem' }}>
+              {Number(currentPh).toFixed(2)} <small style={{ fontSize: '0.7rem', color: '#666' }}>pH</small>
+            </span>
+          </div>
+          <LiveLineChart data={recentReadings} activeMetric="ph" height={210} showLegend={false} />
+        </div>
+
+        {/* Chart 3: Turbidity Live */}
+        <div className="atom-card">
+          <div className="atom-card-header" style={{ marginBottom: '0.5rem' }}>
+            <div>
+              <h4 className="card-title" style={{ fontSize: '0.9rem' }}>Turbidity (Simulated)</h4>
+              <span className="card-subtitle">Suspended particle clarity index</span>
+            </div>
+            <span style={{ fontWeight: 800, color: '#D97706', fontSize: '1rem' }}>
+              {Number(currentTurbidity).toFixed(1)} <small style={{ fontSize: '0.7rem', color: '#666' }}>(sim)</small>
+            </span>
+          </div>
+          <LiveLineChart data={recentReadings} activeMetric="turbidity" height={210} showLegend={false} />
+        </div>
       </div>
 
-      {/* LIVE EVENT FEED & RAW DATA LOG */}
-      <div className="atom-card">
-        <div className="atom-card-header">
-          <div>
-            <h3 className="card-title">Live Sensor Ingestion Stream</h3>
-            <p className="card-subtitle">
-              Raw telemetry packets logged in MongoDB as received from ESP32
-            </p>
+      {/* 4. Bottom Section: Latest Readings Table & Live Active Alerts */}
+      <div className="live-bottom-grid">
+        {/* Latest Sensor Readings Table */}
+        <div className="atom-card">
+          <div className="atom-card-header">
+            <div>
+              <h3 className="card-title">Latest Sensor Stream Log</h3>
+              <p className="card-subtitle">Incoming packets received from ESP32</p>
+            </div>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+              Last {Math.min(recentReadings.length, 8)} samples
+            </span>
           </div>
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            Showing latest {Math.min(recentReadings.length, 12)} events
-          </span>
+
+          <div className="atom-table-wrapper">
+            <table className="atom-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>TDS (ppm)</th>
+                  <th>pH</th>
+                  <th>Turbidity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentReadings.slice(-8).reverse().map((r, i) => {
+                  const time = new Date(r.timestamp).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                  });
+                  return (
+                    <tr key={r.id || r._id || i}>
+                      <td style={{ fontFamily: 'monospace', color: 'var(--text-secondary)' }}>{time}</td>
+                      <td style={{ fontWeight: 700, color: '#000000' }}>{Number(r.tds).toFixed(1)}</td>
+                      <td style={{ fontWeight: 700, color: '#10B981' }}>{Number(r.ph).toFixed(2)}</td>
+                      <td style={{ fontWeight: 700, color: '#D97706' }}>{Number(r.turbidity).toFixed(1)}</td>
+                      <td><StatusBadge status={r.overall_status || 'Normal'} /></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div className="atom-table-wrapper">
-          <table className="atom-table">
-            <thead>
-              <tr>
-                <th>Timestamp</th>
-                <th>Device ID</th>
-                <th>TDS (ppm)</th>
-                <th>pH</th>
-                <th>Turbidity (Simulated)</th>
-                <th>Water Purity</th>
-                <th>AI Anomaly</th>
-                <th>Overall Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentReadings.slice(-12).reverse().map((reading, index) => {
-                const tsFormatted = new Date(reading.timestamp).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit'
-                });
+        {/* Live Active Alerts Panel (Requested for Live Monitoring page too!) */}
+        <div className="atom-card" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className="atom-card-header">
+            <div className="card-title-group">
+              <div className="card-icon-bubble" style={{ 
+                backgroundColor: activeAlerts.length > 0 ? 'var(--status-critical-bg)' : 'var(--status-normal-bg)',
+                borderColor: activeAlerts.length > 0 ? 'var(--status-critical-border)' : 'var(--status-normal-border)'
+              }}>
+                <AlertTriangle size={18} color={activeAlerts.length > 0 ? 'var(--status-critical)' : 'var(--status-normal)'} />
+              </div>
+              <div>
+                <h3 className="card-title">Active Alerts</h3>
+                <span className="card-subtitle">
+                  {activeAlerts.length} unresolved condition(s)
+                </span>
+              </div>
+            </div>
+          </div>
 
-                return (
-                  <tr key={reading.id || reading._id || index}>
-                    <td style={{ fontFamily: 'monospace', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                      {tsFormatted}
-                    </td>
-                    <td>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        backgroundColor: 'var(--bg-subtle)',
-                        padding: '0.2rem 0.5rem',
-                        borderRadius: 'var(--radius-xs)',
-                        color: 'var(--brand-primary)'
-                      }}>
-                        {reading.device_id || 'AquaSense-ESP32'}
-                      </span>
-                    </td>
-                    <td style={{ fontWeight: 700, color: '#7B2CBF' }}>
-                      {Number(reading.tds).toFixed(1)}
-                    </td>
-                    <td style={{ fontWeight: 700, color: '#059669' }}>
-                      {Number(reading.ph).toFixed(2)}
-                    </td>
-                    <td style={{ fontWeight: 700, color: '#D97706' }}>
-                      {Number(reading.turbidity).toFixed(1)}
-                    </td>
-                    <td style={{ fontWeight: 700 }}>
-                      {reading.water_quality_score || 95}%
-                    </td>
-                    <td>
-                      {reading.anomaly_detected ? (
-                        <span className="status-pill warning" style={{ fontSize: '0.68rem', padding: '0.2rem 0.45rem' }}>
-                          Deviation
+          <div style={{ flex: 1, overflowY: 'auto', maxHeight: '280px' }}>
+            {activeAlerts.length === 0 ? (
+              <div className="empty-state-box" style={{ padding: '2rem 1rem' }}>
+                <div className="empty-state-icon" style={{ backgroundColor: 'var(--status-normal-bg)', color: 'var(--status-normal)', width: 40, height: 40 }}>
+                  <ShieldCheck size={24} />
+                </div>
+                <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: '#065f46', marginBottom: '0.2rem' }}>
+                  No Active Alerts
+                </h4>
+                <p style={{ fontSize: '0.76rem', color: '#047857' }}>
+                  All simulated water parameters are within acceptable thresholds.
+                </p>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                {activeAlerts.map((alert) => (
+                  <div
+                    key={alert.id}
+                    className={`alert-item-card ${alert.severity === 'Critical' ? 'critical' : 'warning'}`}
+                    style={{ padding: '0.75rem 0.95rem', marginBottom: 0 }}
+                  >
+                    <div className="alert-body">
+                      <div className="alert-top">
+                        <div className="alert-headline">
+                          <span className="alert-title-text">{alert.title}</span>
+                          <StatusBadge status={alert.severity} />
+                        </div>
+                        <span className="alert-time-text">
+                          {new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
-                      ) : (
-                        <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>Normal</span>
+                      </div>
+
+                      <p className="alert-desc-text" style={{ marginBottom: '0.35rem' }}>
+                        {alert.message}
+                      </p>
+
+                      <div className="alert-metrics-line" style={{ marginBottom: '0.35rem' }}>
+                        <span>Parameter: <b>{alert.parameter}</b></span>
+                        {alert.reading_value !== null && alert.reading_value !== undefined && (
+                          <span>Reading: <b>{alert.reading_value}</b></span>
+                        )}
+                        {alert.threshold_value && (
+                          <span>Limit: <b>{alert.threshold_value}</b></span>
+                        )}
+                      </div>
+
+                      {alert.suggested_action && (
+                        <div className="alert-action-line" style={{ marginBottom: '0.45rem' }}>
+                          <b>Action:</b> {alert.suggested_action}
+                        </div>
                       )}
-                    </td>
-                    <td>
-                      <StatusBadge status={reading.overall_status || 'Normal'} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <button
+                          className="atom-btn atom-btn-outline atom-btn-sm"
+                          onClick={() => onAcknowledgeAlert(alert.id)}
+                          style={{ padding: '0.2rem 0.55rem', fontSize: '0.7rem' }}
+                        >
+                          <CheckCircle2 size={12} />
+                          <span>Acknowledge</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
-

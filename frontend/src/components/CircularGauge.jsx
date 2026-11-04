@@ -6,9 +6,9 @@ export default function CircularGauge({
   unit = 'ppm', 
   label = 'TDS', 
   status = 'Normal',
-  size = 110 
+  size = 96 
 }) {
-  const strokeWidth = 10;
+  const strokeWidth = 8;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   
@@ -16,9 +16,9 @@ export default function CircularGauge({
   const progress = (clamped / max) * circumference;
   const strokeDashoffset = circumference - progress;
 
-  let strokeColor = '#10B981'; // normal
-  if (status.toLowerCase() === 'warning') strokeColor = '#F59E0B';
-  if (status.toLowerCase() === 'critical') strokeColor = '#EF4444';
+  let strokeColor = '#10B981'; // normal subtle green
+  if (status.toLowerCase() === 'warning') strokeColor = '#F59E0B'; // amber
+  if (status.toLowerCase() === 'critical') strokeColor = '#EF4444'; // red
 
   return (
     <div style={{ position: 'relative', width: size, height: size, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -28,7 +28,7 @@ export default function CircularGauge({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="#E5E8F0"
+          stroke="#E5E5E5"
           strokeWidth={strokeWidth}
           fill="none"
         />
@@ -43,18 +43,17 @@ export default function CircularGauge({
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
           fill="none"
-          style={{ transition: 'stroke-dashoffset 0.5s ease, stroke 0.3s ease' }}
+          style={{ transition: 'stroke-dashoffset 0.4s ease' }}
         />
       </svg>
       <div style={{ position: 'absolute', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--brand-primary)', lineHeight: 1 }}>
+        <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#000000', lineHeight: 1 }}>
           {typeof value === 'number' ? (value % 1 === 0 ? value : value.toFixed(1)) : value}
         </span>
-        <span style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+        <span style={{ fontSize: '0.65rem', fontWeight: 600, color: '#666666', marginTop: '2px' }}>
           {unit}
         </span>
       </div>
     </div>
   );
 }
-

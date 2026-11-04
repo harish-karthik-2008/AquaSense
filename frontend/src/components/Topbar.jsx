@@ -1,26 +1,14 @@
-import React, { useState } from 'react';
-import { Bell, Cpu, Clock, Layers, Sparkles } from 'lucide-react';
-import NotificationPanel from './NotificationPanel';
+import React from 'react';
+import { Clock, Layers, Menu, X } from 'lucide-react';
 
 export default function Topbar({
   activeTab = 'overview',
   deviceName = 'AquaSense ESP32',
   deviceConnected = false,
   lastReceivedTimestamp = null,
-  unreadAlertCount = 0,
-  onOpenAlerts = () => {},
-  notifications = [],
-  unreadNotificationCount = 0,
-  onMarkNotificationAsRead = () => {},
-  onMarkAllNotificationsAsRead = () => {},
-  onAcknowledgeNotification = () => {},
-  onAcknowledgeAllNotifications = () => {},
-  onClearAcknowledgedNotifications = () => {},
-  isLoadingNotifications = false
+  onToggleMobile = () => {},
+  mobileOpen = false
 }) {
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-
-  // Format relative timestamp
   const formatTime = (ts) => {
     if (!ts) return 'Awaiting initial stream';
     try {
@@ -38,23 +26,27 @@ export default function Topbar({
   };
 
   const pageTitles = {
-    overview: 'Water Quality Overview',
-    live: 'Live Sensor Telemetry',
-    analytics: 'Water Quality Analytics',
-    alerts: 'Smart Alerts & Incidents',
-    filter: 'Predictive Filter Health',
-    device: 'Device Management & Simulator',
-    settings: 'Threshold Configurations'
+    overview: 'Overview',
+    live: 'Live Monitoring',
+    analytics: 'Analytics',
+    filter: 'Filter Health'
   };
-
-  // Determine badge count (priority to unread notification count, fallback to unread alert count)
-  const displayCount = unreadNotificationCount !== undefined ? unreadNotificationCount : unreadAlertCount;
 
   return (
     <header className="topbar">
-      {/* Left: Breadcrumbs & Title */}
+      {/* Left: Mobile Hamburger Toggle + Breadcrumb/Title */}
       <div className="topbar-left">
-        <div>
+        <button
+          type="button"
+          className="mobile-menu-btn"
+          onClick={onToggleMobile}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          title={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+        >
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
+        <div className="topbar-title-group">
           <div className="page-breadcrumb">
             <span>AquaSense AI</span>
             <span>/</span>
@@ -64,65 +56,26 @@ export default function Topbar({
         </div>
       </div>
 
-      {/* Right: Device Status, Simulation Pill, Notifications, Profile */}
+      {/* Right: Simulation Mode, Device Status, Timestamp */}
       <div className="topbar-right">
-        {/* Simulation Mode Badge */}
+        {/* Simulation Mode Indicator */}
         <div className="simulation-mode-badge" title="Data is originating from Wokwi ESP32 Potentiometer Simulation">
           <Layers className="simulation-icon" />
-          <span>Simulation Mode (Wokwi)</span>
+          <span className="badge-text-full">Simulation Mode (Wokwi)</span>
+          <span className="badge-text-compact">Wokwi Sim</span>
         </div>
 
         {/* Device Status */}
         <div className="topbar-device-pill" title={`Connected to ${deviceName}`}>
           <span className={`status-dot ${deviceConnected ? 'online' : 'offline'}`} />
-          <span>{deviceName}</span>
+          <span className="device-name-full">{deviceName}</span>
+          <span className="device-name-compact">{deviceConnected ? 'Online' : 'Offline'}</span>
         </div>
 
-        {/* Timestamp */}
+        {/* Last Updated Timestamp */}
         <div className="topbar-timestamp" title="Last Sensor Data Telemetry">
-          <Clock size={14} />
+          <Clock size={13} />
           <span>{formatTime(lastReceivedTimestamp)}</span>
-        </div>
-
-        {/* Notifications Bell & Dropdown */}
-        <div className="topbar-bell-wrapper" style={{ position: 'relative' }}>
-          <button
-            className="topbar-btn notification-bell-btn"
-            onClick={() => setIsNotificationsOpen((prev) => !prev)}
-            title={displayCount > 0 ? `${displayCount} unread notifications` : 'Notifications'}
-          >
-            <Bell size={18} />
-            {displayCount > 0 && (
-              <span className="topbar-badge-count">
-                {displayCount > 99 ? '99+' : displayCount}
-              </span>
-            )}
-          </button>
-
-          <NotificationPanel
-            isOpen={isNotificationsOpen}
-            onClose={() => setIsNotificationsOpen(false)}
-            notifications={notifications}
-            unreadCount={unreadNotificationCount}
-            onMarkAsRead={onMarkNotificationAsRead}
-            onMarkAllAsRead={onMarkAllNotificationsAsRead}
-            onAcknowledge={onAcknowledgeNotification}
-            onAcknowledgeAll={onAcknowledgeAllNotifications}
-            onClearAcknowledged={onClearAcknowledgedNotifications}
-            onViewAllAlerts={onOpenAlerts}
-            isLoading={isLoadingNotifications}
-          />
-        </div>
-
-        {/* User Profile */}
-        <div className="topbar-user">
-          <div className="user-avatar" title="Atomberg QA Engineer">
-            AQ
-          </div>
-          <div className="user-info">
-            <span className="user-name">Atomberg Lab</span>
-            <span className="user-role">Purifier Track 2</span>
-          </div>
         </div>
       </div>
     </header>

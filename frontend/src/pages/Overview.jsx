@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  Droplet,
   ShieldCheck,
   AlertTriangle,
-  Clock,
-  Sparkles,
   ArrowRight,
-  TrendingUp,
-  Cpu
+  Clock,
+  Layers,
+  Cpu,
+  CheckCircle2
 } from 'lucide-react';
 import SensorCard from '../components/SensorCard';
 import LiveLineChart from '../charts/LiveLineChart';
@@ -21,7 +20,8 @@ export default function Overview({
   deviceStatus = {},
   filterHealth = {},
   settings = {},
-  onNavigate = () => {}
+  onNavigate = () => {},
+  onAcknowledgeAlert = () => {}
 }) {
   const currentTds = latestReading?.tds ?? 165.0;
   const currentPh = latestReading?.ph ?? 7.35;
@@ -31,128 +31,75 @@ export default function Overview({
   const prevPh = previousReading?.ph ?? null;
   const prevTurbidity = previousReading?.turbidity ?? null;
 
-  const wqi = latestReading?.water_quality_score ?? 96.0;
   const overallStatus = latestReading?.overall_status ?? 'Normal';
   const isOnline = deviceStatus?.is_online ?? false;
+  const lastSeen = latestReading?.timestamp || deviceStatus?.last_seen;
+
+  const formatTime = (ts) => {
+    if (!ts) return 'Awaiting data';
+    try {
+      const dt = new Date(ts);
+      return dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch {
+      return ts;
+    }
+  };
 
   // Threshold labels
   const tdsThresholdText = `Threshold: < ${settings?.tds_warning_threshold || 300} ppm`;
   const phThresholdText = `Range: ${settings?.ph_min_acceptable || 6.5} - ${settings?.ph_max_acceptable || 8.5}`;
   const turbThresholdText = `Threshold: < ${settings?.turbidity_warning_threshold || 5.0} (sim)`;
 
-  // Filter overall condition
-  const filterCondition = filterHealth?.overall_condition_pct ?? 78.0;
-
   return (
     <div>
-      {/* Welcome & System Summary Bar */}
-      <div style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 'var(--radius-lg)',
-        padding: '1.5rem 1.75rem',
-        border: '1px solid var(--border-light)',
-        boxShadow: 'var(--shadow-card)',
-        marginBottom: '2rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '1.25rem'
-      }}>
+      {/* 1. Header Overview Bar */}
+      <div className="dashboard-header-card">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.35rem' }}>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--brand-primary)', letterSpacing: '-0.02em' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.25rem', flexWrap: 'wrap' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#000000', letterSpacing: '-0.02em' }}>
               Water Quality Overview
             </h2>
             <StatusBadge status={overallStatus} />
           </div>
-          <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
-            Real-time multi-stage purifier telemetry monitored by AquaSense AI ecosystem.
+          <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            Real-time water quality monitoring powered by AquaSense AI.
           </p>
         </div>
 
-        {/* Quick Summary Metrics */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.75rem', flexWrap: 'wrap' }}>
-          {/* Water Quality Index */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              width: 44,
-              height: 44,
-              borderRadius: 'var(--radius-md)',
-              background: 'var(--brand-gradient-purple)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#fff'
-            }}>
-              <ShieldCheck size={24} />
-            </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.3rem' }}>
-                <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--brand-primary)' }}>
-                  {wqi}
-                </span>
-                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>/ 100</span>
-              </div>
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-                Water Purity Index
-              </span>
-            </div>
+        {/* Status Indicators */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+          {/* Device Connection Status */}
+          <div className="topbar-device-pill">
+            <span className={`status-dot ${isOnline ? 'online' : 'offline'}`} />
+            <span>{isOnline ? 'ESP32 Connected' : 'ESP32 Offline'}</span>
           </div>
 
-          {/* Purifier Filter Health */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              width: 44,
-              height: 44,
-              borderRadius: 'var(--radius-md)',
-              background: 'var(--brand-purple-subtle)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--brand-accent)'
-            }}>
-              <Droplet size={22} />
-            </div>
-            <div>
-              <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--brand-primary)' }}>
-                {filterCondition}%
-              </span>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-                Filter Health Condition
-              </div>
-            </div>
+          {/* Simulation Mode Indicator */}
+          <div className="simulation-mode-badge">
+            <Layers className="simulation-icon" />
+            <span>Simulation Mode (Wokwi)</span>
           </div>
 
-          {/* Device Connectivity */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              width: 44,
-              height: 44,
-              borderRadius: 'var(--radius-md)',
-              background: isOnline ? 'var(--status-normal-bg)' : 'var(--status-critical-bg)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: isOnline ? 'var(--status-normal)' : 'var(--status-critical)'
-            }}>
-              <Cpu size={22} />
-            </div>
-            <div>
-              <span style={{ fontSize: '1rem', fontWeight: 700, color: isOnline ? '#065f46' : '#991b1b' }}>
-                {isOnline ? 'Online (ESP32)' : 'Offline'}
-              </span>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-                {isOnline ? 'Active Stream' : 'Awaiting Heartbeat'}
-              </div>
-            </div>
+          {/* Last Updated Timestamp */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            fontSize: '0.76rem',
+            color: 'var(--text-secondary)',
+            padding: '0.3rem 0.65rem',
+            backgroundColor: '#FAFAFA',
+            border: '1px solid var(--border-light)',
+            borderRadius: 'var(--radius-xs)'
+          }}>
+            <Clock size={12} />
+            <span>Updated: {formatTime(lastSeen)}</span>
           </div>
         </div>
       </div>
 
-      {/* THREE LARGE SENSOR CARDS */}
+      {/* 2. Three Sensor Summary Cards */}
       <div className="sensor-card-grid">
-        {/* CARD 1: TDS */}
         <SensorCard
           type="tds"
           title="TDS – Total Dissolved Solids"
@@ -164,7 +111,6 @@ export default function Overview({
           settings={settings}
         />
 
-        {/* CARD 2: pH */}
         <SensorCard
           type="ph"
           title="pH – Acidity & Alkalinity"
@@ -176,7 +122,6 @@ export default function Overview({
           settings={settings}
         />
 
-        {/* CARD 3: TURBIDITY */}
         <SensorCard
           type="turbidity"
           title="Turbidity (Simulated Scale)"
@@ -190,119 +135,115 @@ export default function Overview({
         />
       </div>
 
-      {/* QUICK TRENDS & LIVE PREVIEW */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
-        {/* Real-time Mini Trend Chart */}
+      {/* 3. Small Water-Quality Trend Chart & Latest Alerts Section */}
+      <div className="overview-grid-split">
+        {/* Small Water Quality Trend Chart */}
         <div className="atom-card">
           <div className="atom-card-header">
             <div>
-              <h3 className="card-title">Live Water Quality Trend</h3>
-              <p className="card-subtitle">Real-time incoming readings from ESP32 simulator</p>
+              <h3 className="card-title">Water Quality Trend</h3>
+              <p className="card-subtitle">Real-time incoming telemetry from ESP32</p>
             </div>
             <button 
-              className="atom-btn atom-btn-outline atom-btn-sm"
+              className="atom-btn atom-btn-secondary atom-btn-sm"
               onClick={() => onNavigate('live')}
             >
-              Full Live View <ArrowRight size={13} />
+              Live Telemetry <ArrowRight size={13} />
             </button>
           </div>
-          <LiveLineChart data={recentReadings.slice(-15)} activeMetric="all" />
+
+          <LiveLineChart data={recentReadings.slice(-15)} activeMetric="all" height={260} />
         </div>
 
-        {/* Active Alerts & System Health Quick Widget */}
-        <div className="atom-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <div className="atom-card-header">
-              <div className="card-title-group">
-                <div className="card-icon-bubble" style={{ color: activeAlerts.length > 0 ? 'var(--status-critical)' : 'var(--status-normal)' }}>
-                  <AlertTriangle size={20} />
-                </div>
-                <div>
-                  <h3 className="card-title">Active Alerts</h3>
-                  <span className="card-subtitle">{activeAlerts.length} requires attention</span>
-                </div>
-              </div>
-              <button 
-                className="atom-btn atom-btn-outline atom-btn-sm"
-                onClick={() => onNavigate('alerts')}
-              >
-                View All
-              </button>
-            </div>
-
-            {activeAlerts.length === 0 ? (
-              <div style={{
-                textAlign: 'center',
-                padding: '2rem 1rem',
-                backgroundColor: 'var(--status-normal-bg)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--status-normal-border)',
-                marginTop: '0.5rem'
+        {/* Latest Alerts Section (Integrated directly on Overview) */}
+        <div className="atom-card" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className="atom-card-header">
+            <div className="card-title-group">
+              <div className="card-icon-bubble" style={{ 
+                backgroundColor: activeAlerts.length > 0 ? 'var(--status-critical-bg)' : 'var(--status-normal-bg)',
+                borderColor: activeAlerts.length > 0 ? 'var(--status-critical-border)' : 'var(--status-normal-border)'
               }}>
-                <ShieldCheck size={36} color="var(--status-normal)" style={{ margin: '0 auto 0.5rem' }} />
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#065f46', marginBottom: '0.2rem' }}>
+                <AlertTriangle size={18} color={activeAlerts.length > 0 ? 'var(--status-critical)' : 'var(--status-normal)'} />
+              </div>
+              <div>
+                <h3 className="card-title">Latest Alerts</h3>
+                <span className="card-subtitle">
+                  {activeAlerts.length > 0 ? `${activeAlerts.length} active notification(s)` : 'System normal'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ flex: 1, overflowY: 'auto', maxHeight: '290px' }}>
+            {activeAlerts.length === 0 ? (
+              <div className="empty-state-box" style={{ padding: '2rem 1rem' }}>
+                <div className="empty-state-icon" style={{ backgroundColor: 'var(--status-normal-bg)', color: 'var(--status-normal)', width: 40, height: 40 }}>
+                  <ShieldCheck size={24} />
+                </div>
+                <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: '#065f46', marginBottom: '0.2rem' }}>
                   All Parameters Normal
                 </h4>
-                <p style={{ fontSize: '0.78rem', color: '#047857' }}>
-                  TDS, pH, and simulated turbidity are within safe drinking guidelines.
+                <p style={{ fontSize: '0.76rem', color: '#047857' }}>
+                  TDS, pH, and turbidity values are within safe acceptable drinking thresholds.
                 </p>
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
-                {activeAlerts.slice(0, 2).map((alert) => (
-                  <div key={alert.id} style={{
-                    padding: '0.75rem',
-                    borderRadius: 'var(--radius-md)',
-                    backgroundColor: alert.severity === 'Critical' ? 'var(--status-critical-bg)' : 'var(--status-warning-bg)',
-                    border: `1px solid ${alert.severity === 'Critical' ? 'var(--status-critical-border)' : 'var(--status-warning-border)'}`,
-                    fontSize: '0.8rem'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                      <span style={{ fontWeight: 700, color: alert.severity === 'Critical' ? '#991b1b' : '#92400e' }}>
-                        {alert.title}
-                      </span>
-                      <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                        {new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                {activeAlerts.slice(0, 3).map((alert) => (
+                  <div
+                    key={alert.id}
+                    className={`alert-item-card ${alert.severity === 'Critical' ? 'critical' : 'warning'}`}
+                    style={{ padding: '0.75rem 0.95rem', marginBottom: 0 }}
+                  >
+                    <div className="alert-body">
+                      <div className="alert-top">
+                        <div className="alert-headline">
+                          <span className="alert-title-text">{alert.title}</span>
+                          <StatusBadge status={alert.severity} />
+                        </div>
+                        <span className="alert-time-text">
+                          {new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+
+                      <p className="alert-desc-text" style={{ marginBottom: '0.35rem' }}>
+                        {alert.message}
+                      </p>
+
+                      <div className="alert-metrics-line" style={{ marginBottom: '0.35rem' }}>
+                        <span>Parameter: <b>{alert.parameter}</b></span>
+                        {alert.reading_value !== null && alert.reading_value !== undefined && (
+                          <span>Reading: <b>{alert.reading_value}</b></span>
+                        )}
+                        {alert.threshold_value && (
+                          <span>Limit: <b>{alert.threshold_value}</b></span>
+                        )}
+                      </div>
+
+                      {alert.suggested_action && (
+                        <div className="alert-action-line" style={{ marginBottom: '0.45rem' }}>
+                          <b>Action:</b> {alert.suggested_action}
+                        </div>
+                      )}
+
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <button
+                          className="atom-btn atom-btn-outline atom-btn-sm"
+                          onClick={() => onAcknowledgeAlert(alert.id)}
+                          style={{ padding: '0.2rem 0.55rem', fontSize: '0.7rem' }}
+                        >
+                          <CheckCircle2 size={12} />
+                          <span>Acknowledge</span>
+                        </button>
+                      </div>
                     </div>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', lineHeight: 1.3 }}>
-                      {alert.message}
-                    </p>
                   </div>
                 ))}
               </div>
             )}
-          </div>
-
-          {/* Purifier Action Prompt */}
-          <div style={{
-            marginTop: '1.25rem',
-            padding: '0.85rem',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--brand-purple-subtle)',
-            border: '1px solid var(--brand-purple-border)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
-            <div>
-              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--brand-primary)' }}>
-                Filter Health Status: {filterHealth?.overall_status || 'Optimal'}
-              </span>
-              <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
-                Stage 3 RO Membrane at {filterHealth?.stages?.[2]?.condition_pct || 89}% condition.
-              </p>
-            </div>
-            <button 
-              className="atom-btn atom-btn-primary atom-btn-sm"
-              onClick={() => onNavigate('filter')}
-            >
-              Details
-            </button>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

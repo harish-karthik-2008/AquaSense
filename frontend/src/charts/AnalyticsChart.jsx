@@ -12,7 +12,7 @@ import {
 
 export default function AnalyticsChart({
   data = [],
-  parameter = 'tds', // 'tds' | 'ph' | 'turbidity' | 'combined'
+  parameter = 'tds', // 'tds' | 'ph' | 'turbidity'
   thresholds = {}
 }) {
   const formattedData = data.map((item) => {
@@ -33,21 +33,24 @@ export default function AnalyticsChart({
     tds: {
       key: 'tds',
       name: 'TDS (ppm)',
-      color: '#7B2CBF',
+      stroke: '#000000',
+      fill: '#fdb813',
       unit: 'ppm',
       domain: [0, 'auto']
     },
     ph: {
       key: 'ph',
       name: 'pH Level',
-      color: '#059669',
+      stroke: '#10b981',
+      fill: '#a7f3d0',
       unit: 'pH',
       domain: [0, 14]
     },
     turbidity: {
       key: 'turbidity',
       name: 'Simulated Turbidity',
-      color: '#D97706',
+      stroke: '#fdb813',
+      fill: '#fef3c7',
       unit: '(sim)',
       domain: [0, 'auto']
     }
@@ -56,36 +59,36 @@ export default function AnalyticsChart({
   const curr = config[parameter] || config.tds;
 
   return (
-    <div style={{ width: '100%', height: 320 }}>
+    <div style={{ width: '100%', height: 300, minWidth: 0 }}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={formattedData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+        <AreaChart data={formattedData} margin={{ top: 10, right: 15, left: -10, bottom: 0 }}>
           <defs>
             <linearGradient id={`color-${curr.key}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={curr.color} stopOpacity={0.25} />
-              <stop offset="95%" stopColor={curr.color} stopOpacity={0.0} />
+              <stop offset="5%" stopColor={curr.fill} stopOpacity={0.4} />
+              <stop offset="95%" stopColor={curr.fill} stopOpacity={0.0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#F0F2F7" vertical={false} />
-          <XAxis dataKey="dateStr" stroke="#8A92A6" fontSize={11} dy={6} />
-          <YAxis stroke="#8A92A6" fontSize={11} domain={curr.domain} dx={-4} />
+          <CartesianGrid strokeDasharray="2 2" stroke="#EEEEEE" vertical={false} />
+          <XAxis dataKey="dateStr" stroke="#888888" fontSize={10} dy={5} />
+          <YAxis stroke="#666666" fontSize={10} domain={curr.domain} />
           <Tooltip
             contentStyle={{
               backgroundColor: '#FFFFFF',
-              borderRadius: '10px',
-              border: '1px solid #E5E8F0',
-              boxShadow: '0 8px 24px rgba(46, 8, 84, 0.1)',
-              fontSize: '0.8rem'
+              borderRadius: '6px',
+              border: '1px solid #E5E5E5',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+              fontSize: '0.78rem'
             }}
             formatter={(val) => [`${val} ${curr.unit}`, curr.name]}
             labelFormatter={(label) => `Time: ${label}`}
           />
-          <Legend wrapperStyle={{ fontSize: '0.8rem' }} />
+          <Legend wrapperStyle={{ fontSize: '0.76rem', paddingTop: '6px' }} />
           <Area
             type="monotone"
             dataKey={curr.key}
             name={curr.name}
-            stroke={curr.color}
-            strokeWidth={2.5}
+            stroke={curr.stroke}
+            strokeWidth={2}
             fillOpacity={1}
             fill={`url(#color-${curr.key})`}
           />
@@ -94,4 +97,3 @@ export default function AnalyticsChart({
     </div>
   );
 }
-

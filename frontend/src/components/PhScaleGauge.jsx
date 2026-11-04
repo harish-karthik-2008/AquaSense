@@ -28,11 +28,10 @@ export default function PhScaleGauge({ value = 7.0, minAcceptable = 6.5, maxAcce
         <span style={{ color: '#059669', fontWeight: 600 }}>
           Safe Range: {minAcceptable} – {maxAcceptable} pH
         </span>
-        <span style={{ color: 'var(--brand-primary)', fontWeight: 700 }}>
+        <span style={{ color: '#000000', fontWeight: 700 }}>
           Current: {numericVal.toFixed(2)}
         </span>
       </div>
     </div>
   );
 }
-

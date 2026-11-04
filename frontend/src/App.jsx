@@ -4,10 +4,7 @@ import Topbar from './components/Topbar';
 import Overview from './pages/Overview';
 import LiveMonitoring from './pages/LiveMonitoring';
 import Analytics from './pages/Analytics';
-import Alerts from './pages/Alerts';
 import FilterHealth from './pages/FilterHealth';
-import DeviceManagement from './pages/DeviceManagement';
-import Settings from './pages/Settings';
 
 import { api } from './services/api';
 import { wsClient } from './services/websocket';
@@ -17,8 +14,10 @@ import './styles/layout.css';
 import './styles/components.css';
 
 export default function App() {
+  // Navigation State - Exactly 4 Pages: 'overview' | 'live' | 'analytics' | 'filter'
   const [activeTab, setActiveTab] = useState('overview');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   // Sensor Telemetry State
   const [latestReading, setLatestReading] = useState(null);
@@ -33,11 +32,6 @@ export default function App() {
   const [settings, setSettings] = useState(null);
   const [wsConnected, setWsConnected] = useState(false);
 
-  // Notifications State
-  const [notifications, setNotifications] = useState([]);
-  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
-  const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
-
   // Ref to hold paused state inside callbacks
   const isPausedRef = useRef(isStreamPaused);
   isPausedRef.current = isStreamPaused;
@@ -45,16 +39,14 @@ export default function App() {
   // Initial Load from REST Backend
   useEffect(() => {
     const fetchInitialData = async () => {
-      setIsLoadingNotifications(true);
       try {
-        const [latestRes, historyRes, alertsRes, devRes, filterRes, settingsRes, notifRes] = await Promise.allSettled([
+        const [latestRes, historyRes, alertsRes, devRes, filterRes, settingsRes] = await Promise.allSettled([
           api.getLatestReading(),
           api.getHistory(30, 'all'),
           api.getAlerts(null, 50),
           api.getDeviceStatus(),
           api.getFilterHealth(),
-          api.getSettings(),
-          api.getNotifications({ limit: 50 })
+          api.getSettings()
         ]);
 
         if (latestRes.status === 'fulfilled' && latestRes.value?.data) {
@@ -84,18 +76,8 @@ export default function App() {
         if (settingsRes.status === 'fulfilled' && settingsRes.value?.data) {
           setSettings(settingsRes.value.data);
         }
-
-        if (notifRes.status === 'fulfilled' && notifRes.value?.data) {
-          setNotifications(notifRes.value.data);
-          const unread = typeof notifRes.value.unread_count === 'number'
-            ? notifRes.value.unread_count
-            : notifRes.value.data.filter((n) => !n.is_read).length;
-          setUnreadNotificationCount(unread);
-        }
       } catch (err) {
-        console.error('[AquaSense] Error fetching initial data:', err);
-      } finally {
-        setIsLoadingNotifications(false);
+        console.error('[AquaSense] Error fetching initial telemetry:', err);
       }
     };
 
@@ -119,7 +101,7 @@ export default function App() {
         return data;
       });
 
-      // Update device online status on sensor data packet
+      // Mark device online on incoming telemetry packet
       setDeviceStatus((prev) => ({
         ...prev,
         is_online: true,
@@ -159,55 +141,6 @@ export default function App() {
       setAlerts((prev) => prev.map((a) => ({ ...a, acknowledged: true })));
     });
 
-    // Handle real-time notifications
-    const unsubNotifCreated = wsClient.on('notification_created', (newNotif) => {
-      if (!newNotif || !newNotif.id) return;
-      setNotifications((prev) => {
-        const exists = prev.some((n) => n.id === newNotif.id);
-        if (exists) {
-          return prev.map((n) => (n.id === newNotif.id ? { ...n, ...newNotif } : n));
-        }
-        return [newNotif, ...prev];
-      });
-      setUnreadNotificationCount((prev) => prev + (!newNotif.is_read ? 1 : 0));
-    });
-
-    const unsubNotifRead = wsClient.on('notification_read', (payload) => {
-      if (!payload?.id) return;
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === payload.id ? { ...n, is_read: true } : n))
-      );
-      if (typeof payload.unread_count === 'number') {
-        setUnreadNotificationCount(payload.unread_count);
-      } else {
-        setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
-      }
-    });
-
-    const unsubNotifAllRead = wsClient.on('notifications_all_read', () => {
-      setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
-      setUnreadNotificationCount(0);
-    });
-
-    const unsubNotifAck = wsClient.on('notification_acknowledged', (payload) => {
-      if (!payload?.id) return;
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === payload.id ? { ...n, is_acknowledged: true, is_read: true } : n))
-      );
-      setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
-    });
-
-    const unsubNotifAllAck = wsClient.on('notifications_all_acknowledged', () => {
-      setNotifications((prev) =>
-        prev.map((n) => ({ ...n, is_acknowledged: true, is_read: true }))
-      );
-      setUnreadNotificationCount(0);
-    });
-
-    const unsubNotifCleared = wsClient.on('notifications_cleared', () => {
-      setNotifications((prev) => prev.filter((n) => !n.is_acknowledged));
-    });
-
     // Periodic Heartbeat Poll (every 10 seconds)
     const heartbeatTimer = setInterval(async () => {
       try {
@@ -216,7 +149,7 @@ export default function App() {
           setDeviceStatus(res.data);
         }
       } catch {
-        // silent poll fail
+        // silent heartbeat poll fail
       }
     }, 10000);
 
@@ -226,12 +159,6 @@ export default function App() {
       unsubAlert();
       unsubAck();
       unsubAckAll();
-      unsubNotifCreated();
-      unsubNotifRead();
-      unsubNotifAllRead();
-      unsubNotifAck();
-      unsubNotifAllAck();
-      unsubNotifCleared();
       clearInterval(heartbeatTimer);
     };
   }, []);
@@ -248,81 +175,7 @@ export default function App() {
     }
   };
 
-  const handleAcknowledgeAll = async () => {
-    try {
-      await api.acknowledgeAllAlerts();
-      setAlerts((prev) => prev.map((a) => ({ ...a, acknowledged: true })));
-    } catch (err) {
-      console.error('[AquaSense] Failed to acknowledge all alerts:', err);
-    }
-  };
-
-  const handleClearAcknowledged = async () => {
-    try {
-      await api.clearAcknowledgedAlerts();
-      setAlerts((prev) => prev.filter((a) => !a.acknowledged));
-    } catch (err) {
-      console.error('[AquaSense] Failed to clear acknowledged alerts:', err);
-    }
-  };
-
-  // Notification Actions
-  const handleMarkNotificationAsRead = async (id) => {
-    try {
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
-      );
-      setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
-      await api.markNotificationAsRead(id);
-    } catch (err) {
-      console.error('[AquaSense] Failed to mark notification as read:', err);
-    }
-  };
-
-  const handleMarkAllNotificationsAsRead = async () => {
-    try {
-      setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
-      setUnreadNotificationCount(0);
-      await api.markAllNotificationsAsRead();
-    } catch (err) {
-      console.error('[AquaSense] Failed to mark all notifications as read:', err);
-    }
-  };
-
-  const handleAcknowledgeNotification = async (id) => {
-    try {
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, is_acknowledged: true, is_read: true } : n))
-      );
-      setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
-      await api.acknowledgeNotification(id);
-    } catch (err) {
-      console.error('[AquaSense] Failed to acknowledge notification:', err);
-    }
-  };
-
-  const handleAcknowledgeAllNotifications = async () => {
-    try {
-      setNotifications((prev) =>
-        prev.map((n) => ({ ...n, is_acknowledged: true, is_read: true }))
-      );
-      setUnreadNotificationCount(0);
-      await api.acknowledgeAllNotifications();
-    } catch (err) {
-      console.error('[AquaSense] Failed to acknowledge all notifications:', err);
-    }
-  };
-
-  const handleClearAcknowledgedNotifications = async () => {
-    try {
-      setNotifications((prev) => prev.filter((n) => !n.is_acknowledged));
-      await api.clearAcknowledgedNotifications();
-    } catch (err) {
-      console.error('[AquaSense] Failed to clear acknowledged notifications:', err);
-    }
-  };
-
-  // Filter Reset Action
+  // Filter Reset Action (Simulation)
   const handleResetFilters = async () => {
     try {
       const res = await api.resetFilterHealth();
@@ -334,51 +187,38 @@ export default function App() {
     }
   };
 
-  // Settings Save Action
-  const handleSaveSettings = async (newSettings) => {
-    const res = await api.updateSettings(newSettings);
-    if (res?.data) {
-      setSettings(res.data);
-    }
-  };
-
-  const unreadAlertCount = alerts.filter((a) => !a.acknowledged).length;
   const activeAlerts = alerts.filter((a) => !a.acknowledged);
 
   return (
     <div className="app-container">
-      {/* Sidebar Navigation */}
+      {/* Collapsible Minimal Sidebar Navigation - Exactly 4 Pages */}
       <Sidebar
         activeTab={activeTab}
-        onSelectTab={setActiveTab}
+        onSelectTab={(tab) => {
+          setActiveTab(tab);
+          setMobileNavOpen(false);
+        }}
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-        unreadAlertCount={unreadAlertCount}
         deviceConnected={deviceStatus?.is_online}
         wsConnected={wsConnected}
+        mobileOpen={mobileNavOpen}
+        onCloseMobile={() => setMobileNavOpen(false)}
       />
 
       {/* Main Content Area */}
       <div className={`main-wrapper ${sidebarCollapsed ? 'expanded' : ''}`}>
-        {/* Topbar Navigation */}
+        {/* Topbar: Title, Device Status, Simulation Mode Indicator, Timestamp, Mobile Hamburger */}
         <Topbar
           activeTab={activeTab}
           deviceName={deviceStatus?.device_id || 'AquaSense ESP32'}
           deviceConnected={deviceStatus?.is_online}
           lastReceivedTimestamp={latestReading?.timestamp || deviceStatus?.last_seen}
-          unreadAlertCount={unreadAlertCount}
-          onOpenAlerts={() => setActiveTab('alerts')}
-          notifications={notifications}
-          unreadNotificationCount={unreadNotificationCount}
-          onMarkNotificationAsRead={handleMarkNotificationAsRead}
-          onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}
-          onAcknowledgeNotification={handleAcknowledgeNotification}
-          onAcknowledgeAllNotifications={handleAcknowledgeAllNotifications}
-          onClearAcknowledgedNotifications={handleClearAcknowledgedNotifications}
-          isLoadingNotifications={isLoadingNotifications}
+          mobileOpen={mobileNavOpen}
+          onToggleMobile={() => setMobileNavOpen((prev) => !prev)}
         />
 
-        {/* Page Content View */}
+        {/* Page Content View - Strictly 4 Primary Pages */}
         <main className="content-area">
           {activeTab === 'overview' && (
             <Overview
@@ -390,6 +230,7 @@ export default function App() {
               filterHealth={filterHealth}
               settings={settings}
               onNavigate={setActiveTab}
+              onAcknowledgeAlert={handleAcknowledgeAlert}
             />
           )}
 
@@ -398,11 +239,13 @@ export default function App() {
               latestReading={latestReading}
               previousReading={previousReading}
               recentReadings={recentReadings}
+              activeAlerts={activeAlerts}
               deviceStatus={deviceStatus}
               settings={settings}
               isPaused={isStreamPaused}
               onTogglePause={() => setIsStreamPaused(!isStreamPaused)}
               onClearBuffer={() => setRecentReadings([])}
+              onAcknowledgeAlert={handleAcknowledgeAlert}
             />
           )}
 
@@ -410,30 +253,10 @@ export default function App() {
             <Analytics settings={settings} />
           )}
 
-          {activeTab === 'alerts' && (
-            <Alerts
-              alerts={alerts}
-              onAcknowledge={handleAcknowledgeAlert}
-              onAcknowledgeAll={handleAcknowledgeAll}
-              onClearAcknowledged={handleClearAcknowledged}
-            />
-          )}
-
           {activeTab === 'filter' && (
             <FilterHealth
               filterData={filterHealth}
               onResetFilters={handleResetFilters}
-            />
-          )}
-
-          {activeTab === 'device' && (
-            <DeviceManagement deviceStatus={deviceStatus} />
-          )}
-
-          {activeTab === 'settings' && (
-            <Settings
-              settings={settings}
-              onSaveSettings={handleSaveSettings}
             />
           )}
         </main>

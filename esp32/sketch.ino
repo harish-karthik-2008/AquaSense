@@ -28,8 +28,7 @@ const char* password = "";
 // - If running ESP32 on same local network as backend:
 //   Set this to your machine's LAN IP, e.g. "http://192.168.1.50:8000/api/sensor-data"
 // - Default local host address:
-const char* serverUrl = "http://host.wokwi.internal:8000/api/sensor-data";
-
+const char* serverUrl = "http://console-cognitive-hyphen.ngrok-free.dev/api/sensor-data";
 // Pin Definitions
 const int PIN_TDS = 34;
 const int PIN_PH = 35;

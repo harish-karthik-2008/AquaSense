@@ -14,6 +14,7 @@ from ai.anomaly_detector import anomaly_detector
 from services.alert_service import alert_service
 from services.filter_service import filter_service
 from services.websocket_manager import ws_manager
+from services.analytics_service import analytics_service
 
 class SensorService:
     def __init__(self):
@@ -26,7 +27,10 @@ class SensorService:
             "turbidity_warning_threshold": 5.0,
             "turbidity_critical_threshold": 10.0,
             "anomaly_sensitivity": "medium",
-            "heartbeat_timeout_seconds": 25
+            "heartbeat_timeout_seconds": 25,
+            "filter_warning_threshold": 30.0,
+            "filter_critical_threshold": 15.0,
+            "filter_max_operating_hours": 2000.0
         }
 
     async def get_readings_collection(self):
@@ -129,7 +133,27 @@ class SensorService:
         await alert_service.evaluate_reading(tds, ph, turbidity, settings, ai_res)
 
         # Filter usage increment
-        await filter_service.increment_usage(liters=0.2)
+        await filter_service.increment_usage(liters=0.2, tds=tds, turbidity=turbidity, device_id=device_id)
+
+        # Intelligent Recommendation Engine synthesis
+        try:
+            from services.recommendation_service import recommendation_service
+            await recommendation_service.evaluate_and_generate_recommendations(
+                current_reading={
+                    "tds": tds,
+                    "ph": ph,
+                    "turbidity": turbidity,
+                    "overall_status": overall_status,
+                    "water_quality_score": wqi,
+                    "anomaly_detected": ai_res.get("anomaly_detected", False),
+                    "anomaly_score": ai_res.get("anomaly_score", 0.0),
+                    "anomaly_reason": ai_res.get("explanation"),
+                    "anomaly_parameter": ai_res.get("parameter")
+                },
+                trigger_broadcast=True
+            )
+        except Exception:
+            pass
 
         # Update Device Heartbeat
         self.device_heartbeats[device_id] = {
@@ -205,48 +229,17 @@ class SensorService:
                 item["id"] = str(item["_id"])
         return items
 
-    async def get_analytics_summary(self, timeframe: Optional[str] = "24h") -> Dict[str, Any]:
-        """Compute statistical min, max, average, and counts from actual database records."""
-        readings = await self.get_history(limit=500, timeframe=timeframe)
-        if not readings:
-            return {
-                "has_data": False,
-                "count": 0,
-                "tds": {"min": 0, "max": 0, "avg": 0},
-                "ph": {"min": 0, "max": 0, "avg": 0},
-                "turbidity": {"min": 0, "max": 0, "avg": 0},
-                "water_quality_score": {"avg": 0}
-            }
-
-        tds_vals = [r["tds"] for r in readings if "tds" in r]
-        ph_vals = [r["ph"] for r in readings if "ph" in r]
-        turb_vals = [r["turbidity"] for r in readings if "turbidity" in r]
-        wqi_vals = [r.get("water_quality_score", 100) for r in readings]
-
-        return {
-            "has_data": True,
-            "count": len(readings),
-            "timeframe": timeframe,
-            "tds": {
-                "min": round(min(tds_vals), 1) if tds_vals else 0,
-                "max": round(max(tds_vals), 1) if tds_vals else 0,
-                "avg": round(sum(tds_vals) / len(tds_vals), 1) if tds_vals else 0
-            },
-            "ph": {
-                "min": round(min(ph_vals), 2) if ph_vals else 0,
-                "max": round(max(ph_vals), 2) if ph_vals else 0,
-                "avg": round(sum(ph_vals) / len(ph_vals), 2) if ph_vals else 0
-            },
-            "turbidity": {
-                "min": round(min(turb_vals), 2) if turb_vals else 0,
-                "max": round(max(turb_vals), 2) if turb_vals else 0,
-                "avg": round(sum(turb_vals) / len(turb_vals), 2) if turb_vals else 0,
-                "note": "Turbidity values are simulated scale based on Wokwi potentiometer"
-            },
-            "water_quality_score": {
-                "avg": round(sum(wqi_vals) / len(wqi_vals), 1) if wqi_vals else 0
-            }
-        }
+    async def get_analytics_summary(
+        self,
+        timeframe: Optional[str] = "24h",
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None
+    ) -> Dict[str, Any]:
+        return await analytics_service.compute_analytics(
+            timeframe=timeframe,
+            start_date=start_date,
+            end_date=end_date
+        )
 
     async def get_device_status(self, device_id: str = "AquaSense-ESP32") -> Dict[str, Any]:
         """Check if device is currently sending heartbeats."""

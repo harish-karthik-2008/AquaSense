@@ -33,6 +33,11 @@ export default function App() {
   const [settings, setSettings] = useState(null);
   const [wsConnected, setWsConnected] = useState(false);
 
+  // Notifications State
+  const [notifications, setNotifications] = useState([]);
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
+  const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
+
   // Ref to hold paused state inside callbacks
   const isPausedRef = useRef(isStreamPaused);
   isPausedRef.current = isStreamPaused;
@@ -40,14 +45,16 @@ export default function App() {
   // Initial Load from REST Backend
   useEffect(() => {
     const fetchInitialData = async () => {
+      setIsLoadingNotifications(true);
       try {
-        const [latestRes, historyRes, alertsRes, devRes, filterRes, settingsRes] = await Promise.allSettled([
+        const [latestRes, historyRes, alertsRes, devRes, filterRes, settingsRes, notifRes] = await Promise.allSettled([
           api.getLatestReading(),
           api.getHistory(30, 'all'),
           api.getAlerts(null, 50),
           api.getDeviceStatus(),
           api.getFilterHealth(),
-          api.getSettings()
+          api.getSettings(),
+          api.getNotifications({ limit: 50 })
         ]);
 
         if (latestRes.status === 'fulfilled' && latestRes.value?.data) {
@@ -77,8 +84,18 @@ export default function App() {
         if (settingsRes.status === 'fulfilled' && settingsRes.value?.data) {
           setSettings(settingsRes.value.data);
         }
+
+        if (notifRes.status === 'fulfilled' && notifRes.value?.data) {
+          setNotifications(notifRes.value.data);
+          const unread = typeof notifRes.value.unread_count === 'number'
+            ? notifRes.value.unread_count
+            : notifRes.value.data.filter((n) => !n.is_read).length;
+          setUnreadNotificationCount(unread);
+        }
       } catch (err) {
         console.error('[AquaSense] Error fetching initial data:', err);
+      } finally {
+        setIsLoadingNotifications(false);
       }
     };
 
@@ -123,7 +140,6 @@ export default function App() {
     const unsubAlert = wsClient.on('alert_triggered', (newAlert) => {
       if (!newAlert) return;
       setAlerts((prev) => {
-        // Avoid duplicate ID
         const exists = prev.some((a) => a.id === newAlert.id);
         if (exists) return prev;
         return [newAlert, ...prev];
@@ -141,6 +157,55 @@ export default function App() {
     // Handle batch alert acknowledge event
     const unsubAckAll = wsClient.on('alerts_all_acknowledged', () => {
       setAlerts((prev) => prev.map((a) => ({ ...a, acknowledged: true })));
+    });
+
+    // Handle real-time notifications
+    const unsubNotifCreated = wsClient.on('notification_created', (newNotif) => {
+      if (!newNotif || !newNotif.id) return;
+      setNotifications((prev) => {
+        const exists = prev.some((n) => n.id === newNotif.id);
+        if (exists) {
+          return prev.map((n) => (n.id === newNotif.id ? { ...n, ...newNotif } : n));
+        }
+        return [newNotif, ...prev];
+      });
+      setUnreadNotificationCount((prev) => prev + (!newNotif.is_read ? 1 : 0));
+    });
+
+    const unsubNotifRead = wsClient.on('notification_read', (payload) => {
+      if (!payload?.id) return;
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === payload.id ? { ...n, is_read: true } : n))
+      );
+      if (typeof payload.unread_count === 'number') {
+        setUnreadNotificationCount(payload.unread_count);
+      } else {
+        setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
+      }
+    });
+
+    const unsubNotifAllRead = wsClient.on('notifications_all_read', () => {
+      setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+      setUnreadNotificationCount(0);
+    });
+
+    const unsubNotifAck = wsClient.on('notification_acknowledged', (payload) => {
+      if (!payload?.id) return;
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === payload.id ? { ...n, is_acknowledged: true, is_read: true } : n))
+      );
+      setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
+    });
+
+    const unsubNotifAllAck = wsClient.on('notifications_all_acknowledged', () => {
+      setNotifications((prev) =>
+        prev.map((n) => ({ ...n, is_acknowledged: true, is_read: true }))
+      );
+      setUnreadNotificationCount(0);
+    });
+
+    const unsubNotifCleared = wsClient.on('notifications_cleared', () => {
+      setNotifications((prev) => prev.filter((n) => !n.is_acknowledged));
     });
 
     // Periodic Heartbeat Poll (every 10 seconds)
@@ -161,6 +226,12 @@ export default function App() {
       unsubAlert();
       unsubAck();
       unsubAckAll();
+      unsubNotifCreated();
+      unsubNotifRead();
+      unsubNotifAllRead();
+      unsubNotifAck();
+      unsubNotifAllAck();
+      unsubNotifCleared();
       clearInterval(heartbeatTimer);
     };
   }, []);
@@ -192,6 +263,62 @@ export default function App() {
       setAlerts((prev) => prev.filter((a) => !a.acknowledged));
     } catch (err) {
       console.error('[AquaSense] Failed to clear acknowledged alerts:', err);
+    }
+  };
+
+  // Notification Actions
+  const handleMarkNotificationAsRead = async (id) => {
+    try {
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
+      );
+      setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
+      await api.markNotificationAsRead(id);
+    } catch (err) {
+      console.error('[AquaSense] Failed to mark notification as read:', err);
+    }
+  };
+
+  const handleMarkAllNotificationsAsRead = async () => {
+    try {
+      setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+      setUnreadNotificationCount(0);
+      await api.markAllNotificationsAsRead();
+    } catch (err) {
+      console.error('[AquaSense] Failed to mark all notifications as read:', err);
+    }
+  };
+
+  const handleAcknowledgeNotification = async (id) => {
+    try {
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === id ? { ...n, is_acknowledged: true, is_read: true } : n))
+      );
+      setUnreadNotificationCount((prev) => Math.max(0, prev - 1));
+      await api.acknowledgeNotification(id);
+    } catch (err) {
+      console.error('[AquaSense] Failed to acknowledge notification:', err);
+    }
+  };
+
+  const handleAcknowledgeAllNotifications = async () => {
+    try {
+      setNotifications((prev) =>
+        prev.map((n) => ({ ...n, is_acknowledged: true, is_read: true }))
+      );
+      setUnreadNotificationCount(0);
+      await api.acknowledgeAllNotifications();
+    } catch (err) {
+      console.error('[AquaSense] Failed to acknowledge all notifications:', err);
+    }
+  };
+
+  const handleClearAcknowledgedNotifications = async () => {
+    try {
+      setNotifications((prev) => prev.filter((n) => !n.is_acknowledged));
+      await api.clearAcknowledgedNotifications();
+    } catch (err) {
+      console.error('[AquaSense] Failed to clear acknowledged notifications:', err);
     }
   };
 
@@ -241,6 +368,14 @@ export default function App() {
           lastReceivedTimestamp={latestReading?.timestamp || deviceStatus?.last_seen}
           unreadAlertCount={unreadAlertCount}
           onOpenAlerts={() => setActiveTab('alerts')}
+          notifications={notifications}
+          unreadNotificationCount={unreadNotificationCount}
+          onMarkNotificationAsRead={handleMarkNotificationAsRead}
+          onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}
+          onAcknowledgeNotification={handleAcknowledgeNotification}
+          onAcknowledgeAllNotifications={handleAcknowledgeAllNotifications}
+          onClearAcknowledgedNotifications={handleClearAcknowledgedNotifications}
+          isLoadingNotifications={isLoadingNotifications}
         />
 
         {/* Page Content View */}
@@ -306,4 +441,3 @@ export default function App() {
     </div>
   );
 }
-

@@ -51,6 +51,39 @@ export const api = {
   clearAcknowledgedAlerts: () =>
     request('/api/alerts/clear-acknowledged', { method: 'DELETE' }),
 
+  // Notifications
+  getNotifications: (params = {}) => {
+    const qs = new URLSearchParams();
+    if (params.status) qs.append('status', params.status);
+    if (params.severity) qs.append('severity', params.severity);
+    if (params.category) qs.append('category', params.category);
+    if (params.parameter) qs.append('parameter', params.parameter);
+    if (params.limit) qs.append('limit', params.limit);
+    const queryString = qs.toString();
+    return request(`/api/notifications${queryString ? '?' + queryString : ''}`);
+  },
+  getNotificationsSummary: () => request('/api/notifications/summary'),
+  getNotification: (id) => request(`/api/notifications/${id}`),
+  markNotificationAsRead: (id, readBy = 'User') =>
+    request(`/api/notifications/${id}/read`, {
+      method: 'POST',
+      body: JSON.stringify({ read_by: readBy })
+    }),
+  markAllNotificationsAsRead: () =>
+    request('/api/notifications/mark-all-read', { method: 'POST' }),
+  acknowledgeNotification: (id, ackBy = 'User') =>
+    request(`/api/notifications/${id}/acknowledge`, {
+      method: 'POST',
+      body: JSON.stringify({ acknowledged_by: ackBy })
+    }),
+  acknowledgeAllNotifications: (ackBy = 'User') =>
+    request('/api/notifications/acknowledge-all', {
+      method: 'POST',
+      body: JSON.stringify({ acknowledged_by: ackBy })
+    }),
+  clearAcknowledgedNotifications: () =>
+    request('/api/notifications/clear', { method: 'DELETE' }),
+
   // Device Status
   getDeviceStatus: () => request('/api/device/status'),
 
@@ -66,6 +99,17 @@ export const api = {
       body: JSON.stringify(settings)
     }),
 
+  // Recommendations
+  getRecommendations: (params = {}) => {
+    const qs = new URLSearchParams();
+    if (params.priority) qs.append('priority', params.priority);
+    if (params.category) qs.append('category', params.category);
+    if (params.include_dismissed) qs.append('include_dismissed', 'true');
+    const queryString = qs.toString();
+    return request(`/api/recommendations${queryString ? '?' + queryString : ''}`);
+  },
+  dismissRecommendation: (id) =>
+    request(`/api/recommendations/${id}/dismiss`, { method: 'POST' }),
+
   getBaseUrl: () => API_BASE
 };
-

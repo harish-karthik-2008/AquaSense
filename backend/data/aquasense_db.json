@@ -9,25 +9,28 @@
       "turbidity_critical_threshold": 10.0,
       "anomaly_sensitivity": "medium",
       "heartbeat_timeout_seconds": 25,
-      "_id": "threshold_settings"
+      "_id": "threshold_settings",
+      "filter_warning_threshold": 35.0,
+      "filter_critical_threshold": 12.0,
+      "filter_max_operating_hours": 2500.0
     }
   ],
   "filter_health": [
     {
-      "operating_hours": 1420.6,
-      "processed_volume_liters": 4851.199999999999,
-      "last_serviced_date": "2026-08-15",
-      "next_scheduled_service": "2027-02-15",
+      "operating_hours": 0.16,
+      "processed_volume_liters": 1.6,
+      "last_serviced_date": "2026-11-04",
+      "next_scheduled_service": "2027-05-03",
       "stages": [
         {
           "id": "stage-1-sediment",
           "name": "Sediment Pre-Filter (PP Spun)",
           "stage_number": 1,
           "type": "Mechanical Filtration (5 Micron)",
-          "condition_pct": 74.0,
-          "status": "Good",
+          "condition_pct": 99.9,
+          "status": "Optimal",
           "lifespan_days": 180,
-          "days_remaining": 48,
+          "days_remaining": 179,
           "description": "Traps suspended silt, sand, rust, and turbidity particles before entering delicate RO membrane.",
           "target_contaminants": "Coarse sediment, rust, visible turbidity",
           "replacement_model": "Atomberg ProClean PP-5M"
@@ -37,10 +40,10 @@
           "name": "Pre-Carbon Block Filter",
           "stage_number": 2,
           "type": "Adsorption (Activated Coconut Shell)",
-          "condition_pct": 81.0,
+          "condition_pct": 100.0,
           "status": "Optimal",
           "lifespan_days": 180,
-          "days_remaining": 62,
+          "days_remaining": 180,
           "description": "Adsorbs chlorine, organic volatile compounds, pesticides, foul odor and taste.",
           "target_contaminants": "Chlorine, odor, pesticides, VOCs",
           "replacement_model": "Atomberg PureCarb Block-10"
@@ -50,11 +53,11 @@
           "name": "RO Membrane (High Recovery)",
           "stage_number": 3,
           "type": "Reverse Osmosis (0.0001 Micron)",
-          "condition_pct": 89.0,
+          "condition_pct": 100.0,
           "status": "Optimal",
           "lifespan_days": 365,
-          "days_remaining": 178,
-          "description": "Semi-permeable thin-film composite membrane rejecting dissolved salts (TDS) and heavy metals.",
+          "days_remaining": 365,
+          "description": "Semi-permeable thin-film composite membrane reducing dissolved solids (simulated TDS).",
           "target_contaminants": "High TDS, salts, dissolved inorganics",
           "replacement_model": "Atomberg DuraFlow RO-75GPD"
         },
@@ -63,16 +66,20 @@
           "name": "Post-Carbon & Alkaline Mineralizer",
           "stage_number": 4,
           "type": "Mineral Infusion & Polish",
-          "condition_pct": 68.0,
-          "status": "Good",
+          "condition_pct": 100.0,
+          "status": "Optimal",
           "lifespan_days": 180,
-          "days_remaining": 36,
+          "days_remaining": 180,
           "description": "Restores essential calcium/magnesium minerals, balances drinking pH (6.5-8.5), and enriches taste.",
           "target_contaminants": "Taste polish, pH stabilization",
           "replacement_model": "Atomberg AlkiPure Mineralizer"
         }
       ],
-      "_id": "filter_state_01"
+      "_id": "filter_state_01",
+      "telemetry_reading_count": 8,
+      "last_telemetry_timestamp": "2026-11-04T06:25:25.876691+00:00",
+      "last_evaluated_condition_pct": 100.0,
+      "last_evaluated_status": "Optimal"
     }
   ],
   "sensor_readings": [
@@ -91,7 +98,8 @@
       "anomaly_score": 0.0,
       "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
       "note": "Turbidity values are simulated based on potentiometer input.",
-      "_id": "c19c6ff6-8cd3-4918-beb9-a46b7dae0e51"
+      "_id": "c19c6ff6-8cd3-4918-beb9-a46b7dae0e51",
+      "id": "c19c6ff6-8cd3-4918-beb9-a46b7dae0e51"
     },
     {
       "device_id": "AquaSense-ESP32",
@@ -108,7 +116,8 @@
       "anomaly_score": 0.0,
       "anomaly_reason": "Establishing baseline: 2/12 readings collected for AI pattern learning.",
       "note": "Turbidity values are simulated based on potentiometer input.",
-      "_id": "bc98c921-1a7d-4aca-9c11-5441844505f6"
+      "_id": "bc98c921-1a7d-4aca-9c11-5441844505f6",
+      "id": "bc98c921-1a7d-4aca-9c11-5441844505f6"
     },
     {
       "device_id": "AquaSense-ESP32",
@@ -125,7 +134,8 @@
       "anomaly_score": 0.0,
       "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
       "note": "Turbidity values are simulated based on potentiometer input.",
-      "_id": "9bd8598e-0ebc-40b1-a5c9-7da495a8cb6b"
+      "_id": "9bd8598e-0ebc-40b1-a5c9-7da495a8cb6b",
+      "id": "9bd8598e-0ebc-40b1-a5c9-7da495a8cb6b"
     },
     {
       "device_id": "AquaSense-ESP32",
@@ -142,7 +152,8 @@
       "anomaly_score": 0.0,
       "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
       "note": "Turbidity values are simulated based on potentiometer input.",
-      "_id": "a050b4f3-5f04-410a-bc67-7183895cace4"
+      "_id": "a050b4f3-5f04-410a-bc67-7183895cace4",
+      "id": "a050b4f3-5f04-410a-bc67-7183895cace4"
     },
     {
       "device_id": "AquaSense-ESP32",
@@ -159,7 +170,8 @@
       "anomaly_score": 0.0,
       "anomaly_reason": "Establishing baseline: 2/12 readings collected for AI pattern learning.",
       "note": "Turbidity values are simulated based on potentiometer input.",
-      "_id": "0a2e3faf-0b3e-41ef-87d8-d2ba66a95526"
+      "_id": "0a2e3faf-0b3e-41ef-87d8-d2ba66a95526",
+      "id": "0a2e3faf-0b3e-41ef-87d8-d2ba66a95526"
     },
     {
       "device_id": "AquaSense-ESP32",
@@ -176,16 +188,1819 @@
       "anomaly_score": 0.0,
       "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
       "note": "Turbidity values are simulated based on potentiometer input.",
-      "_id": "1be32647-6e2c-479a-b7bb-615819c29ef9"
+      "_id": "1be32647-6e2c-479a-b7bb-615819c29ef9",
+      "id": "1be32647-6e2c-479a-b7bb-615819c29ef9"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T14:30:53.360158+00:00",
+      "tds": 170.0,
+      "ph": 7.35,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Normal",
+      "water_quality_score": 100.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "813abb9a-11e9-4e55-8a7a-5dd1352ff90a",
+      "id": "813abb9a-11e9-4e55-8a7a-5dd1352ff90a"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T14:30:53.364277+00:00",
+      "tds": 590.0,
+      "ph": 7.4,
+      "turbidity": 1.5,
+      "tds_status": "Critical",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 65.2,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 2/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "cda7f281-b11e-4330-93bf-262a676b6b85",
+      "id": "cda7f281-b11e-4330-93bf-262a676b6b85"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T14:30:53.369442+00:00",
+      "tds": 170.0,
+      "ph": 4.9,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 68.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "adb05365-b382-4d88-9884-f822ae4f7723",
+      "id": "adb05365-b382-4d88-9884-f822ae4f7723"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T14:41:33.385926+00:00",
+      "tds": 170.0,
+      "ph": 7.35,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Normal",
+      "water_quality_score": 100.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "cc418502-399e-4885-b89f-7e09f5fdf0eb",
+      "id": "cc418502-399e-4885-b89f-7e09f5fdf0eb"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T14:41:33.387934+00:00",
+      "tds": 590.0,
+      "ph": 7.4,
+      "turbidity": 1.5,
+      "tds_status": "Critical",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 65.2,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 2/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "48ec7b06-ff91-41e7-b6ae-75b359846637",
+      "id": "48ec7b06-ff91-41e7-b6ae-75b359846637"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T14:41:33.392082+00:00",
+      "tds": 170.0,
+      "ph": 4.9,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 68.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "db620a41-a13c-413c-8211-dcb566639a5a",
+      "id": "db620a41-a13c-413c-8211-dcb566639a5a"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T15:14:07.254840+00:00",
+      "tds": 312.3,
+      "ph": 12.09,
+      "turbidity": 71.38,
+      "tds_status": "Warning",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 33.5,
+      "anomaly_detected": true,
+      "anomaly_score": 49.1,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 350.5x relative to historical baseline avg of 1.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "d2ede5eb-02bb-475b-98d5-befb027a8c87",
+      "id": "d2ede5eb-02bb-475b-98d5-befb027a8c87"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T15:14:18.216772+00:00",
+      "tds": 312.3,
+      "ph": 12.09,
+      "turbidity": 71.38,
+      "tds_status": "Warning",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 33.5,
+      "anomaly_detected": true,
+      "anomaly_score": 49.1,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 350.5x relative to historical baseline avg of 1.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "ec032f90-ea3a-4073-a87e-8ebcf5968250",
+      "id": "ec032f90-ea3a-4073-a87e-8ebcf5968250"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T15:16:21.346755+00:00",
+      "tds": 834.2,
+      "ph": 4.23,
+      "turbidity": 45.76,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 50.9,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 222.4x relative to historical baseline avg of 1.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "f5376fe6-411d-4e87-9f57-0775302229a5",
+      "id": "f5376fe6-411d-4e87-9f57-0775302229a5"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T15:16:39.364158+00:00",
+      "tds": 811.2,
+      "ph": 4.35,
+      "turbidity": 45.3,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 50.9,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 220.1x relative to historical baseline avg of 1.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "e15ac3ea-f6ae-4c11-b37d-e1b947f39e7c",
+      "id": "e15ac3ea-f6ae-4c11-b37d-e1b947f39e7c"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T15:17:21.752490+00:00",
+      "tds": 809.8,
+      "ph": 4.54,
+      "turbidity": 42.12,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 50.9,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 204.2x relative to historical baseline avg of 1.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "6b75bbe1-cb3e-4522-91d5-f823ddb6def9",
+      "id": "6b75bbe1-cb3e-4522-91d5-f823ddb6def9"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T15:38:22.212004+00:00",
+      "tds": 806.3,
+      "ph": 4.16,
+      "turbidity": 46.72,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 50.9,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 227.2x relative to historical baseline avg of 1.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "f82c7e47-8938-4a3c-99f7-593c84ed0699",
+      "id": "f82c7e47-8938-4a3c-99f7-593c84ed0699"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:07:27.384614+00:00",
+      "tds": 270.8,
+      "ph": 5.43,
+      "turbidity": 32.31,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 48.6,
+      "anomaly_detected": false,
+      "anomaly_score": 46.8,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "b5f342a7-7e90-417e-96de-62cd935356c1",
+      "id": "b5f342a7-7e90-417e-96de-62cd935356c1"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:07:32.509563+00:00",
+      "tds": 249.1,
+      "ph": 5.12,
+      "turbidity": 34.43,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 42.4,
+      "anomaly_detected": false,
+      "anomaly_score": 47.1,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "f87b2db4-db56-4e81-ad9b-705d5d779506",
+      "id": "f87b2db4-db56-4e81-ad9b-705d5d779506"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:07:36.441021+00:00",
+      "tds": 262.8,
+      "ph": 5.75,
+      "turbidity": 31.26,
+      "tds_status": "Normal",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 55.0,
+      "anomaly_detected": false,
+      "anomaly_score": 48.2,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "5976448f-f792-4197-a471-b850adaf2370",
+      "id": "5976448f-f792-4197-a471-b850adaf2370"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:07:40.425067+00:00",
+      "tds": 260.8,
+      "ph": 5.57,
+      "turbidity": 32.31,
+      "tds_status": "Normal",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 51.4,
+      "anomaly_detected": false,
+      "anomaly_score": 48.1,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "456045e2-a116-4c3c-a1fc-27292f809824",
+      "id": "456045e2-a116-4c3c-a1fc-27292f809824"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:07:44.119859+00:00",
+      "tds": 325.3,
+      "ph": 5.56,
+      "turbidity": 38.66,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 48.2,
+      "anomaly_detected": false,
+      "anomaly_score": 47.6,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "70df3bf7-d8e9-4e63-9abe-9f04ec964469",
+      "id": "70df3bf7-d8e9-4e63-9abe-9f04ec964469"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:07:59.640982+00:00",
+      "tds": 373.6,
+      "ph": 6.22,
+      "turbidity": 36.95,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 55.6,
+      "anomaly_detected": false,
+      "anomaly_score": 47.0,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "ceb4b7bb-8726-4ed8-8682-871604c2de63",
+      "id": "ceb4b7bb-8726-4ed8-8682-871604c2de63"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:08:16.671406+00:00",
+      "tds": 447.6,
+      "ph": 5.98,
+      "turbidity": 41.68,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 41.9,
+      "anomaly_detected": false,
+      "anomaly_score": 46.9,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "ec9cc29b-9872-421c-be8f-de2d3139f256",
+      "id": "ec9cc29b-9872-421c-be8f-de2d3139f256"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:08:25.449184+00:00",
+      "tds": 404.9,
+      "ph": 5.85,
+      "turbidity": 42.56,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 44.4,
+      "anomaly_detected": false,
+      "anomaly_score": 47.1,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "9888104f-d308-4da4-993c-6382b6f789d5",
+      "id": "9888104f-d308-4da4-993c-6382b6f789d5"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:08:29.511861+00:00",
+      "tds": 371.7,
+      "ph": 5.66,
+      "turbidity": 40.05,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 44.6,
+      "anomaly_detected": false,
+      "anomaly_score": 47.2,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "9737547c-a60e-4c04-bd55-3bab05becf74",
+      "id": "9737547c-a60e-4c04-bd55-3bab05becf74"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:08:43.698129+00:00",
+      "tds": 410.3,
+      "ph": 5.29,
+      "turbidity": 45.71,
+      "tds_status": "Warning",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 32.6,
+      "anomaly_detected": false,
+      "anomaly_score": 47.1,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "8172d530-b731-4952-a587-c72315e38d66",
+      "id": "8172d530-b731-4952-a587-c72315e38d66"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:10:45.890060+00:00",
+      "tds": 378.5,
+      "ph": 5.15,
+      "turbidity": 44.08,
+      "tds_status": "Warning",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 33.6,
+      "anomaly_detected": false,
+      "anomaly_score": 46.8,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "548da4ed-cd9a-44a3-b8b3-dbe7c9c92d59",
+      "id": "548da4ed-cd9a-44a3-b8b3-dbe7c9c92d59"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:10:49.649883+00:00",
+      "tds": 346.0,
+      "ph": 5.96,
+      "turbidity": 46.86,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 53.7,
+      "anomaly_detected": false,
+      "anomaly_score": 45.0,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "02169178-6027-4826-97a7-8cc4c0e1a11f",
+      "id": "02169178-6027-4826-97a7-8cc4c0e1a11f"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:18:30.455707+00:00",
+      "tds": 358.2,
+      "ph": 5.68,
+      "turbidity": 47.01,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 46.6,
+      "anomaly_detected": false,
+      "anomaly_score": 44.2,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "56085d6d-7860-44c9-ad02-f95883c0d5ff",
+      "id": "56085d6d-7860-44c9-ad02-f95883c0d5ff"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:18:35.465834+00:00",
+      "tds": 390.0,
+      "ph": 6.32,
+      "turbidity": 48.5,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 55.6,
+      "anomaly_detected": false,
+      "anomaly_score": 46.3,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "89e8bf5f-51fb-41b1-b508-9e0035f12469",
+      "id": "89e8bf5f-51fb-41b1-b508-9e0035f12469"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:18:50.418028+00:00",
+      "tds": 363.4,
+      "ph": 6.58,
+      "turbidity": 43.69,
+      "tds_status": "Warning",
+      "ph_status": "Normal",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 62.4,
+      "anomaly_detected": false,
+      "anomaly_score": 44.6,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "e76e6bb9-2fdf-4773-b232-031a8a1a85fb",
+      "id": "e76e6bb9-2fdf-4773-b232-031a8a1a85fb"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:18:59.683005+00:00",
+      "tds": 384.4,
+      "ph": 6.17,
+      "turbidity": 46.54,
+      "tds_status": "Warning",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 53.3,
+      "anomaly_detected": false,
+      "anomaly_score": 45.3,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "3cb9c541-ff8f-4e1d-b38c-8dd1970eec28",
+      "id": "3cb9c541-ff8f-4e1d-b38c-8dd1970eec28"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-03T16:19:03.860413+00:00",
+      "tds": 375.1,
+      "ph": 6.7,
+      "turbidity": 45.45,
+      "tds_status": "Warning",
+      "ph_status": "Normal",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 61.0,
+      "anomaly_detected": false,
+      "anomaly_score": 44.9,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "c8a5ff17-9721-49ca-aeb1-19ee4fdf60d6",
+      "id": "c8a5ff17-9721-49ca-aeb1-19ee4fdf60d6"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T16:24:56.288941+00:00",
+      "tds": 170.0,
+      "ph": 7.35,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Normal",
+      "water_quality_score": 100.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 1/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "d9f34e5b-7005-4f06-b853-80638630d6c4",
+      "id": "d9f34e5b-7005-4f06-b853-80638630d6c4"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T16:24:56.304498+00:00",
+      "tds": 590.0,
+      "ph": 7.4,
+      "turbidity": 1.5,
+      "tds_status": "Critical",
+      "ph_status": "Normal",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 65.2,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 2/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "5e3ad87d-e052-4a7f-9fcd-f5886b9626f3",
+      "id": "5e3ad87d-e052-4a7f-9fcd-f5886b9626f3"
+    },
+    {
+      "device_id": "AquaSense-ESP32",
+      "timestamp": "2026-11-03T16:24:56.325456+00:00",
+      "tds": 170.0,
+      "ph": 4.9,
+      "turbidity": 1.2,
+      "tds_status": "Normal",
+      "ph_status": "Critical",
+      "turbidity_status": "Normal",
+      "overall_status": "Critical",
+      "water_quality_score": 68.0,
+      "anomaly_detected": false,
+      "anomaly_score": 0.0,
+      "anomaly_reason": "Establishing baseline: 3/12 readings collected for AI pattern learning.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "83a51674-f1b2-4faf-8bd8-2a46c6100567",
+      "id": "83a51674-f1b2-4faf-8bd8-2a46c6100567"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:37:21.241377+00:00",
+      "tds": 584.1,
+      "ph": 12.07,
+      "turbidity": 21.76,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 52.9,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 3.4x relative to historical baseline avg of 6.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "8ea05a57-8410-4584-8637-0ab0eedd5c85",
+      "id": "8ea05a57-8410-4584-8637-0ab0eedd5c85"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:37:31.551936+00:00",
+      "tds": 625.4,
+      "ph": 11.76,
+      "turbidity": 26.59,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 52.7,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 3.2x relative to historical baseline avg of 6.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "e23bd5ae-e8ec-478c-873a-815c867bfe32",
+      "id": "e23bd5ae-e8ec-478c-873a-815c867bfe32"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:37:41.064552+00:00",
+      "tds": 650.5,
+      "ph": 11.85,
+      "turbidity": 29.11,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 53.2,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 3.3x relative to historical baseline avg of 6.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "8cf0b4c2-d488-4ef1-8384-c10078836b81",
+      "id": "8cf0b4c2-d488-4ef1-8384-c10078836b81"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:37:49.646881+00:00",
+      "tds": 608.8,
+      "ph": 11.51,
+      "turbidity": 35.73,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 52.6,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 3.1x relative to historical baseline avg of 6.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "aabb4a7b-5f6b-4370-b3d1-3e29f7eb73ee",
+      "id": "aabb4a7b-5f6b-4370-b3d1-3e29f7eb73ee"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:37:53.251214+00:00",
+      "tds": 617.6,
+      "ph": 10.82,
+      "turbidity": 38.32,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 51.7,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 2.7x relative to historical baseline avg of 6.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "6e731486-9d5f-4b20-b311-134de91ebb94",
+      "id": "6e731486-9d5f-4b20-b311-134de91ebb94"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:39:08.774921+00:00",
+      "tds": 916.0,
+      "ph": 3.5,
+      "turbidity": 63.81,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": true,
+      "anomaly_score": 52.0,
+      "anomaly_reason": "Unusual water-quality pattern detected: TDS deviated significantly (Z-score: 2.5x relative to historical baseline avg of 408.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "3160dadf-b8f9-46dc-88c0-6a63845b56f2",
+      "id": "3160dadf-b8f9-46dc-88c0-6a63845b56f2"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:39:18.917337+00:00",
+      "tds": 827.1,
+      "ph": 3.69,
+      "turbidity": 65.93,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": false,
+      "anomaly_score": 51.5,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "d3723ac2-37c6-481f-9200-de44b8093876",
+      "id": "d3723ac2-37c6-481f-9200-de44b8093876"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:39:22.384454+00:00",
+      "tds": 808.3,
+      "ph": 3.86,
+      "turbidity": 65.08,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": false,
+      "anomaly_score": 50.4,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "88a9503b-140d-4717-a7fd-d0187839295b",
+      "id": "88a9503b-140d-4717-a7fd-d0187839295b"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T03:39:25.834080+00:00",
+      "tds": 774.6,
+      "ph": 3.93,
+      "turbidity": 61.37,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 5.0,
+      "anomaly_detected": false,
+      "anomaly_score": 50.2,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "8c6bc30c-027e-4350-9c3a-0771dedd0389",
+      "id": "8c6bc30c-027e-4350-9c3a-0771dedd0389"
+    },
+    {
+      "timestamp": "2026-11-02T21:39:44.296898+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "df049085-c674-4693-a7f9-3cbd23742d3f"
+    },
+    {
+      "timestamp": "2026-11-02T22:39:44.296898+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "af142df4-d489-4a63-b3e5-04ecb0f36f2a"
+    },
+    {
+      "timestamp": "2026-11-02T23:39:44.296898+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "b3cca523-bc66-48ac-b7a1-75e536dd8f5c"
+    },
+    {
+      "timestamp": "2026-11-03T00:39:44.296898+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "0531f1be-81fb-409d-b8ee-8704beef363f"
+    },
+    {
+      "timestamp": "2026-11-03T01:39:44.296898+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "4baaa3e6-8f09-44e0-ab3a-7289c42be490"
+    },
+    {
+      "timestamp": "2026-11-03T02:39:44.296898+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "8ea2fb41-b5c2-4a84-9834-9758a205628a"
+    },
+    {
+      "timestamp": "2026-11-03T03:39:44.296898+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "c7b0df17-bb97-48f9-88e7-788c49c42631"
+    },
+    {
+      "timestamp": "2026-11-03T04:39:44.296898+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "b79a6242-56ca-4f80-9501-79e85d3a14b1"
+    },
+    {
+      "timestamp": "2026-11-03T05:39:44.296898+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "3a20dc11-3ed9-418e-b9af-5e9f3e67b8d2"
+    },
+    {
+      "timestamp": "2026-11-03T06:39:44.296898+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "19860e1b-a57a-4afe-ac9d-be3b8d72a17e"
+    },
+    {
+      "timestamp": "2026-11-03T07:39:44.296898+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "d5cb5df8-06da-44c0-9647-2ffcc2ed9215"
+    },
+    {
+      "timestamp": "2026-11-03T08:39:44.296898+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "c0943664-6c1d-48c9-9038-ecee478b2612"
+    },
+    {
+      "timestamp": "2026-11-03T09:39:44.296898+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "3ce6a2f3-676e-4f15-96bd-7febf56c5085"
+    },
+    {
+      "timestamp": "2026-11-03T10:39:44.296898+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "3f7572b6-8634-41c7-9021-9022e6be66b0"
+    },
+    {
+      "timestamp": "2026-11-03T11:39:44.296898+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "1240973a-d7c2-46e2-8b08-8cf866568bbd"
+    },
+    {
+      "timestamp": "2026-11-03T12:39:44.296898+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "1e7c963c-2a64-4295-a02b-31a2e2e6f060"
+    },
+    {
+      "timestamp": "2026-11-03T13:39:44.296898+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "834cbc26-a26b-47a7-b542-882f5517043a"
+    },
+    {
+      "timestamp": "2026-11-03T14:39:44.296898+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "61187ba9-91d7-4d29-b588-efb6781db1dd"
+    },
+    {
+      "timestamp": "2026-11-03T15:39:44.296898+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "4c1d1aaf-92b5-4c47-b356-3f7e68120660"
+    },
+    {
+      "timestamp": "2026-11-03T16:39:44.296898+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "44e88f1c-74b1-4311-90ef-d71798ab1e0c"
+    },
+    {
+      "timestamp": "2026-11-03T17:39:44.296898+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "13e0ba47-6d95-44c9-b611-bc0bb192d337"
+    },
+    {
+      "timestamp": "2026-11-03T18:39:44.296898+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "0e6fc9a6-8159-4b0e-bb71-c78324c917d2"
+    },
+    {
+      "timestamp": "2026-11-03T19:39:44.296898+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "e02f92b1-6ac7-4eff-9728-3ca61a0ad4b8"
+    },
+    {
+      "timestamp": "2026-11-03T20:39:44.296898+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "0429d78b-ce42-4be4-af3b-1cbf0ebf6d4e"
+    },
+    {
+      "timestamp": "2026-11-03T21:39:44.296898+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "b2da93db-4976-486d-aebf-8a050fbe6e2a"
+    },
+    {
+      "timestamp": "2026-11-03T22:39:44.296898+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "8d0d887d-47eb-452c-8088-8f7f950386bf"
+    },
+    {
+      "timestamp": "2026-11-03T23:39:44.296898+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "827abc96-b0c6-42ec-86c3-b47e8fabb322",
+      "id": "827abc96-b0c6-42ec-86c3-b47e8fabb322"
+    },
+    {
+      "timestamp": "2026-11-04T00:39:44.296898+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "8c1c292f-22e0-4365-a5de-9f66d5593347",
+      "id": "8c1c292f-22e0-4365-a5de-9f66d5593347"
+    },
+    {
+      "timestamp": "2026-11-04T01:39:44.296898+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "715dc0bd-75a4-4be7-af68-8ee29d5bd9e9",
+      "id": "715dc0bd-75a4-4be7-af68-8ee29d5bd9e9"
+    },
+    {
+      "timestamp": "2026-11-04T02:39:44.296898+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "4b150009-6671-4d0f-b748-efb6302e3184",
+      "id": "4b150009-6671-4d0f-b748-efb6302e3184"
+    },
+    {
+      "timestamp": "2026-11-02T21:40:32.494646+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "0181fbea-9c10-4ec9-9049-be5807214919"
+    },
+    {
+      "timestamp": "2026-11-02T22:40:32.494646+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "463bc993-9a2c-4885-be8c-a580d51a62e3"
+    },
+    {
+      "timestamp": "2026-11-02T23:40:32.494646+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "d871d5c7-d61d-4b57-9e16-e927ef69786a"
+    },
+    {
+      "timestamp": "2026-11-03T00:40:32.494646+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "2548d904-e62b-4910-9d3b-4572f9e96090"
+    },
+    {
+      "timestamp": "2026-11-03T01:40:32.494646+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "5d15119b-7ef4-430f-b02a-f47dd2b01d88"
+    },
+    {
+      "timestamp": "2026-11-03T02:40:32.494646+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "5be8e4bd-536c-426a-b2fd-fcfbdc05020b"
+    },
+    {
+      "timestamp": "2026-11-03T03:40:32.494646+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "8c767565-7064-4690-b698-d2bac2ad79be"
+    },
+    {
+      "timestamp": "2026-11-03T04:40:32.494646+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "36145de9-b06a-4226-b01d-56b260469b92"
+    },
+    {
+      "timestamp": "2026-11-03T05:40:32.494646+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "29ebba9c-d884-4885-a8a1-597b396446b0"
+    },
+    {
+      "timestamp": "2026-11-03T06:40:32.494646+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "d0a4443a-73ce-43c9-9a5f-7df2f353b3b1"
+    },
+    {
+      "timestamp": "2026-11-03T07:40:32.494646+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "59bc8f68-55f3-445e-9085-f31da23f07bb"
+    },
+    {
+      "timestamp": "2026-11-03T08:40:32.494646+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "c3f201cb-c936-44ca-ba30-20d24679d379"
+    },
+    {
+      "timestamp": "2026-11-03T09:40:32.494646+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "7665dae7-4ba9-43de-b64c-362af499f20a"
+    },
+    {
+      "timestamp": "2026-11-03T10:40:32.494646+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "e54cbe25-2744-487b-9d05-0fac3e63e8ca"
+    },
+    {
+      "timestamp": "2026-11-03T11:40:32.494646+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "16a90057-ccec-4e8a-9572-289c92e520b7"
+    },
+    {
+      "timestamp": "2026-11-03T12:40:32.494646+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "796fbfd7-09b5-492f-b527-243532914b1d"
+    },
+    {
+      "timestamp": "2026-11-03T13:40:32.494646+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "9a1e963a-7551-4a50-af58-f4600fa3ef9a"
+    },
+    {
+      "timestamp": "2026-11-03T14:40:32.494646+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "d81946ae-2d00-42e6-aad1-768a06dad946"
+    },
+    {
+      "timestamp": "2026-11-03T15:40:32.494646+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "1306936d-76f4-4d4b-a2a4-dd84dab1a111"
+    },
+    {
+      "timestamp": "2026-11-03T16:40:32.494646+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "8bff9a35-1f63-4b98-b1cf-d4a7d0b46256"
+    },
+    {
+      "timestamp": "2026-11-03T17:40:32.494646+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "b6c21507-1a72-41e4-9d31-2fb3d3d2e86e"
+    },
+    {
+      "timestamp": "2026-11-03T18:40:32.494646+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "353db1d6-c1c8-42c2-9b95-50991966df0c"
+    },
+    {
+      "timestamp": "2026-11-03T19:40:32.494646+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "538f9e36-3215-4ded-94e8-84a62c7d63c4"
+    },
+    {
+      "timestamp": "2026-11-03T20:40:32.494646+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "ecfc007d-bb20-44e9-9452-62b603ee98b4"
+    },
+    {
+      "timestamp": "2026-11-03T21:40:32.494646+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "82d8aef7-e6e7-4ad2-b4df-7102bece15d1"
+    },
+    {
+      "timestamp": "2026-11-03T22:40:32.494646+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "925e934e-e4e2-4ab1-8ae0-2b816c426fe8"
+    },
+    {
+      "timestamp": "2026-11-03T23:40:32.494646+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "9fe4cebb-f68a-4037-8127-75dfac88f2ad",
+      "id": "9fe4cebb-f68a-4037-8127-75dfac88f2ad"
+    },
+    {
+      "timestamp": "2026-11-04T00:40:32.494646+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "e95b410c-716d-48ba-820c-34252eb43034",
+      "id": "e95b410c-716d-48ba-820c-34252eb43034"
+    },
+    {
+      "timestamp": "2026-11-04T01:40:32.494646+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "0d40a74c-a646-49ba-b6d8-548c00aa8d58",
+      "id": "0d40a74c-a646-49ba-b6d8-548c00aa8d58"
+    },
+    {
+      "timestamp": "2026-11-04T02:40:32.494646+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "ed622578-bd17-47ab-8459-810b15f9673b",
+      "id": "ed622578-bd17-47ab-8459-810b15f9673b"
+    },
+    {
+      "timestamp": "2026-11-02T21:41:32.692722+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "9ea02421-849c-47a6-9e0c-a8632b3757a5"
+    },
+    {
+      "timestamp": "2026-11-02T22:41:32.692722+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "af53c26b-73bc-41c9-a3ef-39e231f20b97"
+    },
+    {
+      "timestamp": "2026-11-02T23:41:32.692722+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "c01fbd5c-ba75-4c5c-bdfe-106f509f2da7"
+    },
+    {
+      "timestamp": "2026-11-03T00:41:32.692722+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "8485e44b-29fd-4873-8492-76db06962ab1"
+    },
+    {
+      "timestamp": "2026-11-03T01:41:32.692722+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "6e5a47fe-2402-4f0b-9096-fa46925a62b3"
+    },
+    {
+      "timestamp": "2026-11-03T02:41:32.692722+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "45647858-1b38-4c04-ada2-185e1bfa4cdf"
+    },
+    {
+      "timestamp": "2026-11-03T03:41:32.692722+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "cca02ce3-aeea-431b-ba1d-b0c5b95d14ba"
+    },
+    {
+      "timestamp": "2026-11-03T04:41:32.692722+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "2253e77c-d06c-4950-a00f-6074b7a168e6"
+    },
+    {
+      "timestamp": "2026-11-03T05:41:32.692722+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "284d856f-70bd-4f6b-b2cd-de6d7592fa54"
+    },
+    {
+      "timestamp": "2026-11-03T06:41:32.692722+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "1ec250c0-db7a-415d-a1ad-d4317778760c"
+    },
+    {
+      "timestamp": "2026-11-03T07:41:32.692722+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "405a03a3-0ff4-4d1f-9388-49bdb62127c8"
+    },
+    {
+      "timestamp": "2026-11-03T08:41:32.692722+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "092853ac-091b-44b0-befd-ebd9a4230f9c"
+    },
+    {
+      "timestamp": "2026-11-03T09:41:32.692722+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "b2d9f03f-f86c-4842-9074-4c606cfedfc2"
+    },
+    {
+      "timestamp": "2026-11-03T10:41:32.692722+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "97550767-886b-4058-825d-75526b1f610b"
+    },
+    {
+      "timestamp": "2026-11-03T11:41:32.692722+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "d45671c2-cb61-41a5-9024-2057f1260d13"
+    },
+    {
+      "timestamp": "2026-11-03T12:41:32.692722+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "eb17ea80-69aa-4563-8dcd-e22f990eb3c9"
+    },
+    {
+      "timestamp": "2026-11-03T13:41:32.692722+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "cbca7462-fe0e-4ccf-b295-f780aa96eaa5"
+    },
+    {
+      "timestamp": "2026-11-03T14:41:32.692722+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "40eef9c3-12e0-4d2e-83c6-df422dbffa18"
+    },
+    {
+      "timestamp": "2026-11-03T15:41:32.692722+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "566d899b-e047-4e3d-ace1-abe56ab9bd8a"
+    },
+    {
+      "timestamp": "2026-11-03T16:41:32.692722+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "532b7702-7ef8-4551-93c0-1c7a6380d246"
+    },
+    {
+      "timestamp": "2026-11-03T17:41:32.692722+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "d21aa0bc-d8f6-4d6f-b626-8c82fceca99f"
+    },
+    {
+      "timestamp": "2026-11-03T18:41:32.692722+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "363f8b3a-ad7f-446c-b0f0-0b707858f059"
+    },
+    {
+      "timestamp": "2026-11-03T19:41:32.692722+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "b2a55790-7bee-4ce5-b2e5-45697c62080c"
+    },
+    {
+      "timestamp": "2026-11-03T20:41:32.692722+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "da8e2392-0546-48df-9c7e-db3cbb35e4b5"
+    },
+    {
+      "timestamp": "2026-11-03T21:41:32.692722+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "1a294246-9b7b-4f50-9efa-bf0e3b13d06e"
+    },
+    {
+      "timestamp": "2026-11-03T22:41:32.692722+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "bcfa90b1-f981-4a02-be62-d052a9ddcfee"
+    },
+    {
+      "timestamp": "2026-11-03T23:41:32.692722+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "c8c21481-688b-4079-8043-fed7dd2f149b",
+      "id": "c8c21481-688b-4079-8043-fed7dd2f149b"
+    },
+    {
+      "timestamp": "2026-11-04T00:41:32.692722+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "d6319147-e0dc-4fe1-b7c3-577d5e09e2e8",
+      "id": "d6319147-e0dc-4fe1-b7c3-577d5e09e2e8"
+    },
+    {
+      "timestamp": "2026-11-04T01:41:32.692722+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "15f7bfec-7e59-4d2b-adc0-2810118bd2d7",
+      "id": "15f7bfec-7e59-4d2b-adc0-2810118bd2d7"
+    },
+    {
+      "timestamp": "2026-11-04T02:41:32.692722+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "47ecc520-f8e6-4d11-a9dd-2d660e62a1f4",
+      "id": "47ecc520-f8e6-4d11-a9dd-2d660e62a1f4"
+    },
+    {
+      "timestamp": "2026-11-02T21:58:21.204212+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "791c0026-1818-4e49-a544-93077576c1d2"
+    },
+    {
+      "timestamp": "2026-11-02T22:58:21.204212+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "0c434c54-24eb-476e-88ac-c3faeaa7ea00"
+    },
+    {
+      "timestamp": "2026-11-02T23:58:21.204212+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "c6e0a261-af8b-43be-a9bb-e6caad7e8bd7"
+    },
+    {
+      "timestamp": "2026-11-03T00:58:21.204212+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "9a49473e-6835-4dfa-b0db-78017d46558a"
+    },
+    {
+      "timestamp": "2026-11-03T01:58:21.204212+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "ff8d6152-8296-48c1-81ea-6c9cd4289a9e"
+    },
+    {
+      "timestamp": "2026-11-03T02:58:21.204212+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "24211964-c56e-435c-ae9f-27775b36a26c"
+    },
+    {
+      "timestamp": "2026-11-03T03:58:21.204212+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "bf2fe44e-04f1-487d-a82c-39b28fec0ecf"
+    },
+    {
+      "timestamp": "2026-11-03T04:58:21.204212+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "352dfc89-157d-470b-b4a2-9cd2865f2816"
+    },
+    {
+      "timestamp": "2026-11-03T05:58:21.204212+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "fa66f7a4-fb93-4dc2-9b1a-c813e5fee934"
+    },
+    {
+      "timestamp": "2026-11-03T06:58:21.204212+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "6841d7b6-756d-4a96-99d7-e2cc48be0014"
+    },
+    {
+      "timestamp": "2026-11-03T07:58:21.204212+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "7eb25e59-d02c-402a-bf17-161738ab54e4"
+    },
+    {
+      "timestamp": "2026-11-03T08:58:21.204212+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "e080852c-9da1-4dd9-9dc8-0f0d602781d6"
+    },
+    {
+      "timestamp": "2026-11-03T09:58:21.204212+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "71faee79-2cee-439e-948b-0269c04c558c"
+    },
+    {
+      "timestamp": "2026-11-03T10:58:21.204212+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "67e31227-b96c-4aa1-abdd-11a8f5fe01aa"
+    },
+    {
+      "timestamp": "2026-11-03T11:58:21.204212+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "db702396-fb68-42c1-ac5e-475f41b1fe5a"
+    },
+    {
+      "timestamp": "2026-11-03T12:58:21.204212+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "e945494a-bf16-460b-9281-d951eab5fb03"
+    },
+    {
+      "timestamp": "2026-11-03T13:58:21.204212+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "17288275-96fb-4824-baf6-8067376c014d"
+    },
+    {
+      "timestamp": "2026-11-03T14:58:21.204212+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "7cc28413-3700-4e69-b63c-6f6066e070f1"
+    },
+    {
+      "timestamp": "2026-11-03T15:58:21.204212+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "28a9baaf-ddf8-4b12-8dd8-751d5ebe5be5"
+    },
+    {
+      "timestamp": "2026-11-03T16:58:21.204212+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "5a8b1094-aaa4-4857-a729-8d68b37e92f5"
+    },
+    {
+      "timestamp": "2026-11-03T17:58:21.204212+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "402c99fb-2437-43c0-bfe0-3a8e27cfaf1f"
+    },
+    {
+      "timestamp": "2026-11-03T18:58:21.204212+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "ba559662-bb3e-4329-8217-e4d2829c1675"
+    },
+    {
+      "timestamp": "2026-11-03T19:58:21.204212+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "b1a0359d-4a3f-4aa0-95c3-8f55fdad81ef"
+    },
+    {
+      "timestamp": "2026-11-03T20:58:21.204212+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "6470a82b-2da8-49b7-9960-00c98c0a4b61"
+    },
+    {
+      "timestamp": "2026-11-03T21:58:21.204212+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "c2f758b5-b92d-49c0-a7e0-8baf43ec4f2f"
+    },
+    {
+      "timestamp": "2026-11-03T22:58:21.204212+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "3be3db50-70f6-4eb5-ab0a-ea74f268e0a2"
+    },
+    {
+      "timestamp": "2026-11-03T23:58:21.204212+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "e0fb0bf3-a9d0-4c3c-b524-d5614411a8e8",
+      "id": "e0fb0bf3-a9d0-4c3c-b524-d5614411a8e8"
+    },
+    {
+      "timestamp": "2026-11-04T00:58:21.204212+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "9f770cf3-ad5b-4f4c-a45c-459fca7a06e9",
+      "id": "9f770cf3-ad5b-4f4c-a45c-459fca7a06e9"
+    },
+    {
+      "timestamp": "2026-11-04T01:58:21.204212+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "dc2d8f3a-ba08-4996-bfd4-f1487960edba",
+      "id": "dc2d8f3a-ba08-4996-bfd4-f1487960edba"
+    },
+    {
+      "timestamp": "2026-11-04T02:58:21.204212+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "dbd19005-4b3c-4a9b-91a3-53c617d90b34",
+      "id": "dbd19005-4b3c-4a9b-91a3-53c617d90b34"
+    },
+    {
+      "timestamp": "2026-11-02T22:08:40.442123+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "ea93ced6-28c8-491b-b9df-815b73d2c015"
+    },
+    {
+      "timestamp": "2026-11-02T23:08:40.442123+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "384b54b1-d799-4a76-bab5-f2a989f08aa6"
+    },
+    {
+      "timestamp": "2026-11-03T00:08:40.442123+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "2a4bed08-73c0-44b3-84ef-2d4671c95c73"
+    },
+    {
+      "timestamp": "2026-11-03T01:08:40.442123+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "40c0dbf6-6046-4234-81bb-652e8bcb4ec0"
+    },
+    {
+      "timestamp": "2026-11-03T02:08:40.442123+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "73ebef8c-3f2c-4aca-8fb5-2bbd0edb7e0c"
+    },
+    {
+      "timestamp": "2026-11-03T03:08:40.442123+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "4c349d19-b6a4-4b75-a4b7-984706a917d5"
+    },
+    {
+      "timestamp": "2026-11-03T04:08:40.442123+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "4dcb2f79-3f03-4719-8274-40056b0b8921"
+    },
+    {
+      "timestamp": "2026-11-03T05:08:40.442123+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "5273d52d-baac-4621-bfce-c0f8972f5ede"
+    },
+    {
+      "timestamp": "2026-11-03T06:08:40.442123+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "d86298d1-e7bc-4342-8b52-4c1f041752bc"
+    },
+    {
+      "timestamp": "2026-11-03T07:08:40.442123+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "68fc93e2-14d8-46ae-881a-643c6e569de2"
+    },
+    {
+      "timestamp": "2026-11-03T08:08:40.442123+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "9036ded8-ed33-4a19-8475-4b21b725a5b2"
+    },
+    {
+      "timestamp": "2026-11-03T09:08:40.442123+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "82b0f3f4-644c-42b6-97a2-0b53ca033469"
+    },
+    {
+      "timestamp": "2026-11-03T10:08:40.442123+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "dcf6b597-2a56-478e-88c7-404c6344cb6e"
+    },
+    {
+      "timestamp": "2026-11-03T11:08:40.442123+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "8ba83f9c-fba3-4776-b081-83f010211bc2"
+    },
+    {
+      "timestamp": "2026-11-03T12:08:40.442123+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "cf341bc1-a1a5-426e-812c-2cad4647095a"
+    },
+    {
+      "timestamp": "2026-11-03T13:08:40.442123+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "9cb538c7-80af-48a0-a7a1-27b4e76bceca"
+    },
+    {
+      "timestamp": "2026-11-03T14:08:40.442123+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "295d343d-bc57-444d-bf53-532e0a8224ae"
+    },
+    {
+      "timestamp": "2026-11-03T15:08:40.442123+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "add02587-6e44-42e2-815b-b12620a3ee9c"
+    },
+    {
+      "timestamp": "2026-11-03T16:08:40.442123+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "35449a22-258e-4252-9dd8-e67894855853"
+    },
+    {
+      "timestamp": "2026-11-03T17:08:40.442123+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "725fc505-78ed-4bea-80e0-68d34403c3eb"
+    },
+    {
+      "timestamp": "2026-11-03T18:08:40.442123+00:00",
+      "tds": 170.0,
+      "turbidity": 1.2,
+      "_id": "c1bb073e-d81f-4eca-9e4a-ab7e6c75d8d6"
+    },
+    {
+      "timestamp": "2026-11-03T19:08:40.442123+00:00",
+      "tds": 179.0,
+      "turbidity": 1.6,
+      "_id": "5710e679-c1a0-4483-b797-8f68a0f602bd"
+    },
+    {
+      "timestamp": "2026-11-03T20:08:40.442123+00:00",
+      "tds": 178.0,
+      "turbidity": 1.5,
+      "_id": "8db018cd-03d1-4d74-91e6-f57f8d9ff79f"
+    },
+    {
+      "timestamp": "2026-11-03T21:08:40.442123+00:00",
+      "tds": 177.0,
+      "turbidity": 1.4,
+      "_id": "e9891309-0307-4e1b-98ce-2e7a09733abc"
+    },
+    {
+      "timestamp": "2026-11-03T22:08:40.442123+00:00",
+      "tds": 176.0,
+      "turbidity": 1.3,
+      "_id": "18bc607c-8994-4f6b-81e5-1e425f4da5ec"
+    },
+    {
+      "timestamp": "2026-11-03T23:08:40.442123+00:00",
+      "tds": 175.0,
+      "turbidity": 1.2,
+      "_id": "0506dcff-1b92-4c68-bac7-4b1ecb8e911e",
+      "id": "0506dcff-1b92-4c68-bac7-4b1ecb8e911e"
+    },
+    {
+      "timestamp": "2026-11-04T00:08:40.442123+00:00",
+      "tds": 174.0,
+      "turbidity": 1.6,
+      "_id": "0b832d4b-42f3-4ab8-8d8c-6810a31a877a",
+      "id": "0b832d4b-42f3-4ab8-8d8c-6810a31a877a"
+    },
+    {
+      "timestamp": "2026-11-04T01:08:40.442123+00:00",
+      "tds": 173.0,
+      "turbidity": 1.5,
+      "_id": "65ab8592-88a5-4560-ba11-f625ec3b3bf5",
+      "id": "65ab8592-88a5-4560-ba11-f625ec3b3bf5"
+    },
+    {
+      "timestamp": "2026-11-04T02:08:40.442123+00:00",
+      "tds": 172.0,
+      "turbidity": 1.4,
+      "_id": "018190e6-af25-4828-be1b-8dc63093798b",
+      "id": "018190e6-af25-4828-be1b-8dc63093798b"
+    },
+    {
+      "timestamp": "2026-11-04T03:08:40.442123+00:00",
+      "tds": 171.0,
+      "turbidity": 1.3,
+      "_id": "bbc74fbe-c4b5-4133-8863-637f8b8146d4",
+      "id": "bbc74fbe-c4b5-4133-8863-637f8b8146d4"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T04:46:33.405689+00:00",
+      "tds": 386.1,
+      "ph": 1.2,
+      "turbidity": 29.67,
+      "tds_status": "Warning",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 24.7,
+      "anomaly_detected": true,
+      "anomaly_score": 49.0,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 4.1x relative to historical baseline avg of 7.5). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "c9889e38-4b6b-4928-afa2-810201cfa426",
+      "id": "c9889e38-4b6b-4928-afa2-810201cfa426"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T04:46:48.297208+00:00",
+      "tds": 423.0,
+      "ph": 1.58,
+      "turbidity": 29.08,
+      "tds_status": "Warning",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 20.2,
+      "anomaly_detected": true,
+      "anomaly_score": 48.7,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 3.8x relative to historical baseline avg of 7.5). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "9191fc9f-c773-4451-b624-59815653fa14",
+      "id": "9191fc9f-c773-4451-b624-59815653fa14"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T04:48:36.662790+00:00",
+      "tds": 921.9,
+      "ph": 5.58,
+      "turbidity": 93.87,
+      "tds_status": "Critical",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 16.6,
+      "anomaly_detected": true,
+      "anomaly_score": 51.5,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 5.0x relative to historical baseline avg of 8.0). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "25d14ef0-45f1-440c-ae19-549392b79f7e",
+      "id": "25d14ef0-45f1-440c-ae19-549392b79f7e"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T04:49:06.577232+00:00",
+      "tds": 918.9,
+      "ph": 5.12,
+      "turbidity": 84.74,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 7.4,
+      "anomaly_detected": true,
+      "anomaly_score": 51.8,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 4.5x relative to historical baseline avg of 8.0). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "c312b73a-b4a9-4abe-82af-b61035fab1eb",
+      "id": "c312b73a-b4a9-4abe-82af-b61035fab1eb"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T04:53:28.956482+00:00",
+      "tds": 831.0,
+      "ph": 5.86,
+      "turbidity": 84.49,
+      "tds_status": "Critical",
+      "ph_status": "Warning",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 22.2,
+      "anomaly_detected": true,
+      "anomaly_score": 50.1,
+      "anomaly_reason": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 3.2x relative to historical baseline avg of 11.9). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "0aca5cbd-f650-4135-83d8-904471f643fe",
+      "id": "0aca5cbd-f650-4135-83d8-904471f643fe"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T06:22:18.149182+00:00",
+      "tds": 509.2,
+      "ph": 12.28,
+      "turbidity": 44.81,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 9.9,
+      "anomaly_detected": true,
+      "anomaly_score": 50.6,
+      "anomaly_reason": "Unusual water-quality pattern detected: pH deviated significantly (Z-score: 2.6x relative to historical baseline avg of 7.2). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "78428ffd-eb2d-4dab-9be1-e9047ef70410",
+      "id": "78428ffd-eb2d-4dab-9be1-e9047ef70410"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T06:22:44.935172+00:00",
+      "tds": 536.0,
+      "ph": 11.44,
+      "turbidity": 43.35,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 6.7,
+      "anomaly_detected": false,
+      "anomaly_score": 49.5,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "cdd085a4-3f78-4b20-9bde-cfa9a1116186",
+      "id": "cdd085a4-3f78-4b20-9bde-cfa9a1116186"
+    },
+    {
+      "device_id": "aquasense-esp32-sim",
+      "timestamp": "2026-11-04T06:25:25.734788+00:00",
+      "tds": 536.0,
+      "ph": 10.92,
+      "turbidity": 42.61,
+      "tds_status": "Critical",
+      "ph_status": "Critical",
+      "turbidity_status": "Critical",
+      "overall_status": "Critical",
+      "water_quality_score": 6.7,
+      "anomaly_detected": false,
+      "anomaly_score": 50.5,
+      "anomaly_reason": "Sensor pattern is consistent with historical learned operating baseline.",
+      "note": "Turbidity values are simulated based on potentiometer input.",
+      "_id": "a13213da-2a7b-4da9-9616-a7c301aac6bd"
     }
   ],
   "alerts": [
     {
       "id": "5729c135-2137-428b-aa64-2d749ed9e7f7",
-      "timestamp": "2026-11-03T13:03:32.767179+00:00",
+      "timestamp": "2026-11-04T06:25:25.781471+00:00",
       "alert_type": "Threshold",
       "parameter": "TDS",
-      "reading_value": 590.0,
+      "reading_value": 536.0,
       "threshold_value": "> 500.0 ppm",
       "severity": "Critical",
       "title": "Critical TDS Level Exceeded",
@@ -207,6 +2022,1145 @@
       "suggested_action": "Check alkaline remineralizer cartridge and calibrate pH sensor electrode.",
       "acknowledged": true,
       "_id": "7dbd0def-2044-4fb6-99ae-043fdb39f43a"
+    },
+    {
+      "id": "bf6c89fb-e9ad-42a3-aecd-31574eabe251",
+      "timestamp": "2026-11-03T14:30:53.369442+00:00",
+      "alert_type": "Range",
+      "parameter": "pH",
+      "reading_value": 4.9,
+      "threshold_value": "< 6.5",
+      "severity": "Critical",
+      "title": "Acidic Water Quality Alert",
+      "message": "pH level dropped to 4.90, below safe drinking minimum of 6.5. Water may be corrosive.",
+      "suggested_action": "Check alkaline remineralizer cartridge and calibrate pH sensor electrode.",
+      "acknowledged": true,
+      "_id": "bf6c89fb-e9ad-42a3-aecd-31574eabe251"
+    },
+    {
+      "id": "03dc14aa-78c3-4c15-9512-da50436f2b04",
+      "timestamp": "2026-11-03T14:41:33.392082+00:00",
+      "alert_type": "Range",
+      "parameter": "pH",
+      "reading_value": 4.9,
+      "threshold_value": "< 6.5",
+      "severity": "Critical",
+      "title": "Acidic Water Quality Alert",
+      "message": "pH level dropped to 4.90, below safe drinking minimum of 6.5. Water may be corrosive.",
+      "suggested_action": "Check alkaline remineralizer cartridge and calibrate pH sensor electrode.",
+      "acknowledged": true,
+      "_id": "03dc14aa-78c3-4c15-9512-da50436f2b04"
+    },
+    {
+      "id": "6e279b14-1c3f-40f9-9b49-bf993fca67db",
+      "timestamp": "2026-11-04T04:46:48.336356+00:00",
+      "alert_type": "Threshold",
+      "parameter": "TDS",
+      "reading_value": 423.0,
+      "threshold_value": "> 300.0 ppm",
+      "severity": "Warning",
+      "title": "High TDS Warning",
+      "message": "TDS reading reached 312.3 ppm, crossing the recommended warning threshold of 300.0 ppm.",
+      "suggested_action": "Check raw input water hardness and schedule sediment pre-filter inspection.",
+      "acknowledged": false,
+      "_id": "6e279b14-1c3f-40f9-9b49-bf993fca67db"
+    },
+    {
+      "id": "5c862deb-90a6-439f-a2a4-783fbba3974e",
+      "timestamp": "2026-11-03T16:24:56.325456+00:00",
+      "alert_type": "Range",
+      "parameter": "pH",
+      "reading_value": 4.9,
+      "threshold_value": "> 8.5",
+      "severity": "Critical",
+      "title": "Alkaline Water Quality Alert",
+      "message": "pH level elevated to 12.09, above safe drinking maximum of 8.5.",
+      "suggested_action": "Inspect post-carbon filter stage and verify source water alkalinity.",
+      "acknowledged": true,
+      "_id": "5c862deb-90a6-439f-a2a4-783fbba3974e"
+    },
+    {
+      "id": "dc70758a-6924-473f-81d1-1b5d30b248ab",
+      "timestamp": "2026-11-04T06:25:25.781471+00:00",
+      "alert_type": "Threshold",
+      "parameter": "Turbidity",
+      "reading_value": 42.61,
+      "threshold_value": "> 10.0",
+      "severity": "Critical",
+      "title": "High Turbidity Alert (Simulated)",
+      "message": "Simulated turbidity index spiked to 71.4, exceeding critical threshold of 10.0. Water clarity is compromised.",
+      "suggested_action": "Replace Stage 1 Sediment Pre-Filter cartridge and check supply line clarity.",
+      "acknowledged": false,
+      "_id": "dc70758a-6924-473f-81d1-1b5d30b248ab"
+    },
+    {
+      "id": "124a3bf3-6c79-462b-b51d-34e36d61a61a",
+      "timestamp": "2026-11-04T04:53:29.080004+00:00",
+      "alert_type": "Anomaly",
+      "parameter": "Turbidity",
+      "reading_value": 50.1,
+      "threshold_value": "Statistical deviation",
+      "severity": "Warning",
+      "title": "AI Pattern Anomaly Detected",
+      "message": "Unusual water-quality pattern detected: Turbidity deviated significantly (Z-score: 350.5x relative to historical baseline avg of 1.3). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "suggested_action": "Perform sensory verification and check for sudden municipal water source switching.",
+      "acknowledged": false,
+      "_id": "124a3bf3-6c79-462b-b51d-34e36d61a61a"
+    },
+    {
+      "id": "9193b60f-a409-4579-a9ff-ac3ca08d0424",
+      "timestamp": "2026-11-04T06:22:18.237406+00:00",
+      "alert_type": "Range",
+      "parameter": "pH",
+      "reading_value": 50.6,
+      "threshold_value": "< 6.5",
+      "severity": "Warning",
+      "title": "Acidic Water Quality Alert",
+      "message": "pH level dropped to 5.75, below safe drinking minimum of 6.5. Water may be corrosive.",
+      "suggested_action": "Check alkaline remineralizer cartridge and calibrate pH sensor electrode.",
+      "acknowledged": false,
+      "_id": "9193b60f-a409-4579-a9ff-ac3ca08d0424"
+    },
+    {
+      "id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a",
+      "timestamp": "2026-11-04T06:25:25.781471+00:00",
+      "alert_type": "Range",
+      "parameter": "pH",
+      "reading_value": 10.92,
+      "threshold_value": "> 8.5",
+      "severity": "Critical",
+      "title": "Alkaline Water Quality Alert",
+      "message": "pH level elevated to 12.07, above safe drinking maximum of 8.5.",
+      "suggested_action": "Inspect post-carbon filter stage and verify source water alkalinity.",
+      "acknowledged": false,
+      "_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
+    },
+    {
+      "id": "6aacffec-2069-48b3-809a-afe9b526a19b",
+      "timestamp": "2026-11-04T04:08:40.789012+00:00",
+      "alert_type": "Maintenance",
+      "parameter": "Filter Health",
+      "reading_value": 9.8,
+      "threshold_value": "<= 12.0%",
+      "severity": "Critical",
+      "title": "Critical Filter Replacement Required",
+      "message": "Estimated filter health has declined to 9.8% (critical threshold: 12.0%). Health below 12.0% critical threshold.",
+      "suggested_action": "Replace all cartridges immediately.",
+      "acknowledged": false,
+      "_id": "6aacffec-2069-48b3-809a-afe9b526a19b"
+    },
+    {
+      "id": "58a11b74-0155-4763-890e-38bc1bd313c2",
+      "timestamp": "2026-11-04T06:25:25.962349+00:00",
+      "alert_type": "Maintenance",
+      "parameter": "Filter Health",
+      "reading_value": 100.0,
+      "threshold_value": "Telemetry Trend Anomaly",
+      "severity": "Warning",
+      "title": "Filter Water Quality Stress Warning",
+      "message": "Turbidity Surge: Recent simulated turbidity (53.06) is +688.4% relative to baseline (6.7). Indicates sediment pre-filter particulate stress.",
+      "suggested_action": "RECOMMENDED: Inspect pre-filter mesh and verify raw input water parameters.",
+      "acknowledged": false,
+      "_id": "58a11b74-0155-4763-890e-38bc1bd313c2"
+    }
+  ],
+  "filter_maintenance_log": [
+    {
+      "id": "4aef6fc3-5380-42b4-b08b-19041511e668",
+      "timestamp": "2026-11-04T03:41:32.990691+00:00",
+      "action": "Cartridge Replacement",
+      "technician": "Service Engineer Rajesh",
+      "operating_hours_at_service": 1421.31,
+      "previous_condition_pct": 5.0,
+      "notes": "Replaced sediment pre-filter and RO membrane.",
+      "_id": "4aef6fc3-5380-42b4-b08b-19041511e668"
+    },
+    {
+      "id": "c7a924ae-e964-4210-8993-6c9feaa14e33",
+      "timestamp": "2026-11-04T03:58:21.990071+00:00",
+      "action": "Cartridge Replacement",
+      "technician": "Service Engineer Rajesh",
+      "operating_hours_at_service": 0.0,
+      "previous_condition_pct": 100.0,
+      "notes": "Replaced sediment pre-filter and RO membrane.",
+      "_id": "c7a924ae-e964-4210-8993-6c9feaa14e33"
+    },
+    {
+      "id": "b902d608-ea48-4c3e-a3f3-199050eec220",
+      "timestamp": "2026-11-04T04:08:40.802529+00:00",
+      "action": "Cartridge Replacement",
+      "technician": "Service Engineer Rajesh",
+      "operating_hours_at_service": 0.0,
+      "previous_condition_pct": 100.0,
+      "notes": "Replaced sediment pre-filter and RO membrane.",
+      "_id": "b902d608-ea48-4c3e-a3f3-199050eec220"
+    }
+  ],
+  "filter_usage_history": [
+    {
+      "_id": "c13e437b-796a-4259-842f-0940f80623b3",
+      "timestamp": "2026-11-04T03:41:33.008984+00:00",
+      "operating_hours": 0.0,
+      "processed_volume_liters": 0.0,
+      "estimated_filter_health_percentage": 100.0,
+      "filter_condition": "Optimal",
+      "tds_recent_avg": 165.0,
+      "turbidity_recent_avg": 1.2,
+      "water_burden_multiplier": 1.0,
+      "event_type": "maintenance_reset",
+      "note": "Purifier filter cartridges serviced and operational runtime reset to 0.0 hrs.",
+      "id": "c13e437b-796a-4259-842f-0940f80623b3"
+    },
+    {
+      "_id": "5a9976b5-3480-4991-945e-1aebc0422e40",
+      "timestamp": "2026-11-04T03:58:22.037364+00:00",
+      "operating_hours": 0.0,
+      "processed_volume_liters": 0.0,
+      "estimated_filter_health_percentage": 100.0,
+      "filter_condition": "Optimal",
+      "tds_recent_avg": 165.0,
+      "turbidity_recent_avg": 1.2,
+      "water_burden_multiplier": 1.0,
+      "event_type": "maintenance_reset",
+      "note": "Purifier filter cartridges serviced and operational runtime reset to 0.0 hrs.",
+      "id": "5a9976b5-3480-4991-945e-1aebc0422e40"
+    },
+    {
+      "_id": "7a2e0a6a-1bf6-4ee3-8844-8ba92d3218a6",
+      "timestamp": "2026-11-04T04:08:40.822673+00:00",
+      "operating_hours": 0.0,
+      "processed_volume_liters": 0.0,
+      "estimated_filter_health_percentage": 100.0,
+      "filter_condition": "Optimal",
+      "tds_recent_avg": 165.0,
+      "turbidity_recent_avg": 1.2,
+      "water_burden_multiplier": 1.0,
+      "event_type": "maintenance_reset",
+      "note": "Purifier filter cartridges serviced and operational runtime reset to 0.0 hrs.",
+      "id": "7a2e0a6a-1bf6-4ee3-8844-8ba92d3218a6"
+    }
+  ],
+  "water_quality_recommendations": [
+    {
+      "_id": "d96e46f5-12da-4223-a915-c1fd2b1d6b56",
+      "id": "d96e46f5-12da-4223-a915-c1fd2b1d6b56",
+      "created_at": "2026-11-04T04:08:16.792840+00:00",
+      "last_updated_at": "2026-11-04T04:08:17.129834+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Critical TDS Level - High Dissolved Mineral Ingress",
+      "message": "Purifier output TDS reached 580.0 ppm, crossing the critical limit (500.0 ppm). Water contains excessive dissolved mineral content. Immediate filtration check is advised.",
+      "reason": "Measured TDS (580.0 ppm) exceeded critical limit (500.0 ppm). 24h historical average is 265.5 ppm with a degrading trend.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics",
+        "settings_threshold"
+      ],
+      "action": "Inspect RO membrane rejection efficiency and verify inlet flow restrictor valve.",
+      "action_steps": [
+        "Turn off purifier power and test raw feed water TDS to check for municipal supply surges.",
+        "Inspect RO reject water discharge line to ensure brine is flowing freely without flow restriction.",
+        "Flush RO membrane system for 3 to 5 minutes.",
+        "If TDS remains elevated above 500 ppm after flush, service RO membrane cartridge."
+      ],
+      "parameter": "TDS",
+      "current_value": 580.0,
+      "threshold_or_baseline": "> 500.0 ppm",
+      "is_dismissed": true,
+      "dismissed_at": "2026-11-04T04:08:17.187930+00:00",
+      "occurrence_count": 3,
+      "deduplication_key": "water_quality:tds:critical:excessive_dissolved_solids",
+      "related_alert_id": "test-alert-tds-crit-001",
+      "dismissed_by": "Test Technician"
+    },
+    {
+      "_id": "baa08935-0215-4ec7-be74-8d8c02c1f584",
+      "id": "baa08935-0215-4ec7-be74-8d8c02c1f584",
+      "created_at": "2026-11-04T04:08:16.792840+00:00",
+      "last_updated_at": "2026-11-04T06:25:25.896269+00:00",
+      "priority": "Warning",
+      "category": "Water Quality",
+      "title": "Persistent Degrading Water Quality Trend Identified",
+      "message": "Historical analytics detected a continuous declining purity trend across the past 24 hours. Most frequent abnormal parameter: pH.",
+      "reason": "Overall purity score has trended downwards across historical readings. 0 warning and 49 critical records logged.",
+      "source_factors": [
+        "historical_analytics"
+      ],
+      "action": "Review historical trend charts and inspect raw feed water quality.",
+      "action_steps": [
+        "Review Analytics page charts to identify timestamp of initial purity score decline.",
+        "Verify whether raw feed water quality has deteriorated or pre-filtration pressure has dropped.",
+        "Plan preventative cartridge servicing before complete threshold breach."
+      ],
+      "parameter": "pH",
+      "current_value": null,
+      "threshold_or_baseline": "Historical 24h Trend",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 15,
+      "deduplication_key": "water_quality:system:warning:persistent_degrading_trend",
+      "related_alert_id": null
+    },
+    {
+      "_id": "1ebb5fc7-d35b-4a54-b0ba-ff530fa7384f",
+      "id": "1ebb5fc7-d35b-4a54-b0ba-ff530fa7384f",
+      "created_at": "2026-11-04T04:08:16.861805+00:00",
+      "last_updated_at": "2026-11-04T04:53:29.171870+00:00",
+      "priority": "Warning",
+      "category": "Water Quality",
+      "title": "Acidic Water Quality - Remineralizer Inspection Advised",
+      "message": "Drinking water pH has dropped to 5.86, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
+      "reason": "Measured pH is 5.86 (safe minimum: 6.5). Post-Carbon Alkaline cartridge condition is currently at 100.0%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Inspect Stage 4 Post-Carbon Alkaline Mineralizer cartridge and calibrate pH electrode.",
+      "action_steps": [
+        "Rinse pH sensor electrode with distilled water to ensure no surface residue is skewing the probe.",
+        "Inspect Stage 4 mineralizer cartridge condition (estimated remaining life: 100.0%).",
+        "Perform a fresh 60-second purge cycle to test if reservoir stagnation caused acidity accumulation."
+      ],
+      "parameter": "pH",
+      "current_value": 5.86,
+      "threshold_or_baseline": "< 6.5",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 3,
+      "deduplication_key": "water_quality:ph:warning:acidic_balance",
+      "related_alert_id": "9193b60f-a409-4579-a9ff-ac3ca08d0424"
+    },
+    {
+      "_id": "064bf1cc-4a58-457d-9ecd-81580b4b5be7",
+      "id": "064bf1cc-4a58-457d-9ecd-81580b4b5be7",
+      "created_at": "2026-11-04T04:08:16.922615+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.922615+00:00",
+      "priority": "Warning",
+      "category": "Filter Maintenance",
+      "title": "Elevated Turbidity - Sediment Pre-Filter Service Recommended",
+      "message": "Simulated turbidity index reached 8.5, crossing the warning limit (5.0). Suspended particulates can increase resistance and foul the downstream RO membrane.",
+      "reason": "Turbidity reading (8.5) exceeds baseline threshold (5.0). Stage 1 Sediment Pre-Filter estimated condition is at 100.0%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Flush purifier inlet line and inspect Stage 1 Sediment Pre-Filter bowl.",
+      "action_steps": [
+        "Visually inspect external spun sediment pre-filter bowl for visible silt, rust, or discoloration.",
+        "Execute manual flush for 2 minutes to clear inlet pipeline particles.",
+        "Prepare replacement PP-5M spun sediment pre-filter cartridge (current condition: 100.0%)."
+      ],
+      "parameter": "Turbidity",
+      "current_value": 8.5,
+      "threshold_or_baseline": "> 5.0 (sim)",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter_maintenance:turbidity:warning:sediment_particulate_stress",
+      "related_alert_id": "124a3bf3-6c79-462b-b51d-34e36d61a61a"
+    },
+    {
+      "_id": "77d8334e-4ea9-4b95-9369-2a06e051df93",
+      "id": "77d8334e-4ea9-4b95-9369-2a06e051df93",
+      "created_at": "2026-11-04T04:08:16.984372+00:00",
+      "last_updated_at": "2026-11-04T06:22:18.327869+00:00",
+      "priority": "Warning",
+      "category": "Anomaly Resolution",
+      "title": "AI Multivariate Pattern Anomaly Detected",
+      "message": "Machine learning anomaly detector flagged unusual water correlation patterns: Unusual water-quality pattern detected: pH deviated significantly (Z-score: 2.6x relative to historical baseline avg of 7.2). Multi-parameter profile diverged from learned steady-state operating patterns.",
+      "reason": "Isolation Forest identified statistical departure from calibrated baseline (Anomaly score: 50.6/100. Primary diverging parameter: pH).",
+      "source_factors": [
+        "anomaly_detector",
+        "current_reading"
+      ],
+      "action": "Check for aerated flow, probe bubbles, or municipal source switching.",
+      "action_steps": [
+        "Inspect probe measurement vessel for micro-bubbles or intermittent water flow.",
+        "Verify if tap water supply switched between municipal surface and borewell sources.",
+        "Monitor live dashboard graph to observe whether readings return to learned baseline."
+      ],
+      "parameter": "Multi-parameter",
+      "current_value": 50.6,
+      "threshold_or_baseline": "Statistical Anomaly Deviation",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 7,
+      "deduplication_key": "anomaly_resolution:ai:warning:multivariate_correlation_divergence",
+      "related_alert_id": null
+    },
+    {
+      "_id": "176d8ef7-5c39-4771-81aa-018d9eabb77b",
+      "id": "176d8ef7-5c39-4771-81aa-018d9eabb77b",
+      "created_at": "2026-11-04T04:08:16.984372+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.984372+00:00",
+      "priority": "Informational",
+      "category": "System & Calibration",
+      "title": "Periodic Sensor Probe Maintenance & Rinsing Guidance",
+      "message": "Water quality monitoring sensors maintain optimal measurement precision when probe electrodes are periodically inspected and rinsed.",
+      "reason": "Routine preventative advice: optical turbidity quartz windows and pH glass electrodes benefit from periodic rinsing.",
+      "source_factors": [
+        "settings_threshold",
+        "routine_schedule"
+      ],
+      "action": "Inspect probe chamber and gently rinse electrodes with clean water.",
+      "action_steps": [
+        "Inspect the optical turbidity sensor chamber for mineral scale or fine sediment coating.",
+        "Rinse probe ends with clean drinking water; avoid abrasive cloths on the pH glass bulb.",
+        "Ensure sensor probe cable connections to ESP32 are secure."
+      ],
+      "parameter": "Sensor Hardware",
+      "current_value": null,
+      "threshold_or_baseline": "Preventative Maintenance",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "routine_advisory:system:informational:sensor_hygiene_guidance",
+      "related_alert_id": null
+    },
+    {
+      "_id": "c33852d2-7d82-4aa8-9887-36f4b7719eea",
+      "id": "c33852d2-7d82-4aa8-9887-36f4b7719eea",
+      "created_at": "2026-11-04T04:08:17.301209+00:00",
+      "last_updated_at": "2026-11-04T04:49:06.633125+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Acidic Water Quality - Remineralizer Inspection Advised",
+      "message": "Drinking water pH has dropped to 5.12, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
+      "reason": "Measured pH is 5.12 (safe minimum: 6.5). Post-Carbon Alkaline cartridge condition is currently at 100.0%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Inspect Stage 4 Post-Carbon Alkaline Mineralizer cartridge and calibrate pH electrode.",
+      "action_steps": [
+        "Rinse pH sensor electrode with distilled water to ensure no surface residue is skewing the probe.",
+        "Inspect Stage 4 mineralizer cartridge condition (estimated remaining life: 100.0%).",
+        "Perform a fresh 60-second purge cycle to test if reservoir stagnation caused acidity accumulation."
+      ],
+      "parameter": "pH",
+      "current_value": 5.12,
+      "threshold_or_baseline": "< 6.5",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 4,
+      "deduplication_key": "water_quality:ph:critical:acidic_balance",
+      "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
+    },
+    {
+      "_id": "9aae0eef-9e6e-4155-acb3-6a23d66a753b",
+      "id": "9aae0eef-9e6e-4155-acb3-6a23d66a753b",
+      "created_at": "2026-11-04T04:08:17.301209+00:00",
+      "last_updated_at": "2026-11-04T06:25:25.896269+00:00",
+      "priority": "Critical",
+      "category": "Filter Maintenance",
+      "title": "Elevated Turbidity - Sediment Pre-Filter Service Recommended",
+      "message": "Simulated turbidity index reached 42.6, crossing the warning limit (5.0). Suspended particulates can increase resistance and foul the downstream RO membrane.",
+      "reason": "Turbidity reading (42.6) exceeds baseline threshold (5.0). Stage 1 Sediment Pre-Filter estimated condition is at 99.9%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Flush purifier inlet line and inspect Stage 1 Sediment Pre-Filter bowl.",
+      "action_steps": [
+        "Visually inspect external spun sediment pre-filter bowl for visible silt, rust, or discoloration.",
+        "Execute manual flush for 2 minutes to clear inlet pipeline particles.",
+        "Prepare replacement PP-5M spun sediment pre-filter cartridge (current condition: 100.0%)."
+      ],
+      "parameter": "Turbidity",
+      "current_value": 42.61,
+      "threshold_or_baseline": "> 5.0 (sim)",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 9,
+      "deduplication_key": "filter_maintenance:turbidity:critical:sediment_particulate_stress",
+      "related_alert_id": "dc70758a-6924-473f-81d1-1b5d30b248ab"
+    },
+    {
+      "_id": "9935ba07-ebef-4166-977d-394e5d1d93f0",
+      "id": "9935ba07-ebef-4166-977d-394e5d1d93f0",
+      "created_at": "2026-11-04T04:46:33.493101+00:00",
+      "last_updated_at": "2026-11-04T04:46:48.429174+00:00",
+      "priority": "Warning",
+      "category": "Water Quality",
+      "title": "Elevated TDS Level - Water Hardness Advisory",
+      "message": "Water TDS is at 423.0 ppm, above the recommended drinking threshold (300.0 ppm). Water hardness may impart a distinct mineral taste.",
+      "reason": "Current TDS reading (423.0 ppm) crossed the warning baseline (300.0 ppm). Historical analytics indicates degrading mineral stability over the past 24 hours.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics"
+      ],
+      "action": "Monitor purifier output TDS and check raw water hardness.",
+      "action_steps": [
+        "Check raw water source hardness; seasonal shifts can elevate feed salinity.",
+        "Verify TDS modulator valve setting on purifier if equipped.",
+        "Dispense 1 liter to purge stale reservoir water and re-check output reading."
+      ],
+      "parameter": "TDS",
+      "current_value": 423.0,
+      "threshold_or_baseline": "> 300.0 ppm",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 2,
+      "deduplication_key": "water_quality:tds:warning:elevated_mineral_hardness",
+      "related_alert_id": "6e279b14-1c3f-40f9-9b49-bf993fca67db"
+    },
+    {
+      "_id": "b1ccc822-03dd-40be-bee4-14f6808dff8b",
+      "id": "b1ccc822-03dd-40be-bee4-14f6808dff8b",
+      "created_at": "2026-11-04T04:48:36.756209+00:00",
+      "last_updated_at": "2026-11-04T06:25:25.896269+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Critical TDS Level - High Dissolved Mineral Ingress",
+      "message": "Purifier output TDS reached 536.0 ppm, crossing the critical limit (500.0 ppm). Water contains excessive dissolved mineral content. Immediate filtration check is advised.",
+      "reason": "Measured TDS (536.0 ppm) exceeded critical limit (500.0 ppm). 24h historical average is 274.9 ppm with a degrading trend.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics",
+        "settings_threshold"
+      ],
+      "action": "Inspect RO membrane rejection efficiency and verify inlet flow restrictor valve.",
+      "action_steps": [
+        "Turn off purifier power and test raw feed water TDS to check for municipal supply surges.",
+        "Inspect RO reject water discharge line to ensure brine is flowing freely without flow restriction.",
+        "Flush RO membrane system for 3 to 5 minutes.",
+        "If TDS remains elevated above 500 ppm after flush, service RO membrane cartridge."
+      ],
+      "parameter": "TDS",
+      "current_value": 536.0,
+      "threshold_or_baseline": "> 500.0 ppm",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 6,
+      "deduplication_key": "water_quality:tds:critical:excessive_dissolved_solids",
+      "related_alert_id": "5729c135-2137-428b-aa64-2d749ed9e7f7"
+    },
+    {
+      "_id": "088b21d1-7aaa-456d-a9d5-0b7a6f62f72c",
+      "id": "088b21d1-7aaa-456d-a9d5-0b7a6f62f72c",
+      "created_at": "2026-11-04T06:22:18.327869+00:00",
+      "last_updated_at": "2026-11-04T06:25:25.896269+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Elevated Alkaline pH - Mineral Dissolution Advisory",
+      "message": "Water pH has increased to 10.92, above the recommended drinking maximum (8.5). Excessive alkalinity can impart a bitter or slippery taste.",
+      "reason": "Measured pH is 10.92 (recommended maximum: 8.5). Historical analytics shows pH variance across the analyzed timeframe.",
+      "source_factors": [
+        "current_reading",
+        "settings_threshold"
+      ],
+      "action": "Flush purifier storage tank and inspect alkaline media dissolution rate.",
+      "action_steps": [
+        "Empty the storage tank to discard water with excessive dissolved minerals.",
+        "Inspect the remineralization cartridge bypass ratio.",
+        "Verify raw input water pH to confirm whether municipal water source has shifted."
+      ],
+      "parameter": "pH",
+      "current_value": 10.92,
+      "threshold_or_baseline": "> 8.5",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 3,
+      "deduplication_key": "water_quality:ph:critical:alkaline_balance",
+      "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
+    }
+  ],
+  "recommendation_history_log": [
+    {
+      "_id": "d96e46f5-12da-4223-a915-c1fd2b1d6b56",
+      "id": "d96e46f5-12da-4223-a915-c1fd2b1d6b56",
+      "created_at": "2026-11-04T04:08:16.792840+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.792840+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Critical TDS Level - High Dissolved Mineral Ingress",
+      "message": "Purifier output TDS reached 580.0 ppm, crossing the critical limit (500.0 ppm). Water contains excessive dissolved mineral content. Immediate filtration check is advised.",
+      "reason": "Measured TDS (580.0 ppm) exceeded critical limit (500.0 ppm). 24h historical average is 265.5 ppm with a degrading trend.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics",
+        "settings_threshold"
+      ],
+      "action": "Inspect RO membrane rejection efficiency and verify inlet flow restrictor valve.",
+      "action_steps": [
+        "Turn off purifier power and test raw feed water TDS to check for municipal supply surges.",
+        "Inspect RO reject water discharge line to ensure brine is flowing freely without flow restriction.",
+        "Flush RO membrane system for 3 to 5 minutes.",
+        "If TDS remains elevated above 500 ppm after flush, service RO membrane cartridge."
+      ],
+      "parameter": "TDS",
+      "current_value": 580.0,
+      "threshold_or_baseline": "> 500.0 ppm",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water_quality:tds:critical:excessive_dissolved_solids",
+      "related_alert_id": "5729c135-2137-428b-aa64-2d749ed9e7f7"
+    },
+    {
+      "_id": "baa08935-0215-4ec7-be74-8d8c02c1f584",
+      "id": "baa08935-0215-4ec7-be74-8d8c02c1f584",
+      "created_at": "2026-11-04T04:08:16.792840+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.792840+00:00",
+      "priority": "Warning",
+      "category": "Water Quality",
+      "title": "Persistent Degrading Water Quality Trend Identified",
+      "message": "Historical analytics detected a continuous declining purity trend across the past 24 hours. Most frequent abnormal parameter: pH.",
+      "reason": "Overall purity score has trended downwards across historical readings. 0 warning and 42 critical records logged.",
+      "source_factors": [
+        "historical_analytics"
+      ],
+      "action": "Review historical trend charts and inspect raw feed water quality.",
+      "action_steps": [
+        "Review Analytics page charts to identify timestamp of initial purity score decline.",
+        "Verify whether raw feed water quality has deteriorated or pre-filtration pressure has dropped.",
+        "Plan preventative cartridge servicing before complete threshold breach."
+      ],
+      "parameter": "pH",
+      "current_value": null,
+      "threshold_or_baseline": "Historical 24h Trend",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water_quality:system:warning:persistent_degrading_trend",
+      "related_alert_id": null
+    },
+    {
+      "_id": "1ebb5fc7-d35b-4a54-b0ba-ff530fa7384f",
+      "id": "1ebb5fc7-d35b-4a54-b0ba-ff530fa7384f",
+      "created_at": "2026-11-04T04:08:16.861805+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.861805+00:00",
+      "priority": "Warning",
+      "category": "Water Quality",
+      "title": "Acidic Water Quality - Remineralizer Inspection Advised",
+      "message": "Drinking water pH has dropped to 5.80, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
+      "reason": "Measured pH is 5.80 (safe minimum: 6.5). Post-Carbon Alkaline cartridge condition is currently at 100.0%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Inspect Stage 4 Post-Carbon Alkaline Mineralizer cartridge and calibrate pH electrode.",
+      "action_steps": [
+        "Rinse pH sensor electrode with distilled water to ensure no surface residue is skewing the probe.",
+        "Inspect Stage 4 mineralizer cartridge condition (estimated remaining life: 100.0%).",
+        "Perform a fresh 60-second purge cycle to test if reservoir stagnation caused acidity accumulation."
+      ],
+      "parameter": "pH",
+      "current_value": 5.8,
+      "threshold_or_baseline": "< 6.5",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water_quality:ph:warning:acidic_balance",
+      "related_alert_id": "9193b60f-a409-4579-a9ff-ac3ca08d0424"
+    },
+    {
+      "_id": "064bf1cc-4a58-457d-9ecd-81580b4b5be7",
+      "id": "064bf1cc-4a58-457d-9ecd-81580b4b5be7",
+      "created_at": "2026-11-04T04:08:16.922615+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.922615+00:00",
+      "priority": "Warning",
+      "category": "Filter Maintenance",
+      "title": "Elevated Turbidity - Sediment Pre-Filter Service Recommended",
+      "message": "Simulated turbidity index reached 8.5, crossing the warning limit (5.0). Suspended particulates can increase resistance and foul the downstream RO membrane.",
+      "reason": "Turbidity reading (8.5) exceeds baseline threshold (5.0). Stage 1 Sediment Pre-Filter estimated condition is at 100.0%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Flush purifier inlet line and inspect Stage 1 Sediment Pre-Filter bowl.",
+      "action_steps": [
+        "Visually inspect external spun sediment pre-filter bowl for visible silt, rust, or discoloration.",
+        "Execute manual flush for 2 minutes to clear inlet pipeline particles.",
+        "Prepare replacement PP-5M spun sediment pre-filter cartridge (current condition: 100.0%)."
+      ],
+      "parameter": "Turbidity",
+      "current_value": 8.5,
+      "threshold_or_baseline": "> 5.0 (sim)",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter_maintenance:turbidity:warning:sediment_particulate_stress",
+      "related_alert_id": "124a3bf3-6c79-462b-b51d-34e36d61a61a"
+    },
+    {
+      "_id": "77d8334e-4ea9-4b95-9369-2a06e051df93",
+      "id": "77d8334e-4ea9-4b95-9369-2a06e051df93",
+      "created_at": "2026-11-04T04:08:16.984372+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.984372+00:00",
+      "priority": "Warning",
+      "category": "Anomaly Resolution",
+      "title": "AI Multivariate Pattern Anomaly Detected",
+      "message": "Machine learning anomaly detector flagged unusual water correlation patterns: Unusual water-quality pattern detected: multivariate correlation divergence.",
+      "reason": "Isolation Forest identified statistical departure from calibrated baseline (Anomaly score: 88.5/100. Primary diverging parameter: Multi-parameter).",
+      "source_factors": [
+        "anomaly_detector",
+        "current_reading"
+      ],
+      "action": "Check for aerated flow, probe bubbles, or municipal source switching.",
+      "action_steps": [
+        "Inspect probe measurement vessel for micro-bubbles or intermittent water flow.",
+        "Verify if tap water supply switched between municipal surface and borewell sources.",
+        "Monitor live dashboard graph to observe whether readings return to learned baseline."
+      ],
+      "parameter": "Multi-parameter",
+      "current_value": 88.5,
+      "threshold_or_baseline": "Statistical Anomaly Deviation",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "anomaly_resolution:ai:warning:multivariate_correlation_divergence",
+      "related_alert_id": null
+    },
+    {
+      "_id": "176d8ef7-5c39-4771-81aa-018d9eabb77b",
+      "id": "176d8ef7-5c39-4771-81aa-018d9eabb77b",
+      "created_at": "2026-11-04T04:08:16.984372+00:00",
+      "last_updated_at": "2026-11-04T04:08:16.984372+00:00",
+      "priority": "Informational",
+      "category": "System & Calibration",
+      "title": "Periodic Sensor Probe Maintenance & Rinsing Guidance",
+      "message": "Water quality monitoring sensors maintain optimal measurement precision when probe electrodes are periodically inspected and rinsed.",
+      "reason": "Routine preventative advice: optical turbidity quartz windows and pH glass electrodes benefit from periodic rinsing.",
+      "source_factors": [
+        "settings_threshold",
+        "routine_schedule"
+      ],
+      "action": "Inspect probe chamber and gently rinse electrodes with clean water.",
+      "action_steps": [
+        "Inspect the optical turbidity sensor chamber for mineral scale or fine sediment coating.",
+        "Rinse probe ends with clean drinking water; avoid abrasive cloths on the pH glass bulb.",
+        "Ensure sensor probe cable connections to ESP32 are secure."
+      ],
+      "parameter": "Sensor Hardware",
+      "current_value": null,
+      "threshold_or_baseline": "Preventative Maintenance",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "routine_advisory:system:informational:sensor_hygiene_guidance",
+      "related_alert_id": null
+    },
+    {
+      "_id": "c33852d2-7d82-4aa8-9887-36f4b7719eea",
+      "id": "c33852d2-7d82-4aa8-9887-36f4b7719eea",
+      "created_at": "2026-11-04T04:08:17.301209+00:00",
+      "last_updated_at": "2026-11-04T04:08:17.301209+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Acidic Water Quality - Remineralizer Inspection Advised",
+      "message": "Drinking water pH has dropped to 3.93, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
+      "reason": "Measured pH is 3.93 (safe minimum: 6.5). Post-Carbon Alkaline cartridge condition is currently at 100.0%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Inspect Stage 4 Post-Carbon Alkaline Mineralizer cartridge and calibrate pH electrode.",
+      "action_steps": [
+        "Rinse pH sensor electrode with distilled water to ensure no surface residue is skewing the probe.",
+        "Inspect Stage 4 mineralizer cartridge condition (estimated remaining life: 100.0%).",
+        "Perform a fresh 60-second purge cycle to test if reservoir stagnation caused acidity accumulation."
+      ],
+      "parameter": "pH",
+      "current_value": 3.93,
+      "threshold_or_baseline": "< 6.5",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water_quality:ph:critical:acidic_balance",
+      "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
+    },
+    {
+      "_id": "9aae0eef-9e6e-4155-acb3-6a23d66a753b",
+      "id": "9aae0eef-9e6e-4155-acb3-6a23d66a753b",
+      "created_at": "2026-11-04T04:08:17.301209+00:00",
+      "last_updated_at": "2026-11-04T04:08:17.301209+00:00",
+      "priority": "Critical",
+      "category": "Filter Maintenance",
+      "title": "Elevated Turbidity - Sediment Pre-Filter Service Recommended",
+      "message": "Simulated turbidity index reached 61.4, crossing the warning limit (5.0). Suspended particulates can increase resistance and foul the downstream RO membrane.",
+      "reason": "Turbidity reading (61.4) exceeds baseline threshold (5.0). Stage 1 Sediment Pre-Filter estimated condition is at 100.0%.",
+      "source_factors": [
+        "current_reading",
+        "filter_health",
+        "settings_threshold"
+      ],
+      "action": "Flush purifier inlet line and inspect Stage 1 Sediment Pre-Filter bowl.",
+      "action_steps": [
+        "Visually inspect external spun sediment pre-filter bowl for visible silt, rust, or discoloration.",
+        "Execute manual flush for 2 minutes to clear inlet pipeline particles.",
+        "Prepare replacement PP-5M spun sediment pre-filter cartridge (current condition: 100.0%)."
+      ],
+      "parameter": "Turbidity",
+      "current_value": 61.37,
+      "threshold_or_baseline": "> 5.0 (sim)",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter_maintenance:turbidity:critical:sediment_particulate_stress",
+      "related_alert_id": "dc70758a-6924-473f-81d1-1b5d30b248ab"
+    },
+    {
+      "_id": "9935ba07-ebef-4166-977d-394e5d1d93f0",
+      "id": "9935ba07-ebef-4166-977d-394e5d1d93f0",
+      "created_at": "2026-11-04T04:46:33.493101+00:00",
+      "last_updated_at": "2026-11-04T04:46:33.493101+00:00",
+      "priority": "Warning",
+      "category": "Water Quality",
+      "title": "Elevated TDS Level - Water Hardness Advisory",
+      "message": "Water TDS is at 386.1 ppm, above the recommended drinking threshold (300.0 ppm). Water hardness may impart a distinct mineral taste.",
+      "reason": "Current TDS reading (386.1 ppm) crossed the warning baseline (300.0 ppm). Historical analytics indicates degrading mineral stability over the past 24 hours.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics"
+      ],
+      "action": "Monitor purifier output TDS and check raw water hardness.",
+      "action_steps": [
+        "Check raw water source hardness; seasonal shifts can elevate feed salinity.",
+        "Verify TDS modulator valve setting on purifier if equipped.",
+        "Dispense 1 liter to purge stale reservoir water and re-check output reading."
+      ],
+      "parameter": "TDS",
+      "current_value": 386.1,
+      "threshold_or_baseline": "> 300.0 ppm",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water_quality:tds:warning:elevated_mineral_hardness",
+      "related_alert_id": "6e279b14-1c3f-40f9-9b49-bf993fca67db"
+    },
+    {
+      "_id": "b1ccc822-03dd-40be-bee4-14f6808dff8b",
+      "id": "b1ccc822-03dd-40be-bee4-14f6808dff8b",
+      "created_at": "2026-11-04T04:48:36.756209+00:00",
+      "last_updated_at": "2026-11-04T04:48:36.756209+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Critical TDS Level - High Dissolved Mineral Ingress",
+      "message": "Purifier output TDS reached 921.9 ppm, crossing the critical limit (500.0 ppm). Water contains excessive dissolved mineral content. Immediate filtration check is advised.",
+      "reason": "Measured TDS (921.9 ppm) exceeded critical limit (500.0 ppm). 24h historical average is 255.9 ppm with a degrading trend.",
+      "source_factors": [
+        "current_reading",
+        "historical_analytics",
+        "settings_threshold"
+      ],
+      "action": "Inspect RO membrane rejection efficiency and verify inlet flow restrictor valve.",
+      "action_steps": [
+        "Turn off purifier power and test raw feed water TDS to check for municipal supply surges.",
+        "Inspect RO reject water discharge line to ensure brine is flowing freely without flow restriction.",
+        "Flush RO membrane system for 3 to 5 minutes.",
+        "If TDS remains elevated above 500 ppm after flush, service RO membrane cartridge."
+      ],
+      "parameter": "TDS",
+      "current_value": 921.9,
+      "threshold_or_baseline": "> 500.0 ppm",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water_quality:tds:critical:excessive_dissolved_solids",
+      "related_alert_id": "5729c135-2137-428b-aa64-2d749ed9e7f7"
+    },
+    {
+      "_id": "088b21d1-7aaa-456d-a9d5-0b7a6f62f72c",
+      "id": "088b21d1-7aaa-456d-a9d5-0b7a6f62f72c",
+      "created_at": "2026-11-04T06:22:18.327869+00:00",
+      "last_updated_at": "2026-11-04T06:22:18.327869+00:00",
+      "priority": "Critical",
+      "category": "Water Quality",
+      "title": "Elevated Alkaline pH - Mineral Dissolution Advisory",
+      "message": "Water pH has increased to 12.28, above the recommended drinking maximum (8.5). Excessive alkalinity can impart a bitter or slippery taste.",
+      "reason": "Measured pH is 12.28 (recommended maximum: 8.5). Historical analytics shows pH variance across the analyzed timeframe.",
+      "source_factors": [
+        "current_reading",
+        "settings_threshold"
+      ],
+      "action": "Flush purifier storage tank and inspect alkaline media dissolution rate.",
+      "action_steps": [
+        "Empty the storage tank to discard water with excessive dissolved minerals.",
+        "Inspect the remineralization cartridge bypass ratio.",
+        "Verify raw input water pH to confirm whether municipal water source has shifted."
+      ],
+      "parameter": "pH",
+      "current_value": 12.28,
+      "threshold_or_baseline": "> 8.5",
+      "is_dismissed": false,
+      "dismissed_at": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water_quality:ph:critical:alkaline_balance",
+      "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a"
+    }
+  ],
+  "notifications": [
+    {
+      "_id": "7162b61f-c90c-4b4d-96bd-fba9e83b9933",
+      "id": "7162b61f-c90c-4b4d-96bd-fba9e83b9933",
+      "created_at": "2026-11-04T04:08:16.830694+00:00",
+      "updated_at": "2026-11-04T04:48:36.812397+00:00",
+      "title": "Critical TDS Level - High Dissolved Mineral Ingress",
+      "message": "Purifier output TDS reached 921.9 ppm, crossing the critical limit (500.0 ppm). Water contains excessive dissolved mineral content. Immediate filtration check is advised.",
+      "severity": "Critical",
+      "category": "Water Quality",
+      "parameter": "TDS",
+      "reading_value": 921.9,
+      "threshold_value": "> 500.0 ppm",
+      "suggested_action": "Inspect RO membrane rejection efficiency and verify inlet flow restrictor valve.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 2,
+      "deduplication_key": "water quality:tds:critical:critical tds level - high diss",
+      "related_alert_id": "5729c135-2137-428b-aa64-2d749ed9e7f7",
+      "related_recommendation_id": "b1ccc822-03dd-40be-bee4-14f6808dff8b",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "ce3b8703-9511-4e52-a14b-cb80ecfe2b08",
+      "id": "ce3b8703-9511-4e52-a14b-cb80ecfe2b08",
+      "created_at": "2026-11-04T04:08:16.853806+00:00",
+      "updated_at": "2026-11-04T04:08:16.853806+00:00",
+      "title": "Persistent Degrading Water Quality Trend Identified",
+      "message": "Historical analytics detected a continuous declining purity trend across the past 24 hours. Most frequent abnormal parameter: pH.",
+      "severity": "Warning",
+      "category": "Water Quality",
+      "parameter": "pH",
+      "reading_value": null,
+      "threshold_value": "Historical 24h Trend",
+      "suggested_action": "Review historical trend charts and inspect raw feed water quality.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water quality:ph:warning:persistent degrading water qua",
+      "related_alert_id": null,
+      "related_recommendation_id": "baa08935-0215-4ec7-be74-8d8c02c1f584",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "10e5dc99-3e47-489a-805d-718c513e2962",
+      "id": "10e5dc99-3e47-489a-805d-718c513e2962",
+      "created_at": "2026-11-04T04:08:16.904697+00:00",
+      "updated_at": "2026-11-04T04:08:16.904697+00:00",
+      "title": "Acidic Water Quality - Remineralizer Inspection Advised",
+      "message": "Drinking water pH has dropped to 5.80, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
+      "severity": "Warning",
+      "category": "Water Quality",
+      "parameter": "pH",
+      "reading_value": 5.8,
+      "threshold_value": "< 6.5",
+      "suggested_action": "Inspect Stage 4 Post-Carbon Alkaline Mineralizer cartridge and calibrate pH electrode.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water quality:ph:warning:acidic water quality - reminer",
+      "related_alert_id": "9193b60f-a409-4579-a9ff-ac3ca08d0424",
+      "related_recommendation_id": "1ebb5fc7-d35b-4a54-b0ba-ff530fa7384f",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "836134d9-6048-4291-9c00-e6d0599a2945",
+      "id": "836134d9-6048-4291-9c00-e6d0599a2945",
+      "created_at": "2026-11-04T04:08:16.961913+00:00",
+      "updated_at": "2026-11-04T04:08:16.961913+00:00",
+      "title": "Elevated Turbidity - Sediment Pre-Filter Service Recommended",
+      "message": "Simulated turbidity index reached 8.5, crossing the warning limit (5.0). Suspended particulates can increase resistance and foul the downstream RO membrane.",
+      "severity": "Warning",
+      "category": "Filter Maintenance",
+      "parameter": "Turbidity",
+      "reading_value": 8.5,
+      "threshold_value": "> 5.0 (sim)",
+      "suggested_action": "Flush purifier inlet line and inspect Stage 1 Sediment Pre-Filter bowl.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter maintenance:turbidity:warning:elevated turbidity - sediment ",
+      "related_alert_id": "124a3bf3-6c79-462b-b51d-34e36d61a61a",
+      "related_recommendation_id": "064bf1cc-4a58-457d-9ecd-81580b4b5be7",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "d1ad973c-518b-4fea-bd35-e623c804b104",
+      "id": "d1ad973c-518b-4fea-bd35-e623c804b104",
+      "created_at": "2026-11-04T04:08:17.037785+00:00",
+      "updated_at": "2026-11-04T04:08:17.037785+00:00",
+      "title": "AI Multivariate Pattern Anomaly Detected",
+      "message": "Machine learning anomaly detector flagged unusual water correlation patterns: Unusual water-quality pattern detected: multivariate correlation divergence.",
+      "severity": "Warning",
+      "category": "Anomaly Resolution",
+      "parameter": "Multi-parameter",
+      "reading_value": 88.5,
+      "threshold_value": "Statistical Anomaly Deviation",
+      "suggested_action": "Check for aerated flow, probe bubbles, or municipal source switching.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "anomaly resolution:multi-parameter:warning:ai multivariate pattern anomal",
+      "related_alert_id": null,
+      "related_recommendation_id": "77d8334e-4ea9-4b95-9369-2a06e051df93",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "c3724a4d-c067-4cf6-ab8b-4b9b537056e8",
+      "id": "c3724a4d-c067-4cf6-ab8b-4b9b537056e8",
+      "created_at": "2026-11-04T04:08:17.362605+00:00",
+      "updated_at": "2026-11-04T04:08:17.362605+00:00",
+      "title": "Acidic Water Quality - Remineralizer Inspection Advised",
+      "message": "Drinking water pH has dropped to 3.93, below the safe alkaline balance (6.5). Acidic water can impart a tart taste and may indicate depleted remineralization media.",
+      "severity": "Critical",
+      "category": "Water Quality",
+      "parameter": "pH",
+      "reading_value": 3.93,
+      "threshold_value": "< 6.5",
+      "suggested_action": "Inspect Stage 4 Post-Carbon Alkaline Mineralizer cartridge and calibrate pH electrode.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water quality:ph:critical:acidic water quality - reminer",
+      "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a",
+      "related_recommendation_id": "c33852d2-7d82-4aa8-9887-36f4b7719eea",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "a3909d4c-b8a5-443d-8686-86624ffb15d6",
+      "id": "a3909d4c-b8a5-443d-8686-86624ffb15d6",
+      "created_at": "2026-11-04T04:08:17.406742+00:00",
+      "updated_at": "2026-11-04T04:08:17.406742+00:00",
+      "title": "Elevated Turbidity - Sediment Pre-Filter Service Recommended",
+      "message": "Simulated turbidity index reached 61.4, crossing the warning limit (5.0). Suspended particulates can increase resistance and foul the downstream RO membrane.",
+      "severity": "Critical",
+      "category": "Filter Maintenance",
+      "parameter": "Turbidity",
+      "reading_value": 61.37,
+      "threshold_value": "> 5.0 (sim)",
+      "suggested_action": "Flush purifier inlet line and inspect Stage 1 Sediment Pre-Filter bowl.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter maintenance:turbidity:critical:elevated turbidity - sediment ",
+      "related_alert_id": "dc70758a-6924-473f-81d1-1b5d30b248ab",
+      "related_recommendation_id": "9aae0eef-9e6e-4155-acb3-6a23d66a753b",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "c1b82ef6-5533-4760-b011-b05177410747",
+      "id": "c1b82ef6-5533-4760-b011-b05177410747",
+      "created_at": "2026-11-04T04:08:40.778326+00:00",
+      "updated_at": "2026-11-04T04:08:40.778326+00:00",
+      "title": "Critical Filter Replacement Required",
+      "message": "Estimated filter health has declined to 10.0% (critical threshold: 12.0%). Health below 12.0% critical threshold.",
+      "severity": "Critical",
+      "category": "Filter Maintenance",
+      "parameter": "Filter Health",
+      "reading_value": 10.0,
+      "threshold_value": "<= 12.0%",
+      "suggested_action": "Replace all cartridges immediately.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter maintenance:filter health:critical:critical filter replacement re",
+      "related_alert_id": "6aacffec-2069-48b3-809a-afe9b526a19b",
+      "related_recommendation_id": null,
+      "source_event": "alert_service"
+    },
+    {
+      "_id": "ed84d6e1-257f-4235-bb6e-ef4e2d389201",
+      "id": "ed84d6e1-257f-4235-bb6e-ef4e2d389201",
+      "created_at": "2026-11-04T04:08:40.839718+00:00",
+      "updated_at": "2026-11-04T04:08:40.839718+00:00",
+      "title": "Filter Water Quality Stress Warning",
+      "message": "Turbidity Surge: Recent simulated turbidity (27.71) is +306.3% relative to baseline (6.8). Indicates sediment pre-filter particulate stress.",
+      "severity": "Warning",
+      "category": "Filter Maintenance",
+      "parameter": "Filter Health",
+      "reading_value": 100.0,
+      "threshold_value": "Telemetry Trend Anomaly",
+      "suggested_action": "RECOMMENDED: Inspect pre-filter mesh and verify raw input water parameters.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "filter maintenance:filter health:warning:filter water quality stress wa",
+      "related_alert_id": "58a11b74-0155-4763-890e-38bc1bd313c2",
+      "related_recommendation_id": null,
+      "source_event": "alert_service"
+    },
+    {
+      "_id": "86f39b16-cdc2-4466-9b9d-1d755b7f9e03",
+      "id": "86f39b16-cdc2-4466-9b9d-1d755b7f9e03",
+      "created_at": "2026-11-04T04:46:33.562276+00:00",
+      "updated_at": "2026-11-04T04:46:33.562276+00:00",
+      "title": "Elevated TDS Level - Water Hardness Advisory",
+      "message": "Water TDS is at 386.1 ppm, above the recommended drinking threshold (300.0 ppm). Water hardness may impart a distinct mineral taste.",
+      "severity": "Warning",
+      "category": "Water Quality",
+      "parameter": "TDS",
+      "reading_value": 386.1,
+      "threshold_value": "> 300.0 ppm",
+      "suggested_action": "Monitor purifier output TDS and check raw water hardness.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water quality:tds:warning:elevated tds level - water har",
+      "related_alert_id": "6e279b14-1c3f-40f9-9b49-bf993fca67db",
+      "related_recommendation_id": "9935ba07-ebef-4166-977d-394e5d1d93f0",
+      "source_event": "recommendation_engine"
+    },
+    {
+      "_id": "8e258a09-f589-4dcb-be40-e31d3f2edd83",
+      "id": "8e258a09-f589-4dcb-be40-e31d3f2edd83",
+      "created_at": "2026-11-04T06:22:18.449683+00:00",
+      "updated_at": "2026-11-04T06:22:18.449683+00:00",
+      "title": "Elevated Alkaline pH - Mineral Dissolution Advisory",
+      "message": "Water pH has increased to 12.28, above the recommended drinking maximum (8.5). Excessive alkalinity can impart a bitter or slippery taste.",
+      "severity": "Critical",
+      "category": "Water Quality",
+      "parameter": "pH",
+      "reading_value": 12.28,
+      "threshold_value": "> 8.5",
+      "suggested_action": "Flush purifier storage tank and inspect alkaline media dissolution rate.",
+      "is_read": false,
+      "read_at": null,
+      "is_acknowledged": false,
+      "acknowledged_at": null,
+      "acknowledged_by": null,
+      "occurrence_count": 1,
+      "deduplication_key": "water quality:ph:critical:elevated alkaline ph - mineral",
+      "related_alert_id": "92e2b57d-b0f8-409d-b7de-5dba6dec532a",
+      "related_recommendation_id": "088b21d1-7aaa-456d-a9d5-0b7a6f62f72c",
+      "source_event": "recommendation_engine"
     }
   ]
 }

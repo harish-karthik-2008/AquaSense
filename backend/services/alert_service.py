@@ -189,7 +189,131 @@ class AlertService:
             # Broadcast new alert in real time via WebSocket
             await ws_manager.broadcast("alert_triggered", alert_obj.model_dump())
 
+            # Connect notification event (Requirement 4)
+            try:
+                from services.notification_service import notification_service
+                await notification_service.create_from_alert(doc)
+            except Exception:
+                pass
+
         return generated_alerts
+
+    async def evaluate_filter_maintenance(
+        self,
+        filter_health_pct: float,
+        filter_condition: str,
+        recommendation: str,
+        reason: str,
+        settings: Dict[str, Any],
+        unusual_change_detected: bool = False,
+        unusual_change_description: Optional[str] = None
+    ) -> Optional[Alert]:
+        """
+        Evaluate filter condition and raise Maintenance alerts when thresholds are reached
+        or when unusual water quality trends stress the filter.
+        """
+        warn_th = settings.get("filter_warning_threshold", 30.0)
+        crit_th = settings.get("filter_critical_threshold", 15.0)
+
+        alert_data = None
+        if filter_health_pct <= crit_th:
+            alert_data = {
+                "alert_type": "Maintenance",
+                "parameter": "Filter Health",
+                "reading_value": filter_health_pct,
+                "threshold_value": f"<= {crit_th}%",
+                "severity": "Critical",
+                "title": "Critical Filter Replacement Required",
+                "message": f"Estimated filter health has declined to {filter_health_pct:.1f}% (critical threshold: {crit_th}%). {reason}",
+                "suggested_action": recommendation
+            }
+        elif filter_health_pct <= warn_th:
+            alert_data = {
+                "alert_type": "Maintenance",
+                "parameter": "Filter Health",
+                "reading_value": filter_health_pct,
+                "threshold_value": f"<= {warn_th}%",
+                "severity": "Warning",
+                "title": "Filter Maintenance Due Soon",
+                "message": f"Estimated filter health is at {filter_health_pct:.1f}% (warning threshold: {warn_th}%). {reason}",
+                "suggested_action": recommendation
+            }
+        elif unusual_change_detected:
+            alert_data = {
+                "alert_type": "Maintenance",
+                "parameter": "Filter Health",
+                "reading_value": filter_health_pct,
+                "threshold_value": "Telemetry Trend Anomaly",
+                "severity": "Warning",
+                "title": "Filter Water Quality Stress Warning",
+                "message": unusual_change_description or "Unusual water quality trend detected stressing filter cartridges.",
+                "suggested_action": recommendation
+            }
+
+        if not alert_data:
+            return None
+
+        now_iso = datetime.now(timezone.utc).isoformat()
+        alerts_col = await self.get_alerts_collection()
+        debounce_key = f"filter_health_{alert_data['severity']}_{alert_data['alert_type']}"
+
+        # Check existing active unacknowledged alert
+        existing_active = await alerts_col.find_one({
+            "parameter": "Filter Health",
+            "severity": alert_data["severity"],
+            "acknowledged": False
+        })
+
+        if existing_active:
+            # Update reading value and timestamp without spamming duplicate alerts
+            await alerts_col.update_one(
+                {"_id": existing_active["_id"]},
+                {"$set": {
+                    "reading_value": alert_data["reading_value"],
+                    "timestamp": now_iso,
+                    "message": alert_data["message"]
+                }}
+            )
+            return None
+
+        # Check debounce
+        last_time = self._recent_alert_debounce.get(debounce_key)
+        if last_time:
+            try:
+                delta = (datetime.fromisoformat(now_iso) - datetime.fromisoformat(last_time)).total_seconds()
+                if delta < self.debounce_seconds:
+                    return None
+            except Exception:
+                pass
+
+        self._recent_alert_debounce[debounce_key] = now_iso
+
+        alert_obj = Alert(
+            id=str(uuid.uuid4()),
+            timestamp=now_iso,
+            alert_type=alert_data["alert_type"],
+            parameter=alert_data["parameter"],
+            reading_value=alert_data["reading_value"],
+            threshold_value=alert_data["threshold_value"],
+            severity=alert_data["severity"],
+            title=alert_data["title"],
+            message=alert_data["message"],
+            suggested_action=alert_data["suggested_action"],
+            acknowledged=False
+        )
+        doc = alert_obj.model_dump()
+        doc["_id"] = alert_obj.id
+        await alerts_col.insert_one(doc)
+        await ws_manager.broadcast("alert_triggered", alert_obj.model_dump())
+
+        # Connect notification event (Requirement 4)
+        try:
+            from services.notification_service import notification_service
+            await notification_service.create_from_alert(doc)
+        except Exception:
+            pass
+
+        return alert_obj
 
     async def get_alerts(self, status: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
         col = await self.get_alerts_collection()
@@ -211,6 +335,21 @@ class AlertService:
         res = await col.update_one({"_id": alert_id}, {"$set": {"acknowledged": True}})
         if res.modified_count > 0:
             await ws_manager.broadcast("alert_acknowledged", {"id": alert_id})
+            try:
+                from services.notification_service import notification_service
+                notif_col = await notification_service.get_notifications_collection()
+                now_iso = datetime.now(timezone.utc).isoformat()
+                await notif_col.update_many(
+                    {"related_alert_id": alert_id},
+                    {"$set": {
+                        "is_read": True,
+                        "is_acknowledged": True,
+                        "acknowledged_at": now_iso,
+                        "acknowledged_by": "Alert Sync"
+                    }}
+                )
+            except Exception:
+                pass
             return True
         return False
 
@@ -227,4 +366,3 @@ class AlertService:
 
 # Global singleton
 alert_service = AlertService()
-

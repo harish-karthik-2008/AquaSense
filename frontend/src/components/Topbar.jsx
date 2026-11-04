@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Bell, Cpu, Clock, Layers, Sparkles } from 'lucide-react';
+import NotificationPanel from './NotificationPanel';
 
 export default function Topbar({
   activeTab = 'overview',
@@ -7,8 +8,18 @@ export default function Topbar({
   deviceConnected = false,
   lastReceivedTimestamp = null,
   unreadAlertCount = 0,
-  onOpenAlerts = () => {}
+  onOpenAlerts = () => {},
+  notifications = [],
+  unreadNotificationCount = 0,
+  onMarkNotificationAsRead = () => {},
+  onMarkAllNotificationsAsRead = () => {},
+  onAcknowledgeNotification = () => {},
+  onAcknowledgeAllNotifications = () => {},
+  onClearAcknowledgedNotifications = () => {},
+  isLoadingNotifications = false
 }) {
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
   // Format relative timestamp
   const formatTime = (ts) => {
     if (!ts) return 'Awaiting initial stream';
@@ -35,6 +46,9 @@ export default function Topbar({
     device: 'Device Management & Simulator',
     settings: 'Threshold Configurations'
   };
+
+  // Determine badge count (priority to unread notification count, fallback to unread alert count)
+  const displayCount = unreadNotificationCount !== undefined ? unreadNotificationCount : unreadAlertCount;
 
   return (
     <header className="topbar">
@@ -70,19 +84,35 @@ export default function Topbar({
           <span>{formatTime(lastReceivedTimestamp)}</span>
         </div>
 
-        {/* Notifications Icon */}
-        <button
-          className="topbar-btn"
-          onClick={onOpenAlerts}
-          title={`${unreadAlertCount} active alerts`}
-        >
-          <Bell size={18} />
-          {unreadAlertCount > 0 && (
-            <span className="topbar-badge-count">
-              {unreadAlertCount > 9 ? '9+' : unreadAlertCount}
-            </span>
-          )}
-        </button>
+        {/* Notifications Bell & Dropdown */}
+        <div className="topbar-bell-wrapper" style={{ position: 'relative' }}>
+          <button
+            className="topbar-btn notification-bell-btn"
+            onClick={() => setIsNotificationsOpen((prev) => !prev)}
+            title={displayCount > 0 ? `${displayCount} unread notifications` : 'Notifications'}
+          >
+            <Bell size={18} />
+            {displayCount > 0 && (
+              <span className="topbar-badge-count">
+                {displayCount > 99 ? '99+' : displayCount}
+              </span>
+            )}
+          </button>
+
+          <NotificationPanel
+            isOpen={isNotificationsOpen}
+            onClose={() => setIsNotificationsOpen(false)}
+            notifications={notifications}
+            unreadCount={unreadNotificationCount}
+            onMarkAsRead={onMarkNotificationAsRead}
+            onMarkAllAsRead={onMarkAllNotificationsAsRead}
+            onAcknowledge={onAcknowledgeNotification}
+            onAcknowledgeAll={onAcknowledgeAllNotifications}
+            onClearAcknowledged={onClearAcknowledgedNotifications}
+            onViewAllAlerts={onOpenAlerts}
+            isLoading={isLoadingNotifications}
+          />
+        </div>
 
         {/* User Profile */}
         <div className="topbar-user">
@@ -98,4 +128,3 @@ export default function Topbar({
     </header>
   );
 }
-

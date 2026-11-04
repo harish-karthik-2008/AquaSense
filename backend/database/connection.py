@@ -10,13 +10,19 @@ import socket
 import asyncio
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-import motor.motor_asyncio
+motor = None
 
 USE_MONGODB = os.getenv("USE_MONGODB", "false").lower() in ("true", "1", "yes")
 MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
 DB_NAME = os.getenv("DB_NAME", "aquasense_ai")
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 DATA_FILE = os.path.join(DATA_DIR, "aquasense_db.json")
+
+if USE_MONGODB:
+    try:
+        import motor.motor_asyncio
+    except (ImportError, Exception):
+        motor = None
 
 class LocalCollection:
     """Async-compatible in-memory + file-persisted collection mimicking Motor/MongoDB."""
@@ -174,6 +180,9 @@ class LocalCollection:
         await self.parent_db.persist()
         return type("DeleteResult", (), {"deleted_count": initial_len - len(self.parent_db._store[self.name])})
 
+    async def delete_one(self, filter_dict: Optional[Dict[str, Any]] = None):
+        return await self.delete_many(filter_dict)
+
 
 class LocalAsyncDatabase:
     """Local JSON-backed persistent fallback store."""
@@ -223,7 +232,7 @@ class DatabaseManager:
 
     @classmethod
     async def init_db(cls):
-        if USE_MONGODB:
+        if USE_MONGODB and motor is not None:
             try:
                 print(f"[Database] Connecting to MongoDB at {MONGODB_URI}...")
                 client = motor.motor_asyncio.AsyncIOMotorClient(

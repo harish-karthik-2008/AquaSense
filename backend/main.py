@@ -12,7 +12,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
 from database.connection import DatabaseManager
-from routes import sensor, alerts, device, filter as filter_route, settings as settings_route
+from routes import sensor, alerts, device, filter as filter_route, settings as settings_route, analytics, recommendations, notifications
 from services.websocket_manager import ws_manager
 from services.sensor_service import sensor_service
 from ai.anomaly_detector import anomaly_detector
@@ -62,7 +62,11 @@ async def seed_initial_data_if_empty():
         # Load existing readings into AI buffer
         cursor = readings_col.find().sort("timestamp", -1).limit(60)
         existing = await cursor.to_list(length=60)
-        samples = [[r["tds"], r["ph"], r["turbidity"]] for r in reversed(existing) if "tds" in r]
+        samples = [
+            [float(r["tds"]), float(r.get("ph", 7.35) if r.get("ph") is not None else 7.35), float(r["turbidity"])]
+            for r in reversed(existing)
+            if isinstance(r, dict) and r.get("tds") is not None and r.get("turbidity") is not None
+        ]
         if samples:
             anomaly_detector.add_historical_samples(samples)
             print(f"[AquaSense AI] Loaded {len(samples)} historical readings into AI anomaly detector.")
@@ -99,6 +103,9 @@ app.include_router(alerts.router)
 app.include_router(device.router)
 app.include_router(filter_route.router)
 app.include_router(settings_route.router)
+app.include_router(analytics.router)
+app.include_router(recommendations.router)
+app.include_router(notifications.router)
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -151,4 +158,3 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
-

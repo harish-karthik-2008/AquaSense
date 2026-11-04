@@ -9,4 +9,6 @@ class ThresholdSettings(BaseModel):
     turbidity_critical_threshold: float = Field(10.0, description="Turbidity critical threshold (simulated scale)", ge=2.0, le=100.0)
     anomaly_sensitivity: str = Field("medium", description="AI anomaly sensitivity: low, medium, or high")
     heartbeat_timeout_seconds: int = Field(25, description="Seconds without data before marking ESP32 offline", ge=5, le=120)
-
+    filter_warning_threshold: float = Field(30.0, description="Filter health warning threshold (%)", ge=5.0, le=90.0)
+    filter_critical_threshold: float = Field(15.0, description="Filter health critical replacement threshold (%)", ge=1.0, le=50.0)
+    filter_max_operating_hours: float = Field(2000.0, description="Rated filter lifespan in operating hours", ge=100.0, le=10000.0)

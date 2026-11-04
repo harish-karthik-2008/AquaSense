@@ -51,14 +51,19 @@ async def get_history(
         "data": readings
     }
 
-@router.get("/analytics", summary="Get statistical metrics (min, max, avg)")
+@router.get("/analytics", summary="Get water quality analytics and trends")
 async def get_analytics(
-    timeframe: Optional[str] = Query("24h", description="Timeframe: 1h, 24h, 7d, all")
+    timeframe: Optional[str] = Query("24h", description="Timeframe: 1h, 24h, 7d, 30d, all"),
+    start_date: Optional[str] = Query(None, description="Start date ISO string"),
+    end_date: Optional[str] = Query(None, description="End date ISO string")
 ):
-    """Returns minimum, maximum, and average values computed from real backend data."""
-    summary = await sensor_service.get_analytics_summary(timeframe=timeframe)
+    """Returns minimum, maximum, average values, counts, trends, anomalies, and summary text."""
+    summary = await sensor_service.get_analytics_summary(
+        timeframe=timeframe,
+        start_date=start_date,
+        end_date=end_date
+    )
     return {
         "status": "success",
         "data": summary
     }
-
